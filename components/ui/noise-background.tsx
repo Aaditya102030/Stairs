@@ -169,11 +169,7 @@ export const NoiseBackground = ({
     <div
       ref={containerRef}
       className={cn(
-        "group relative overflow-hidden rounded-2xl bg-neutral-200 p-2 backdrop-blur-sm dark:bg-neutral-800",
-        "shadow-[0px_0.5px_1px_0px_var(--color-neutral-400)_inset,0px_1px_0px_0px_var(--color-neutral-100)]",
-        "dark:shadow-[0px_1px_0px_0px_var(--color-neutral-950)_inset,0px_1px_0px_0px_var(--color-neutral-800)]",
-        backdropBlur &&
-          "after:absolute after:inset-0 after:h-full after:w-full after:backdrop-blur-lg after:content-['']",
+        "group relative overflow-hidden rounded-2xl p-0",
         containerClassName,
       )}
       style={
@@ -187,21 +183,21 @@ export const NoiseBackground = ({
         springX={springX}
         springY={springY}
         gradientColor={gradientColors[0]}
-        opacity={0.4}
+        opacity={1}
         multiplier={1}
       />
       <GradientLayer
         springX={springX}
         springY={springY}
         gradientColor={gradientColors[1]}
-        opacity={0.3}
+        opacity={0.9}
         multiplier={0.7}
       />
       <GradientLayer
         springX={springX}
         springY={springY}
         gradientColor={gradientColors[2] || gradientColors[0]}
-        opacity={0.25}
+        opacity={0.85}
         multiplier={1.2}
       />
 
