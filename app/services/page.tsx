@@ -50,6 +50,13 @@ const globalStyles = `
   .page-hero-bg { position: absolute; inset: 0; background: url('/images/hero-bg.png') center/cover no-repeat; opacity: 0.4; }
   .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.3) 100%); }
   .page-hero-circle { width: 420px; height: 420px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 22px; pointer-events: none; animation: spin-slow 20s linear infinite; opacity: 0.7; }
+  .hero-3d-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
+  @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(-8deg); } }
+  @keyframes float2 { 0%,100% { transform: translateY(0px) rotate(12deg); } 50% { transform: translateY(-16px) rotate(12deg); } }
+  @keyframes float3 { 0%,100% { transform: translateY(0px) rotate(-4deg); } 50% { transform: translateY(-28px) rotate(-4deg); } }
+  @keyframes float4 { 0%,100% { transform: translateY(0px) rotate(6deg); } 50% { transform: translateY(-14px) rotate(6deg); } }
+  @keyframes pulse-ring { 0%,100% { opacity: 0.18; transform: scale(1); } 50% { opacity: 0.32; transform: scale(1.06); } }
+  @keyframes spin-ring { to { transform: rotate(360deg); } }
   @keyframes spin-slow { to { transform: translateY(-50%) rotate(360deg); } }
   .page-hero-content { position: relative; z-index: 2; padding: 0 60px; }
   .page-hero-content .sub { font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; letter-spacing: 4px; color: var(--light); text-transform: uppercase; border-left: 4px solid var(--red); padding-left: 14px; margin-bottom: 16px; display: block; }
@@ -62,7 +69,7 @@ const globalStyles = `
   #services-full { padding: 90px 60px; background: var(--bg-light); }
   #services-full .services-header { text-align: center; margin-bottom: 60px; }
   .services-book { display: flex; gap: 18px; max-width: 1100px; height: 500px; margin: 0 auto; align-items: stretch; justify-content: center; }
-  .service-panel { position: relative; flex: 0.52; min-width: 74px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
+  .service-panel { position: relative; display: block; width: 100%; flex: 0.52; min-width: 74px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
   .service-panel.is-active { flex: 2.7; transform: translateY(-8px); box-shadow: 0 26px 60px rgba(0,0,0,0.34); }
   .service-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.82)), var(--service-bg); background-size: cover; background-position: center; filter: grayscale(1); transition: filter 0.55s ease; }
   .service-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(232,55,44,0.18), rgba(4,22,73,0.36)); opacity: 0.55; transition: opacity 0.55s ease; }
@@ -82,7 +89,7 @@ const globalStyles = `
   #service-cards .section-title { color: var(--light); text-align: center; margin-bottom: 50px; }
   #service-cards .section-label { color: var(--red); display: block; text-align: center; margin-bottom: 10px; }
   .sc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
-  .sc-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 32px 28px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+  .sc-card { display: block; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 32px 28px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
   .sc-card:hover { border-color: var(--red); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(232,55,44,0.2); }
   .sc-card .icon { width: 56px; height: 56px; background: rgba(232,55,44,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: background 0.3s; }
   .sc-card:hover .icon { background: var(--red); }
@@ -122,26 +129,28 @@ const globalStyles = `
     .services-book { flex-direction: column; height: auto; }
     .service-panel { min-width: unset; min-height: 80px; flex: none; }
     .service-panel.is-active { min-height: 280px; }
+    .service-panel .vertical-title { transform: translate(-50%, -50%); white-space: normal; text-align: center; width: 90%; font-size: 1rem; letter-spacing: 1px; }
     .sc-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
   }
 `;
 
 const services = [
-  { bg: "linear-gradient(135deg,#313131,#111)", vertical: "High Performance Athletes", icon: "fas fa-bolt", title: "High Performance", desc: "Strength, conditioning, speed work, and measurable training plans for athletes chasing peak output." },
-  { bg: "linear-gradient(135deg,#3b3b3b,#151515)", vertical: "Youth Athletes", icon: "fas fa-child", title: "Youth Athletes", desc: "Age-aware coaching that builds movement quality, confidence, discipline, and athletic foundations." },
-  { bg: "linear-gradient(135deg,#444,#101010)", vertical: "Lifestyle Performance", icon: "fas fa-running", title: "Lifestyle Performance", desc: "Personal training, body recomposition, mobility, and lifestyle coaching for stronger everyday health." },
-  { bg: "linear-gradient(135deg,#353535,#121212)", vertical: "Recovery", icon: "fas fa-redo-alt", title: "Recovery", desc: "Mobility sessions, rest planning, corrective work, and recovery support between demanding training days." },
-  { bg: "linear-gradient(135deg,#2c2c2c,#101010)", vertical: "Physiotherapy & Rehab", icon: "fas fa-user-md", title: "Rehabilitation", desc: "Structured return-to-training support with movement screening, rehab progressions, and pain-aware plans." },
+  { href: "/services/bio-mechanical-assessment", bg: "linear-gradient(135deg,#313131,#111)", vertical: "Bio Mechanical Assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
+  { href: "/services/physiotherapy", bg: "linear-gradient(135deg,#3b3b3b,#151515)", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
+  { href: "/services/strength-conditioning", bg: "linear-gradient(135deg,#444,#101010)", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
+  { href: "/services/myofascial-release", bg: "linear-gradient(135deg,#353535,#121212)", vertical: "Myofascial Release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
+  { href: "/services/sports-specific-training", bg: "linear-gradient(135deg,#2c2c2c,#101010)", vertical: "Sports Specific Training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
+  { href: "/services/group-session", bg: "linear-gradient(135deg,#222,#090909)", vertical: "Group Session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
 ];
 
 const serviceCards = [
-  { icon: "fas fa-dumbbell", title: "Strength Training", desc: "Progressive overload programs designed to build raw strength and muscle mass efficiently." },
-  { icon: "fas fa-heartbeat", title: "Cardio & Endurance", desc: "Zone-based cardio programs that improve stamina, heart health, and athletic capacity." },
-  { icon: "fas fa-apple-alt", title: "Nutrition Guidance", desc: "Personalised nutrition advice to fuel workouts, optimise recovery, and hit your goals." },
-  { icon: "fas fa-spa", title: "Mobility & Flexibility", desc: "Structured stretch and mobility sessions to keep you moving freely and pain-free." },
-  { icon: "fas fa-user-md", title: "Physio & Rehab", desc: "Evidence-based rehabilitation and return-to-sport programs with our physio team." },
-  { icon: "fas fa-users", title: "Group Classes", desc: "High-energy group sessions covering HIIT, boxing, yoga, and more — every day of the week." },
+  { href: "/services/bio-mechanical-assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
+  { href: "/services/physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
+  { href: "/services/strength-conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
+  { href: "/services/myofascial-release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
+  { href: "/services/sports-specific-training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
+  { href: "/services/group-session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
 ];
 
 function useReveal() {
@@ -185,6 +194,82 @@ function PageHero() {
     <section id="page-hero">
       <div className="page-hero-bg" />
       <div className="circle-deco page-hero-circle" />
+      <div className="hero-3d-scene">
+        <svg width="420" height="420" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
+          <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
+          <circle cx="260" cy="260" r="140" fill="none" stroke="rgba(232,55,44,0.08)" strokeWidth="60" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "260px 260px" }} />
+          <g style={{ animation: "float1 4s ease-in-out infinite", transformOrigin: "130px 155px" }}>
+            <rect x="72" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="76" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="90" y="151" width="80" height="8" rx="4" fill="url(#sBarGrad)"/>
+            <rect x="170" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="174" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="90" y="151" width="80" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="130" y="172" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">20 KG</text>
+          </g>
+          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "370px 145px" }}>
+            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
+            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <ellipse cx="370" cy="148" rx="32" ry="30" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
+            <ellipse cx="370" cy="148" rx="32" ry="30" fill="url(#sKettleGrad)"/>
+            <rect x="356" y="118" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
+            <text x="370" y="153" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">16KG</text>
+          </g>
+          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "260px 265px" }}>
+            <rect x="82" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            <rect x="86" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="104" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="118" y="258" width="284" height="12" rx="6" fill="url(#sBarGrad2)"/>
+            <rect x="118" y="258" width="284" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
+            <rect x="402" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="410" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="412" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            {[170,190,210,230,250,270,290,310,330,350].map((x: number, i: number) => (
+              <rect key={i} x={x} y="258" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
+            ))}
+            <text x="260" y="290" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue, sans-serif" letterSpacing="2">STAIRS GYM</text>
+          </g>
+          <g style={{ animation: "float4 4.5s ease-in-out infinite", transformOrigin: "370px 380px" }}>
+            <rect x="312" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="316" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="328" y="373" width="84" height="8" rx="4" fill="url(#sBarGrad)"/>
+            <rect x="412" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="412" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="328" y="373" width="84" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="370" y="393" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">12 KG</text>
+          </g>
+          <g style={{ animation: "float1 5.5s ease-in-out infinite 1s", transformOrigin: "140px 385px" }}>
+            <circle cx="108" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="108" cy="375" r="5" fill="#e8372c"/>
+            <path d="M118 375 Q150 345 180 375 Q210 405 240 375" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
+            <circle cx="250" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="250" cy="375" r="5" fill="#e8372c"/>
+          </g>
+          {[
+            { cx: 180, cy: 210, r: 3, delay: "0s" },
+            { cx: 310, cy: 190, r: 2, delay: "0.8s" },
+            { cx: 420, cy: 300, r: 3, delay: "1.4s" },
+            { cx: 150, cy: 320, r: 2, delay: "2s" },
+            { cx: 350, cy: 400, r: 2.5, delay: "0.4s" },
+          ].map((p: { cx: number; cy: number; r: number; delay: string }, i: number) => (
+            <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#ff6a00"
+              style={{ animation: `pulse-ring 3s ease-in-out infinite ${p.delay}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
+            />
+          ))}
+          <defs>
+            <linearGradient id="sBarGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#666"/><stop offset="40%" stopColor="#999"/><stop offset="100%" stopColor="#444"/>
+            </linearGradient>
+            <linearGradient id="sBarGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#777"/><stop offset="40%" stopColor="#aaa"/><stop offset="100%" stopColor="#555"/>
+            </linearGradient>
+            <radialGradient id="sKettleGrad" cx="40%" cy="35%">
+              <stop offset="0%" stopColor="#444"/><stop offset="100%" stopColor="#111"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
       <div className="page-hero-content">
         <span className="sub reveal">Stairs</span>
         <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>OUR<br />SERVICES</h1>
@@ -217,9 +302,8 @@ function ServicesFull() {
       </div>
       <div className="services-book">
         {services.map((s, i) => (
-          <button key={i} className={`service-panel${activeIdx === i ? " is-active" : ""}`}
-            style={{ "--service-bg": s.bg } as React.CSSProperties} type="button"
-            onClick={() => { activeIdxRef.current = i; setActiveIdx(i); if (intervalRef.current) clearInterval(intervalRef.current); }}
+          <a key={i} href={s.href} className={`service-panel${activeIdx === i ? " is-active" : ""}`}
+            style={{ "--service-bg": s.bg } as React.CSSProperties}
             onMouseEnter={() => { activeIdxRef.current = i; setActiveIdx(i); if (intervalRef.current) clearInterval(intervalRef.current); }}
             onMouseLeave={startCycle}>
             <span className="vertical-title">{s.vertical}</span>
@@ -228,7 +312,7 @@ function ServicesFull() {
               <h3>{s.title}</h3><p>{s.desc}</p>
               <span className="read-more">View details <i className="fas fa-arrow-right" /></span>
             </span>
-          </button>
+          </a>
         ))}
       </div>
     </section>
@@ -243,10 +327,10 @@ function ServiceCards() {
       <br /><br />
       <div className="sc-grid">
         {serviceCards.map((c, i) => (
-          <div className="sc-card reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
+          <a href={c.href} key={i} className="sc-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
             <div className="icon"><i className={c.icon} /></div>
             <h3>{c.title}</h3><p>{c.desc}</p>
-          </div>
+          </a>
         ))}
       </div>
       <div style={{ textAlign: "center", marginTop: 50 }}>

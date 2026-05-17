@@ -350,9 +350,11 @@ const globalStyles = `
 
 /* ─── Data ─── */
 const testimonials = [
-  { quote: "Ruis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur exceuisint octaecat cupidata non proident, sunt in culpa aui officia deser mollit anim laborum.", name: "Kevin Andrew", role: "Happy Client" },
-  { quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.", name: "Sarah Mitchell", role: "Fitness Enthusiast" },
-  { quote: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.", name: "James Carter", role: "Regular Member" },
+  { quote: "STAIRS is God-sent for me. Absolutely awesome team and time at Stairs. Just can't wait for my next session every single time. You guys make it so interesting and work towards the need and goal of the client, that ensures I skip my work but not my workout. Keep rocking TEAM STAIRS!", name: "Sanjay Rajpal", role: "Businessman" },
+  { quote: "I have personally grown to understand my body better because of Somya. There is a warm environment that the trainers and therapists foster that is conducive to progress. Every person working in Stairs is kind and helpful and I love the place! I highly recommend coming to Stairs.", name: "Rukmini Vilayakumar", role: "Actor, Dancer" },
+  { quote: "I'm proud to have a coach like Somya Rout, the team he is building and someone to speak to and someone who listens to me especially when you are in a profession it's the other way around all the time. To coach and to be coached is a perfect balance of learning & teaching.", name: "Shreyas Karnad", role: "Running Coach" },
+  { quote: "Stairs is like my second home. Entire team at Stairs is so diligent & proficient. They not only strengthen us but understand the needs of our sport and train us efficaciously such that we are able to pursue our goals.", name: "Pragathi Gupta", role: "Runner" },
+  { quote: "Stairs isn't just a fitness space; it's a home. Grateful for dedicated trainers, physios, and supportive members ensuring peak performance. Thank you, Team Stairs, for fostering excellence and positivity.", name: "Janani Ananthakumar", role: "Athlete, Badminton (India)" },
 ];
 
 const orgs = [
@@ -372,11 +374,12 @@ const features = [
 ];
 
 const services = [
-  { bg: "linear-gradient(135deg,#313131,#111),url('images/high-performance.png')", vertical: "High Performance Athletes", icon: "fas fa-bolt", title: "High Performance", desc: "Strength, conditioning, speed work, and measurable training plans for athletes chasing peak output." },
-  { bg: "linear-gradient(135deg,#3b3b3b,#151515),url('images/youth-athletes.png')", vertical: "Youth Athletes", icon: "fas fa-child", title: "Youth Athletes", desc: "Age-aware coaching that builds movement quality, confidence, discipline, and athletic foundations." },
-  { bg: "linear-gradient(135deg,#444,#101010),url('images/lifestyle-performance.png')", vertical: "Lifestyle Performance", icon: "fas fa-running", title: "Lifestyle Performance", desc: "Personal training, body recomposition, mobility, and lifestyle coaching for stronger everyday health." },
-  { bg: "linear-gradient(135deg,#353535,#121212),url('images/recovery.png')", vertical: "Recovery", icon: "fas fa-redo-alt", title: "Recovery", desc: "Mobility sessions, rest planning, corrective work, and recovery support between demanding training days." },
-  { bg: "linear-gradient(135deg,#2c2c2c,#101010),url('images/physiotherapy.png')", vertical: "Physiotherapy and Rehabilitation", icon: "fas fa-user-md", title: "Rehabilitation", desc: "Structured return-to-training support with movement screening, rehab progressions, and pain-aware plans." },
+  { href: "/services/bio-mechanical-assessment", bg: "linear-gradient(135deg,#313131,#111),url('/images/high-performance.png')", vertical: "Bio Mechanical Assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
+  { href: "/services/physiotherapy", bg: "linear-gradient(135deg,#3b3b3b,#151515),url('/images/youth-athletes.png')", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
+  { href: "/services/strength-conditioning", bg: "linear-gradient(135deg,#444,#101010),url('/images/lifestyle-performance.png')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
+  { href: "/services/myofascial-release", bg: "linear-gradient(135deg,#353535,#121212),url('/images/recovery.png')", vertical: "Myofascial Release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
+  { href: "/services/sports-specific-training", bg: "linear-gradient(135deg,#2c2c2c,#101010),url('/images/physiotherapy.png')", vertical: "Sports Specific Training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
+  { href: "/services/group-session", bg: "linear-gradient(135deg,#222,#090909),url('/images/physiotherapy.png')", vertical: "Group Session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
 ];
 
 const pricingPlans = [
@@ -470,7 +473,7 @@ function Navbar({
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
       <div className="nav-logo">
-        <img src="logo.png" alt="Stairs" style={{ height: 45, width: "auto" }} />
+        <img src="logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} />
       </div>
       <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => (
@@ -827,14 +830,14 @@ function About() {
       <div className="about-content reveal-right">
         <span className="section-label">About Us</span>
         <h2 className="section-title">Welcome To The<br />Stairs</h2>
-        <p>Euis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur sint occaecat cupidatat non proident, sunt in culpa aui officia deserunt mollit anim laborum.</p>
+        <p>STAIRS helps people worldwide heal through physiotherapy. We identify imbalances with musculoskeletal assessment, plan injury prevention programs, and use corrective exercise plus myofascial care so clients can move better and reach their goals.</p>
         <div className="stats-grid stagger">
-          <div className="stat-item reveal"><h3>600K+</h3><p>Working Hours</p></div>
-          <div className="stat-item reveal"><h3>790+</h3><p>Success Program</p></div>
-          <div className="stat-item reveal"><h3>2560+</h3><p>Happy Clients</p></div>
-          <div className="stat-item reveal"><h3>830+</h3><p>Perfect Bodies</p></div>
+          <div className="stat-item reveal"><h3>100K+</h3><p>Working Hours</p></div>
+          <div className="stat-item reveal"><h3>100+</h3><p>Success Program</p></div>
+          <div className="stat-item reveal"><h3>1000+</h3><p>Happy Clients</p></div>
+          <div className="stat-item reveal"><h3>400+</h3><p>Perfect Bodies</p></div>
         </div>
-        <a href="#" className="btn-primary">Read more <span className="play-icon"><i className="fas fa-play" /></span></a>
+        <div className="glow-btn-wrap"><a href="#contact" className="glow-btn-inner">Read more <span className="play-icon"><i className="fas fa-play" /></span></a></div>
       </div>
     </section>
   );
@@ -883,12 +886,11 @@ function Services() {
       </div>
       <div className="services-book stagger" id="serviceDetails">
         {services.map((s, i) => (
-          <button
+          <a
             key={i}
+            href={s.href}
             className={`service-panel${activeIdx === i ? " is-active" : ""}`}
             style={{ "--service-bg": s.bg } as React.CSSProperties}
-            type="button"
-            onClick={() => handleMouseEnter(i)}
             onMouseEnter={() => handleMouseEnter(i)}
             onMouseLeave={handleMouseLeave}
           >
@@ -899,13 +901,15 @@ function Services() {
               <p>{s.desc}</p>
               <span className="read-more">View details <i className="fas fa-arrow-right" /></span>
             </span>
-          </button>
+          </a>
         ))}
       </div>
       <div className="services-join reveal">
-        <a href="#contact" className="btn-primary">
-          Join us now <span className="play-icon"><i className="fas fa-play" /></span>
-        </a>
+        <div className="glow-btn-wrap">
+          <a href="#contact" className="glow-btn-inner">
+            Join us now <span className="play-icon"><i className="fas fa-play" /></span>
+          </a>
+        </div>
       </div>
     </section>
   );

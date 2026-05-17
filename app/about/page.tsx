@@ -71,6 +71,13 @@ const globalStyles = `
   .page-hero-bg { position: absolute; inset: 0; background: url('/images/hero-bg.png') center/cover no-repeat; opacity: 0.4; }
   .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.3) 100%); }
   .page-hero-circle { width: 420px; height: 420px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 22px; pointer-events: none; animation: spin-slow 20s linear infinite; opacity: 0.7; }
+  .hero-3d-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
+  @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(-8deg); } }
+  @keyframes float2 { 0%,100% { transform: translateY(0px) rotate(12deg); } 50% { transform: translateY(-16px) rotate(12deg); } }
+  @keyframes float3 { 0%,100% { transform: translateY(0px) rotate(-4deg); } 50% { transform: translateY(-28px) rotate(-4deg); } }
+  @keyframes float4 { 0%,100% { transform: translateY(0px) rotate(6deg); } 50% { transform: translateY(-14px) rotate(6deg); } }
+  @keyframes pulse-ring { 0%,100% { opacity: 0.18; transform: scale(1); } 50% { opacity: 0.32; transform: scale(1.06); } }
+  @keyframes spin-ring { to { transform: rotate(360deg); } }
   .page-hero-content { position: relative; z-index: 2; padding: 0 60px; }
   .page-hero-content .sub { font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; letter-spacing: 4px; color: var(--light); text-transform: uppercase; border-left: 4px solid var(--red); padding-left: 14px; margin-bottom: 16px; display: block; }
   .page-hero-content h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); color: var(--light); line-height: 1; letter-spacing: 2px; margin-bottom: 16px; }
@@ -81,21 +88,27 @@ const globalStyles = `
 
   /* ABOUT DETAIL SECTION */
   #about-detail { padding: 90px 60px; background: var(--bg-light); }
-  .about-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .about-img-wrap { position: relative; }
-  .about-img-wrap .img-box { width: 100%; height: 460px; background: #ddd; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.25); font-size: 0.85rem; flex-direction: column; gap: 10px; }
-  .about-img-wrap .img-box i { font-size: 2.5rem; }
-  .about-img-wrap .exp-badge { position: absolute; bottom: -24px; right: -24px; background: var(--red); color: var(--light); border-radius: 50%; width: 110px; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2rem; line-height: 1; text-align: center; }
+  .about-detail-grid { display: grid; grid-template-columns: minmax(320px, 1.05fr) minmax(320px, 0.95fr); gap: 70px; align-items: start; }
+  .about-img-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  .about-img-wrap .img-box { width: 100%; height: 460px; background: #e8e8e8; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.3); font-size: 0.95rem; flex-direction: column; gap: 12px; }
+  .about-img-wrap .img-box i { font-size: 2.7rem; }
+  .about-img-wrap .exp-badge { position: absolute; bottom: -24px; right: -24px; background: var(--red); color: var(--light); border-radius: 50%; width: 110px; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2rem; line-height: 1; text-align: center; box-shadow: 0 18px 40px rgba(0,0,0,0.18); }
   .about-img-wrap .exp-badge small { font-size: 0.6rem; font-family: var(--font-body); letter-spacing: 1px; }
-  .about-text .section-label { color: var(--red); }
-  .about-text h2 { margin-bottom: 20px; }
-  .about-text p { color: var(--gray); font-size: 0.95rem; line-height: 1.8; margin-bottom: 20px; }
-  .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
-  .value-item { display: flex; align-items: flex-start; gap: 14px; }
-  .value-item .icon { width: 44px; height: 44px; background: #fef0ef; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .value-item .icon i { color: var(--red); font-size: 1.1rem; }
-  .value-item h4 { font-family: var(--font-display); font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-  .value-item p { color: var(--gray); font-size: 0.82rem; line-height: 1.6; margin: 0; }
+  .about-text { display: flex; flex-direction: column; }
+  .about-text .section-label { color: var(--red); letter-spacing: 3px; font-weight: 700; }
+  .about-text h2 { margin-bottom: 24px; }
+  .about-text p { color: var(--gray); font-size: 0.98rem; line-height: 1.85; margin-bottom: 24px; }
+  .feature-carousel { margin: 42px auto 0; overflow: hidden; position: relative; max-width: 820px; }
+  .feature-carousel-track { display: flex; transition: transform 0.8s ease; }
+  .feature-card { flex: 0 0 100%; min-width: 100%; max-width: 760px; margin: 0 auto; background: rgba(255,255,255,0.96); border: 1px solid rgba(17,17,17,0.06); border-radius: 24px; padding: 42px 42px 44px; min-height: 340px; box-shadow: 0 24px 60px rgba(0,0,0,0.08); display: flex; align-items: flex-start; gap: 20px; }
+  .feature-card .icon { width: 56px; height: 56px; background: #fff4f1; border-radius: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .feature-card .icon i { color: var(--red); font-size: 1.25rem; }
+  .feature-card h4 { font-family: var(--font-display); font-size: 1rem; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; }
+  .feature-card p { color: var(--gray); font-size: 0.95rem; line-height: 1.85; margin: 0; }
+  .feature-carousel-nav { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
+  .feature-carousel-dot { width: 12px; height: 12px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.15); background: rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s, background 0.2s; }
+  .feature-carousel-dot.active { background: var(--red); transform: scale(1.1); border-color: var(--red); }
+  .about-text .btn-primary { margin-top: 36px; align-self: flex-start; }
 
   /* STATS BANNER */
   #stats-banner { background: var(--red); padding: 60px 60px; }
@@ -209,9 +222,86 @@ function PageHero() {
     <section id="page-hero">
       <div className="page-hero-bg" />
       <div className="circle-deco page-hero-circle" />
+      <div className="hero-3d-scene">
+        <svg width="420" height="420" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
+          <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
+          <circle cx="260" cy="260" r="140" fill="none" stroke="rgba(232,55,44,0.08)" strokeWidth="60" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "260px 260px" }} />
+          <g style={{ animation: "float1 4s ease-in-out infinite", transformOrigin: "130px 155px" }}>
+            <rect x="72" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="76" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="90" y="151" width="80" height="8" rx="4" fill="url(#aBarGrad)"/>
+            <rect x="170" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="174" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="90" y="151" width="80" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="130" y="172" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">20 KG</text>
+          </g>
+          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "370px 145px" }}>
+            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
+            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <ellipse cx="370" cy="148" rx="32" ry="30" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
+            <ellipse cx="370" cy="148" rx="32" ry="30" fill="url(#aKettleGrad)"/>
+            <rect x="356" y="118" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
+            <ellipse cx="358" cy="138" rx="8" ry="6" fill="rgba(255,255,255,0.1)" transform="rotate(-20,358,138)"/>
+            <text x="370" y="153" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">16KG</text>
+          </g>
+          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "260px 265px" }}>
+            <rect x="82" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            <rect x="86" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="104" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="118" y="258" width="284" height="12" rx="6" fill="url(#aBarGrad2)"/>
+            <rect x="118" y="258" width="284" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
+            <rect x="402" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="410" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="412" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            {[170,190,210,230,250,270,290,310,330,350].map((x: number, i: number) => (
+              <rect key={i} x={x} y="258" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
+            ))}
+            <text x="260" y="290" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue, sans-serif" letterSpacing="2">STAIRS GYM</text>
+          </g>
+          <g style={{ animation: "float4 4.5s ease-in-out infinite", transformOrigin: "370px 380px" }}>
+            <rect x="312" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="316" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="328" y="373" width="84" height="8" rx="4" fill="url(#aBarGrad)"/>
+            <rect x="412" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="412" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="328" y="373" width="84" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="370" y="393" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">12 KG</text>
+          </g>
+          <g style={{ animation: "float1 5.5s ease-in-out infinite 1s", transformOrigin: "140px 385px" }}>
+            <circle cx="108" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="108" cy="375" r="5" fill="#e8372c"/>
+            <path d="M118 375 Q150 345 180 375 Q210 405 240 375" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
+            <circle cx="250" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="250" cy="375" r="5" fill="#e8372c"/>
+          </g>
+          {[
+            { cx: 180, cy: 210, r: 3, delay: "0s" },
+            { cx: 310, cy: 190, r: 2, delay: "0.8s" },
+            { cx: 420, cy: 300, r: 3, delay: "1.4s" },
+            { cx: 150, cy: 320, r: 2, delay: "2s" },
+            { cx: 350, cy: 400, r: 2.5, delay: "0.4s" },
+          ].map((p: { cx: number; cy: number; r: number; delay: string }, i: number) => (
+            <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#ff6a00"
+              style={{ animation: `pulse-ring 3s ease-in-out infinite ${p.delay}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
+            />
+          ))}
+          <defs>
+            <linearGradient id="aBarGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#666"/><stop offset="40%" stopColor="#999"/><stop offset="100%" stopColor="#444"/>
+            </linearGradient>
+            <linearGradient id="aBarGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#777"/><stop offset="40%" stopColor="#aaa"/><stop offset="100%" stopColor="#555"/>
+            </linearGradient>
+            <radialGradient id="aKettleGrad" cx="40%" cy="35%">
+              <stop offset="0%" stopColor="#444"/><stop offset="100%" stopColor="#111"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
       <div className="page-hero-content">
         <span className="sub reveal">Stairs</span>
-        <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>ABOUT<br />US</h1>
+        <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>WHO<br />WE ARE</h1>
         <div className="breadcrumb reveal" style={{ transitionDelay: "0.2s" }}>
           <a href="/">Home</a><span>/</span><span style={{ color: "#fff" }}>About</span>
         </div>
@@ -230,31 +320,59 @@ function AboutDetail() {
         </div>
         <div className="about-text reveal-right">
           <span className="section-label">About Us</span>
-          <h2 className="section-title">Welcome To The<br />Stairs</h2>
-          <p>Euis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur sint occaecat cupidatat non proident, sunt in culpa aui officia deserunt mollit anim laborum.</p>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis.</p>
-          <div className="about-values">
-            {[
-              { icon: "fas fa-dumbbell", title: "Expert Coaching", text: "Certified coaches with years of experience in performance training." },
-              { icon: "fas fa-heartbeat", title: "Health Focused", text: "Holistic programs that balance fitness, recovery, and wellbeing." },
-              { icon: "fas fa-users", title: "Community Driven", text: "A supportive environment where every member belongs." },
-              { icon: "fas fa-chart-line", title: "Proven Results", text: "Track record of delivering measurable improvements for clients." },
-            ].map((v, i) => (
-              <div className="value-item" key={i}>
-                <div className="icon"><i className={v.icon} /></div>
-                <div>
-                  <h4>{v.title}</h4>
-                  <p>{v.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <h2 className="section-title">Who We Are</h2>
+          <p>STAIRS is a platform where people from all across the globe can experience healing through proper physiotherapy. Our aim is to encourage, support and make people aware of their imbalances through musculoskeletal assessment; planning injury prevention programmes and delaying the degeneration process through corrective exercises; improve mental health through myofascial treatment and enable individuals to achieve their goals.</p>
           <motion.a href="/contact" whileTap={{ scale: 0.95 }} className="btn-primary">
             Get Started <span className="play-icon"><i className="fas fa-play" /></span>
           </motion.a>
         </div>
       </div>
+      <FeatureCarousel />
     </section>
+  );
+}
+
+function FeatureCarousel() {
+  const cards = [
+    { icon: "fas fa-eye", title: "Our Vision", text: "To become the trusted global destination for physiotherapy-led wellness, helping every person move with confidence, live without pain, and build lasting physical and emotional resilience." },
+    { icon: "fas fa-bullseye", title: "Our Mission", text: "To educate, empower and support our clients through world-class assessment, corrective exercise, and mindful care — making physical health and mental wellbeing accessible to everyone." },
+    { icon: "fas fa-cogs", title: "Our Approach", text: "STAIRS is all about taking one step at a time and also educating people to create an impact in the society through postural awareness and adequate exercise programs. Life has become sedentary and obesity is a concern. We all want to start fitness to keep ourselves healthy and at some point end up having a lot of aches and pains. It becomes very important to approach fitness in a right way where awareness and understanding your imbalances play a major role. Mental health is the need of the hour and we have to understand that it is linked physically as well. Myofascial treatment of the body would enable people to fight stress and depression, which in turn leads to mental and physical well-being." },
+    { icon: "fas fa-heart", title: "Why STAIRS", text: "We just don't take care of the physical aspect of a person. We also are equally concerned with their mental well-being. Our clients are not just our clients but they are our family. And families take care of each other holistically." },
+  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % cards.length);
+    }, 3200);
+    return () => window.clearInterval(interval);
+  }, [cards.length]);
+
+  return (
+    <div className="feature-carousel reveal">
+      <div className="feature-carousel-track" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+        {cards.map((card, index) => (
+          <div className="feature-card" key={index}>
+            <div className="icon"><i className={card.icon} /></div>
+            <div>
+              <h4>{card.title}</h4>
+              <p>{card.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="feature-carousel-nav">
+        {cards.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            className={`feature-carousel-dot ${index === activeIndex ? "active" : ""}`}
+            onClick={() => setActiveIndex(index)}
+            aria-label={`Show card ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 

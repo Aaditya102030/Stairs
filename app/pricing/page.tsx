@@ -36,6 +36,13 @@ const globalStyles = `
   .page-hero-bg{position:absolute;inset:0;background:url('/images/hero-bg.png') center/cover no-repeat;opacity:.4;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.9) 50%,rgba(10,10,10,.3) 100%);}
   .page-hero-circle{width:420px;height:420px;right:5%;top:50%;transform:translateY(-50%);border-width:22px;pointer-events:none;animation:spin-slow 20s linear infinite;opacity:.7;}
+  .hero-3d-scene{position:absolute;right:0;top:0;bottom:0;width:55%;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;}
+  @keyframes float1{0%,100%{transform:translateY(0px) rotate(-8deg);}50%{transform:translateY(-22px) rotate(-8deg);}}
+  @keyframes float2{0%,100%{transform:translateY(0px) rotate(12deg);}50%{transform:translateY(-16px) rotate(12deg);}}
+  @keyframes float3{0%,100%{transform:translateY(0px) rotate(-4deg);}50%{transform:translateY(-28px) rotate(-4deg);}}
+  @keyframes float4{0%,100%{transform:translateY(0px) rotate(6deg);}50%{transform:translateY(-14px) rotate(6deg);}}
+  @keyframes pulse-ring{0%,100%{opacity:.18;transform:scale(1);}50%{opacity:.32;transform:scale(1.06);}}
+  @keyframes spin-ring{to{transform:rotate(360deg);}}
   @keyframes spin-slow{to{transform:translateY(-50%) rotate(360deg);}}
   .page-hero-content{position:relative;z-index:2;padding:0 60px;}
   .page-hero-content .sub{font-family:var(--font-body);font-weight:600;font-size:.9rem;letter-spacing:4px;color:var(--light);text-transform:uppercase;border-left:4px solid var(--red);padding-left:14px;margin-bottom:16px;display:block;}
@@ -195,6 +202,82 @@ function PageHero() {
     <section id="page-hero">
       <div className="page-hero-bg" />
       <div className="circle-deco page-hero-circle" />
+      <div className="hero-3d-scene">
+        <svg width="420" height="420" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
+          <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
+          <circle cx="260" cy="260" r="140" fill="none" stroke="rgba(232,55,44,0.08)" strokeWidth="60" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "260px 260px" }} />
+          <g style={{ animation: "float1 4s ease-in-out infinite", transformOrigin: "130px 155px" }}>
+            <rect x="72" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="76" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="90" y="151" width="80" height="8" rx="4" fill="url(#pBarGrad)"/>
+            <rect x="170" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="174" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="90" y="151" width="80" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="130" y="172" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">20 KG</text>
+          </g>
+          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "370px 145px" }}>
+            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
+            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <ellipse cx="370" cy="148" rx="32" ry="30" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
+            <ellipse cx="370" cy="148" rx="32" ry="30" fill="url(#pKettleGrad)"/>
+            <rect x="356" y="118" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
+            <text x="370" y="153" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">16KG</text>
+          </g>
+          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "260px 265px" }}>
+            <rect x="82" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            <rect x="86" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="104" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="118" y="258" width="284" height="12" rx="6" fill="url(#pBarGrad2)"/>
+            <rect x="118" y="258" width="284" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
+            <rect x="402" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="410" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="412" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            {[170,190,210,230,250,270,290,310,330,350].map((x: number, i: number) => (
+              <rect key={i} x={x} y="258" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
+            ))}
+            <text x="260" y="290" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue, sans-serif" letterSpacing="2">STAIRS GYM</text>
+          </g>
+          <g style={{ animation: "float4 4.5s ease-in-out infinite", transformOrigin: "370px 380px" }}>
+            <rect x="312" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="316" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="328" y="373" width="84" height="8" rx="4" fill="url(#pBarGrad)"/>
+            <rect x="412" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="412" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="328" y="373" width="84" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="370" y="393" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">12 KG</text>
+          </g>
+          <g style={{ animation: "float1 5.5s ease-in-out infinite 1s", transformOrigin: "140px 385px" }}>
+            <circle cx="108" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="108" cy="375" r="5" fill="#e8372c"/>
+            <path d="M118 375 Q150 345 180 375 Q210 405 240 375" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
+            <circle cx="250" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="250" cy="375" r="5" fill="#e8372c"/>
+          </g>
+          {[
+            { cx: 180, cy: 210, r: 3, delay: "0s" },
+            { cx: 310, cy: 190, r: 2, delay: "0.8s" },
+            { cx: 420, cy: 300, r: 3, delay: "1.4s" },
+            { cx: 150, cy: 320, r: 2, delay: "2s" },
+            { cx: 350, cy: 400, r: 2.5, delay: "0.4s" },
+          ].map((p: { cx: number; cy: number; r: number; delay: string }, i: number) => (
+            <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#ff6a00"
+              style={{ animation: `pulse-ring 3s ease-in-out infinite ${p.delay}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
+            />
+          ))}
+          <defs>
+            <linearGradient id="pBarGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#666"/><stop offset="40%" stopColor="#999"/><stop offset="100%" stopColor="#444"/>
+            </linearGradient>
+            <linearGradient id="pBarGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#777"/><stop offset="40%" stopColor="#aaa"/><stop offset="100%" stopColor="#555"/>
+            </linearGradient>
+            <radialGradient id="pKettleGrad" cx="40%" cy="35%">
+              <stop offset="0%" stopColor="#444"/><stop offset="100%" stopColor="#111"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
       <div className="page-hero-content">
         <span className="sub reveal">Stairs</span>
         <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>PRICING<br />PLANS</h1>
