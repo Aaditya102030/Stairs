@@ -83,10 +83,83 @@ const globalStyles = `
   #faq .section-label{color:var(--red);display:block;margin-bottom:10px;}
   #faq .section-title{color:var(--light);margin-bottom:50px;}
   .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto;}
-  .faq-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px 28px;transition:border-color .3s;}
-  .faq-item:hover{border-color:var(--red);}
+
+  /* Edge Glow Card */
+  .faq-item{
+    position:relative;
+    background:rgba(255,255,255,.05);
+    border-radius:12px;
+    padding:24px 28px;
+    transition:transform .3s;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .faq-item::before{
+    content:'';
+    position:absolute;
+    inset:-1px;
+    border-radius:12px;
+    background:conic-gradient(
+      from var(--angle, 0deg),
+      transparent 0deg,
+      transparent 60deg,
+      #e8372c 120deg,
+      #ff6b6b 180deg,
+      #e8372c 240deg,
+      transparent 300deg,
+      transparent 360deg
+    );
+    z-index:-1;
+    opacity:0;
+    transition:opacity .4s;
+    animation:faq-spin 3s linear infinite;
+    animation-play-state:paused;
+  }
+  .faq-item::after{
+    content:'';
+    position:absolute;
+    inset:1px;
+    border-radius:11px;
+    background:#111827;
+    z-index:-1;
+  }
+  .faq-item:hover::before{
+    opacity:1;
+    animation-play-state:running;
+  }
+  .faq-item:hover{
+    transform:translateY(-4px);
+  }
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes faq-spin{
+    to { --angle: 360deg; }
+  }
   .faq-item h4{font-family:var(--font-display);font-size:1rem;color:var(--light);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
   .faq-item p{color:rgba(255,255,255,.6);font-size:.88rem;line-height:1.7;}
+
+  /* Typewriter animation for QUESTIONS */
+  .typewriter-word{
+    display:inline-block;
+    position:relative;
+    overflow:hidden;
+    border-right:4px solid rgba(255,255,255,.75);
+    width:0px;
+    white-space:nowrap;
+    vertical-align:bottom;
+    animation:faq-typewriter 2s steps(5) infinite alternate, faq-blink 0.5s steps(9) infinite;
+  }
+  @keyframes faq-typewriter{
+    0%{width:0px;}
+    100%{width:410px;}
+  }
+  @keyframes faq-blink{
+    0%{border-right-color:rgba(255,255,255,.75);}
+    100%{border-right-color:transparent;}
+  }
 
   #footer{background:var(--dark);padding:60px 60px 30px;color:#aaa;}
   .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:40px;margin-bottom:40px;}
@@ -157,12 +230,14 @@ const pricingPlans = [
 ];
 
 const faqs = [
-  { q: "Can I cancel my membership anytime?", a: "Yes — all memberships are month-to-month with no lock-in contract. Cancel with 7 days notice." },
-  { q: "Is there a joining fee?", a: "No joining fee. You only pay the first month's membership when you sign up." },
-  { q: "Do you offer family discounts?", a: "Yes — families of 3+ receive 15% off each membership when registered together." },
-  { q: "What's included in Premium?", a: "Premium includes everything in Standard plus monthly personal trainer sessions and nutrition consultations." },
-  { q: "Can I freeze my membership?", a: "Yes, memberships can be frozen for up to 3 months per year for medical or travel reasons." },
-  { q: "Is there a student rate?", a: "We offer a 20% student discount on Basic and Standard plans with valid student ID." },
+  { q: "How do I schedule an appointment?", a: "Our scheduling is easy and we offer a convenient location and appointment times with our physiotherapist and S & C Coach for you through our online booking option in our website. We have morning and evening appointments available to meet the demands of your busy schedule." },
+  { q: "How do we treat Physical Therapy at Stairs?", a: "As a patient, at Stairs Physiotherapy and Fitness Centre, you will receive the highest quality care while achieving the results you need. We pride ourselves on providing a positive, encouraging environment with well-trained, friendly staff. We are confident in our ability to help you reach your goals and live a pain-free life.  "},
+  { q: "How long does a physiotherapy/traning session last?", a: "Typically, the first session lasts for 1 hour. Each session after that may be 45-60 minutes. The amount of time will be based on your specific needs and your therapist will discuss this with you." },
+  { q: "How many session do I need before I can fully recover from my injury?", a: "Each patients’ diagnosis is different, so your therapist will develop a plan of care that is right for you. Your plan of care and number of visits will be determined during your first visit and explained to you by your physical therapist." },
+  { q: "How can you treat my injury without touching me?", a: "Physical therapy is more than hands-on treatment. It focuses on patient education, lifestyle improvement, and personalized exercise programs to support recovery. Modern therapy emphasizes guided self-care and rehabilitation, helping patients take control of their healing. Research shows online consultations can be highly effective, and if hands-on or medical care is needed, we will guide you immediately. " },
+  { q: "What if I'm not sure if I'm doing my prescribed exercises right?", a: "During your evaluation and treatment sessions, we will guide you through every exercise and technique until you feel confident performing them correctly on your own. We encourage questions throughout the consultation to ensure you fully understand your treatment plan. Your confidence and understanding are essential for a successful recovery and long-term results." },
+  { q: "Are online sessions available?", a: "Yes absolutely! If you would like to schedule an online session, simply book an appointment or call us on the numbers provided or fill out the contact form. These are one-on-one sessions with coaches/physiotherapists conducted on video platforms of your choice (such as Zoom, WhatsApp etc.)."},
+  { q: "What forms of payment do you accept?", a: "We accept UPI, Cash and card payment (Please note : 3% extra on any card payments).We encourage our clients to make payments prior to the sessions by booking an appointment from the website." },
 ];
 
 function useReveal() {
@@ -183,7 +258,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Trainers" }, { href: "/pricing", label: "Pricing" }, { href: "/coming-soon", label: "Coming Soon" },
+    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Program" }, { href: "/coming-soon", label: "Initiatives" },
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
@@ -326,7 +401,7 @@ function FAQ() {
   return (
     <section id="faq">
       <span className="section-label reveal">FAQ</span>
-      <h2 className="section-title reveal">Common Questions</h2>
+      <h2 className="section-title reveal">Common <span className="typewriter-word">Questions</span></h2>
       <br /><br />
       <div className="faq-grid">
         {faqs.map((f, i) => (
