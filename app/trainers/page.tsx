@@ -55,26 +55,268 @@ const globalStyles = `
   .breadcrumb a{color:var(--red);}
   .breadcrumb span{color:rgba(255,255,255,.4);}
 
-  /* TRAINERS SECTION */
-  #trainers-full{background:var(--bg-light);padding:90px 60px;text-align:center;}
+  /* ── TRAINERS SECTION ── */
+  #trainers-full{
+    background:#ffffff;
+    padding:100px 60px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  #trainers-full::before{
+    content:'';
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(232,55,44,.06) 0%,transparent 70%);
+    pointer-events:none;
+  }
   #trainers-full .section-label{color:var(--red);}
-  .trainers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;max-width:1000px;margin:50px auto 0;}
-  .trainer-card{position:relative;background:#fff;border-radius:20px;padding:36px 28px 28px;box-shadow:0 4px 20px rgba(0,0,0,.07);transition:transform .3s,box-shadow .3s;overflow:hidden;}
-  .trainer-card::before{content:'';position:absolute;inset:-3px;border-radius:22px;background:linear-gradient(135deg,#e8372c,#ff6b35,#ffb347,#e8372c,#8b0000);background-size:300% 300%;z-index:-1;opacity:0;transition:opacity .4s ease;animation:gradientSpin 3s ease infinite;}
-  .trainer-card::after{content:'';position:absolute;inset:2px;border-radius:18px;background:#fff;z-index:-1;}
-  @keyframes gradientSpin{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-  .trainer-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(232,55,44,.25);}
-  .trainer-card:hover::before{opacity:1;}
-  .trainer-avatar{width:150px;height:150px;border-radius:50%;background:#f0f0f0;border:4px solid rgba(232,55,44,.2);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.7rem;flex-direction:column;gap:6px;transition:border-color .3s;}
-  .trainer-card:hover .trainer-avatar{border-color:var(--red);}
-  .trainer-avatar i{font-size:2.5rem;}
-  .trainer-card h3{font-family:var(--font-display);font-size:1.25rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
-  .trainer-card .role{color:var(--red);font-size:.82rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;display:block;}
-  .trainer-card p{color:var(--gray);font-size:.85rem;line-height:1.7;margin-bottom:20px;}
-  .trainer-social{display:flex;justify-content:center;gap:10px;}
-  .trainer-social a{width:34px;height:34px;background:#f5f5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark);font-size:.75rem;transition:background .3s,color .3s;}
-  .trainer-social a:hover{background:var(--red);color:var(--light);}
-  .specialty-tag{display:inline-block;background:#fef0ef;color:var(--red);font-size:.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px;}
+  #trainers-full .section-title{color:#111111;}
+  #trainers-full .section-subtitle{
+    color:rgba(0,0,0,.5);
+    font-size:.95rem;
+    margin-top:10px;
+    letter-spacing:1px;
+  }
+
+  /* ── LAYOUT ── */
+  .trainers-layout{max-width:1160px;margin:60px auto 0;display:flex;flex-direction:column;gap:28px;}
+
+  /* ── ADMIN HERO CARD (top, full-width spotlight) ── */
+  .admin-hero{
+    position:relative;
+    border-radius:28px;
+    overflow:hidden;
+    background:linear-gradient(135deg,#1a0a08 0%,#1e0f0c 40%,#180808 100%);
+    border:1px solid rgba(232,55,44,.3);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    min-height:280px;
+    transition:transform .3s,box-shadow .3s;
+    box-shadow:0 8px 40px rgba(232,55,44,.12);
+  }
+  .admin-hero::before{
+    content:'';
+    position:absolute;inset:0;
+    background:conic-gradient(from var(--admin-angle,0deg) at 50% 50%,transparent 0deg,transparent 60deg,rgba(232,55,44,.5) 120deg,rgba(255,107,53,.6) 180deg,rgba(232,55,44,.5) 240deg,transparent 300deg,transparent 360deg);
+    z-index:0;
+    opacity:0;
+    transition:opacity .5s;
+    animation:adminSpin 3s linear infinite;
+    animation-play-state:paused;
+    border-radius:28px;
+  }
+  .admin-hero::after{
+    content:'';
+    position:absolute;inset:1px;
+    background:linear-gradient(135deg,#1a0a08 0%,#1e0f0c 40%,#180808 100%);
+    border-radius:27px;
+    z-index:0;
+  }
+  .admin-hero:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(232,55,44,.3);}
+  .admin-hero:hover::before{opacity:1;animation-play-state:running;}
+  @property --admin-angle{syntax:'<angle>';initial-value:0deg;inherits:false;}
+  @keyframes adminSpin{to{--admin-angle:360deg;}}
+
+  .admin-hero-left{
+    position:relative;z-index:1;
+    padding:50px 50px 50px 60px;
+    text-align:left;
+  }
+  .admin-priority-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--red);color:#fff;
+    font-size:.82rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    padding:6px 16px 6px 10px;border-radius:30px;
+    margin-bottom:22px;
+  }
+  .admin-priority-badge i{font-size:.9rem;}
+  .admin-hero-left h3{
+    font-family:var(--font-display);
+    font-size:3.2rem;letter-spacing:3px;text-transform:uppercase;
+    color:#fff;line-height:1;margin-bottom:16px;
+  }
+  .admin-hero-left p{color:rgba(255,255,255,.6);font-size:1rem;line-height:1.75;margin-bottom:28px;max-width:440px;}
+  .admin-stats{display:flex;gap:32px;margin-bottom:28px;}
+  .admin-stat{text-align:left;}
+  .admin-stat .num{font-family:var(--font-display);font-size:2.4rem;color:var(--red);letter-spacing:1px;}
+  .admin-stat .lbl{font-size:.82rem;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+
+  .admin-hero-right{
+    position:relative;z-index:1;
+    display:flex;align-items:center;justify-content:center;
+    padding:40px;
+  }
+  .admin-avatar-wrap{position:relative;}
+  .admin-avatar-ring{
+    width:220px;height:220px;border-radius:50%;
+    border:3px solid rgba(232,55,44,.4);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    animation:adminRingPulse 3s ease-in-out infinite;
+  }
+  @keyframes adminRingPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(232,55,44,.3),0 0 30px rgba(232,55,44,.15);}
+    50%{box-shadow:0 0 0 16px rgba(232,55,44,0),0 0 50px rgba(232,55,44,.3);}
+  }
+  .admin-avatar-ring::before{
+    content:'';position:absolute;inset:-12px;border-radius:50%;
+    border:1px dashed rgba(232,55,44,.25);
+    animation:adminSpin2 12s linear infinite;
+  }
+  @keyframes adminSpin2{to{transform:rotate(360deg);}}
+  .admin-avatar-inner{
+    width:180px;height:180px;border-radius:50%;
+    background:linear-gradient(135deg,#2a1010,#1a0808);
+    border:3px solid rgba(232,55,44,.5);
+    display:flex;align-items:center;justify-content:center;
+    color:rgba(232,55,44,.6);font-size:3.5rem;
+  }
+  .admin-floating-tag{
+    position:absolute;bottom:-10px;right:-20px;
+    background:var(--red);color:#fff;
+    font-size:.68rem;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;padding:6px 14px;border-radius:20px;
+    box-shadow:0 4px 16px rgba(232,55,44,.5);
+  }
+
+  /* ── FOUNDERS + MID BAND ── */
+  .founders-row{
+    display:grid;
+    grid-template-columns:1fr 1.6fr 1fr;
+    gap:20px;
+    align-items:stretch;
+  }
+  .founders-center{
+    position:relative;
+    border-radius:24px;
+    overflow:hidden;
+    background:linear-gradient(150deg,#161616 0%,#1c1c1c 100%);
+    border:1px solid rgba(232,55,44,.2);
+    padding:40px 32px 32px;
+    text-align:center;
+    transition:transform .3s,box-shadow .3s;
+    box-shadow:0 4px 24px rgba(0,0,0,.4);
+  }
+  .founders-center::before{
+    content:'';
+    position:absolute;inset:-2px;border-radius:24px;
+    background:conic-gradient(from var(--fc-angle,0deg),transparent 0deg,transparent 80deg,rgba(232,55,44,.7) 140deg,rgba(255,100,50,.8) 180deg,rgba(232,55,44,.7) 220deg,transparent 280deg,transparent 360deg);
+    z-index:0;opacity:0;transition:opacity .4s;
+    animation:fcSpin 3s linear infinite;animation-play-state:paused;
+  }
+  .founders-center::after{content:'';position:absolute;inset:1px;border-radius:23px;background:linear-gradient(150deg,#161616,#1c1c1c);z-index:0;}
+  @property --fc-angle{syntax:'<angle>';initial-value:0deg;inherits:false;}
+  @keyframes fcSpin{to{--fc-angle:360deg;}}
+  .founders-center:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(232,55,44,.25);}
+  .founders-center:hover::before{opacity:1;animation-play-state:running;}
+  .founders-center>*{position:relative;z-index:1;}
+  .founders-crown{
+    display:inline-flex;align-items:center;gap:6px;
+    background:linear-gradient(90deg,#e8372c,#ff6b35);
+    color:#fff;font-size:.78rem;font-weight:700;letter-spacing:2px;
+    text-transform:uppercase;padding:5px 16px;border-radius:20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 14px rgba(232,55,44,.4);
+  }
+  .founders-center .f-avatar{
+    width:130px;height:130px;border-radius:50%;
+    background:linear-gradient(135deg,#222,#161616);
+    border:3px solid rgba(232,55,44,.4);
+    display:flex;align-items:center;justify-content:center;
+    color:rgba(232,55,44,.5);font-size:2.8rem;
+    margin:0 auto 20px;
+    transition:border-color .3s;
+  }
+  .founders-center:hover .f-avatar{border-color:var(--red);}
+  .founders-center h3{font-family:var(--font-display);font-size:1.75rem;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:10px;}
+  .founders-center p{color:rgba(255,255,255,.5);font-size:.95rem;line-height:1.75;margin-bottom:24px;}
+
+  /* side location cards in founders row */
+  .loc-card{
+    position:relative;
+    border-radius:20px;
+    overflow:hidden;
+    background:#141414;
+    border:1px solid rgba(255,255,255,.07);
+    padding:32px 24px 26px;
+    text-align:center;
+    transition:transform .3s,border-color .3s,box-shadow .3s;
+    display:flex;flex-direction:column;
+  }
+  .loc-card::before{
+    content:'';
+    position:absolute;inset:-2px;border-radius:20px;
+    background:conic-gradient(from var(--lc-angle,0deg),transparent 0deg,transparent 80deg,rgba(232,55,44,.6) 140deg,rgba(232,55,44,.6) 200deg,transparent 260deg,transparent 360deg);
+    z-index:0;opacity:0;transition:opacity .4s;
+    animation:lcSpin 3s linear infinite;animation-play-state:paused;
+  }
+  .loc-card::after{content:'';position:absolute;inset:1px;border-radius:19px;background:#141414;z-index:0;}
+  @property --lc-angle{syntax:'<angle>';initial-value:0deg;inherits:false;}
+  @keyframes lcSpin{to{--lc-angle:360deg;}}
+  .loc-card:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(232,55,44,.18);border-color:transparent;}
+  .loc-card:hover::before{opacity:1;animation-play-state:running;}
+  .loc-card>*{position:relative;z-index:1;}
+  .loc-num{
+    position:absolute;top:16px;right:20px;z-index:2;
+    font-family:var(--font-display);font-size:3rem;line-height:1;
+    color:rgba(232,55,44,.08);letter-spacing:1px;
+    transition:color .3s;
+  }
+  .loc-card:hover .loc-num{color:rgba(232,55,44,.15);}
+  .loc-icon{
+    width:72px;height:72px;border-radius:50%;
+    background:rgba(232,55,44,.08);
+    border:2px solid rgba(232,55,44,.15);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 16px;
+    color:var(--red);font-size:1.4rem;
+    transition:background .3s,border-color .3s;
+  }
+  .loc-card:hover .loc-icon{background:rgba(232,55,44,.15);border-color:rgba(232,55,44,.4);}
+  .loc-card h3{font-family:var(--font-display);font-size:1.25rem;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;}
+  .loc-card p{color:rgba(255,255,255,.42);font-size:.92rem;line-height:1.75;margin-bottom:20px;flex:1;}
+  .loc-tag{
+    display:inline-block;background:rgba(232,55,44,.1);color:var(--red);
+    font-size:.78rem;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;padding:4px 12px;border-radius:20px;
+    margin-bottom:16px;border:1px solid rgba(232,55,44,.2);
+  }
+
+  /* ── BOTTOM ROW: 2 location teams ── */
+  .bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+  /* shared explore btn */
+  .explore-btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 10px 10px 22px;border-radius:50px;cursor:pointer;transition:background .3s,transform .2s;text-decoration:none;border:none;}
+  .explore-btn:hover{background:#c0251b;transform:translateY(-2px);}
+  .explore-btn .play-icon{width:30px;height:30px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .explore-btn .play-icon i{color:var(--red);font-size:.6rem;margin-left:2px;}
+  .explore-btn-inv{background:transparent;border:1.5px solid rgba(255,255,255,.2);color:#fff;}
+  .explore-btn-inv:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.4);}
+  .explore-btn-inv .play-icon{background:var(--red);}
+  .explore-btn-inv .play-icon i{color:#fff;}
+
+  @media(max-width:1024px){
+    #navbar{padding:16px 30px;}#navbar.scrolled{padding:10px 30px;}
+    #trainers-full,#join-cta,#footer{padding-left:30px;padding-right:30px;}
+    .admin-hero{grid-template-columns:1fr;}
+    .admin-hero-right{padding:0 40px 40px;}
+    .founders-row{grid-template-columns:1fr 1fr;}
+    .founders-center{grid-column:1/-1;order:-1;}
+    .bottom-row{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:768px){
+    .nav-links{display:none;}.hamburger{display:flex;}
+    .page-hero-content{padding:0 20px;}
+    #trainers-full{padding:70px 20px;}
+    .admin-hero{grid-template-columns:1fr;}
+    .admin-hero-left{padding:36px 28px;}
+    .admin-stats{flex-wrap:wrap;gap:16px;}
+    .founders-row{grid-template-columns:1fr;}
+    .bottom-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
 
   /* JOIN CTA */
   #join-cta{background:var(--red);padding:80px 60px;text-align:center;}
@@ -118,12 +360,12 @@ const globalStyles = `
 `;
 
 const trainers = [
-  { name: "Marvin Joiner", role: "CrossFit Coach", specialty: "Strength & Conditioning", bio: "10+ years coaching elite athletes. Certified CrossFit Level 3 trainer with expertise in Olympic lifting and metabolic conditioning." },
-  { name: "Patricia Woodrum", role: "Cardio & Conditioning", specialty: "Endurance Training", bio: "Former marathon runner turned coach. Specialises in aerobic base building, zone training, and race preparation strategies." },
-  { name: "Hannaz Stone", role: "Fitness Coach", specialty: "Body Recomposition", bio: "Passionate about helping everyday people transform their physique through science-backed programming and sustainable habits." },
-  { name: "Derek Hale", role: "Strength & Power", specialty: "Powerlifting", bio: "Competitive powerlifter and certified strength coach. Programs for beginners through to competitive lifters." },
-  { name: "Aisha Patel", role: "Yoga & Mobility", specialty: "Flexibility & Recovery", bio: "Certified yoga instructor and mobility specialist helping clients move better, recover faster, and stay injury-free." },
-  { name: "Tom Reeves", role: "Youth Performance", specialty: "Youth Athletics", bio: "Dedicated to developing young athletes with age-appropriate training, movement fundamentals, and a love for sport." },
+  { slug: "marvin-joiner", name: "ULSOOR TEAM",   bio: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness." },
+  { slug: "patricia-woodrum", name: "KORAMANGALA TEAM",  bio: "Our Koramangala Team combines experience, dedication, and patient-focused care to deliver outstanding physiotherapy treatment. With a passion for helping people recover stronger and healthier, the team creates a positive and motivating healing environment." },
+  { slug: "hannaz-stone", name: "INDIRANAGAR TEAM",  bio: "The Indiranagar Team is known for its friendly approach, expert guidance, and commitment to every patients’ recovery journey. Their teamwork and dedication ensure that every patient receives the highest quality care and support." },
+  { slug: "derek-hale", name: "WHITEFIELD TEAM",  bio: "The Whitefield Team is committed to delivering high-quality physiotherapy care through expertise, dedication, and compassion. Their patient-first approach and focus on long-term recovery help individuals regain strength, mobility, and confidence" },
+  { slug: "aisha-patel", name: "ADMIN TEAM", bio: "The Admin Team is dedicated to providing a smooth and stress-free experience for every visitor. Their friendly approach, quick assistance, and strong coordination ensure that patients feel supported from the moment they walk in" },
+  { slug: "tom-reeves", name: "FOUNDERS",  bio: "The Founders envisioned a centre built on trust, care, and excellence in physiotherapy. Through their dedication, leadership, and passion for improving lives, they have created a place focused on healing, recovery, and patient well-being" },
 ];
 
 function useReveal() {
@@ -144,7 +386,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Trainers" }, { href: "/pricing", label: "Pricing" }, { href: "/coming-soon", label: "Coming Soon" },
+    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Program" }, { href: "/coming-soon", label: "Initiatives" },
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
@@ -251,25 +493,92 @@ function PageHero() {
 }
 
 function TrainersFull() {
+  const admin   = trainers.find(t => t.slug === "aisha-patel")!;
+  const founder = trainers.find(t => t.slug === "tom-reeves")!;
+  const ulsoor  = trainers.find(t => t.slug === "marvin-joiner")!;
+  const kora    = trainers.find(t => t.slug === "patricia-woodrum")!;
+  const indira  = trainers.find(t => t.slug === "hannaz-stone")!;
+  const white   = trainers.find(t => t.slug === "derek-hale")!;
+
+  const locIcons: Record<string, string> = {
+    "marvin-joiner":   "fas fa-map-marker-alt",
+    "patricia-woodrum":"fas fa-map-marker-alt",
+    "hannaz-stone":    "fas fa-map-marker-alt",
+    "derek-hale":      "fas fa-map-marker-alt",
+  };
+
+  const LocCard = ({ t, num }: { t: typeof trainers[0]; num: number }) => (
+    <div className="loc-card reveal">
+      <span className="loc-num">{String(num).padStart(2,"0")}</span>
+      <div className="loc-icon"><i className={locIcons[t.slug] || "fas fa-users"} /></div>
+      <span className="loc-tag">Location Team</span>
+      <h3>{t.name}</h3>
+      <p>{t.bio}</p>
+      <a href={`/trainers/${t.slug}`} className="explore-btn">
+        Explore <span className="play-icon"><i className="fas fa-arrow-right" /></span>
+      </a>
+    </div>
+  );
+
   return (
     <section id="trainers-full">
-      <span className="section-label reveal">Team Members</span>
-      <h2 className="section-title reveal">Meet Our Expert Coaches</h2>
-      <div className="trainers-grid">
-        {trainers.map((t, i) => (
-          <div className="trainer-card reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-            <div className="trainer-avatar"><i className="fas fa-user" /></div>
-            <span className="specialty-tag">{t.specialty}</span>
-            <h3>{t.name}</h3>
-            <span className="role">{t.role}</span>
-            <p>{t.bio}</p>
-            <div className="trainer-social">
-              <a href="#"><i className="fab fa-facebook-f" /></a>
-              <a href="#"><i className="fab fa-twitter" /></a>
-              <a href="#"><i className="fab fa-instagram" /></a>
+      <span className="section-label reveal">Our People</span>
+      <h2 className="section-title reveal">Meet The Full Team</h2>
+      <p className="section-subtitle reveal">The backbone of every great experience</p>
+
+      <div className="trainers-layout">
+
+        {/* ── ROW 1: FOUNDERS — Full-width hero ── */}
+        <div className="admin-hero reveal">
+          <div className="admin-hero-left">
+            <span className="admin-priority-badge">
+              <i className="fas fa-crown" /> Founders
+            </span>
+            <h3>{founder.name}</h3>
+            <p>{founder.bio}</p>
+            <div className="admin-stats">
+              <div className="admin-stat"><div className="num">1+</div><div className="lbl">Vision</div></div>
+              <div className="admin-stat"><div className="num">10+</div><div className="lbl">Years</div></div>
+              <div className="admin-stat"><div className="num">100%</div><div className="lbl">Passion</div></div>
+            </div>
+            <a href={`/trainers/${founder.slug}`} className="explore-btn">
+              Explore <span className="play-icon"><i className="fas fa-arrow-right" /></span>
+            </a>
+          </div>
+          <div className="admin-hero-right">
+            <div className="admin-avatar-wrap">
+              <div className="admin-avatar-ring">
+                <div className="admin-avatar-inner"><i className="fas fa-user" /></div>
+              </div>
+              <span className="admin-floating-tag">Founders</span>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* ── ROW 2: ADMIN TEAM center + 2 location teams ── */}
+        <div className="founders-row">
+          <LocCard t={ulsoor} num={1} />
+
+          {/* Admin — secondary featured */}
+          <div className="founders-center reveal">
+            <span className="founders-crown"><i className="fas fa-star" /> Priority Team</span>
+            <div className="f-avatar"><i className="fas fa-user-tie" /></div>
+            <h3>{admin.name}</h3>
+            <p>{admin.bio}</p>
+            <a href={`/trainers/${admin.slug}`} className="explore-btn explore-btn-inv">
+              Explore <span className="play-icon"><i className="fas fa-arrow-right" /></span>
+            </a>
+          </div>
+
+          <LocCard t={kora} num={2} />
+        </div>
+
+        {/* ── ROW 3: 2 remaining location teams ── */}
+        <div className="bottom-row">
+          <LocCard t={indira} num={3} />
+          <LocCard t={white}  num={4} />
+        </div>
+
       </div>
     </section>
   );
