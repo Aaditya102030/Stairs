@@ -86,6 +86,69 @@ const trainers = [
   },
 ];
 
+/* ─── Location Team Data ─── */
+const locationTeams: Record<string, { name: string; location: string; description: string; members: { name: string; role: string; experience: string; specialty: string }[] }> = {
+  "ulsoor-team": {
+    name: "Ulsoor Team",
+    location: "Ulsoor, Bangalore",
+    description: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness.",
+    members: [
+      { name: "Marvin Joiner", role: "CrossFit Coach", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
+      { name: "Derek Hale", role: "Strength & Power", experience: "9 Yrs", specialty: "Powerlifting" },
+      { name: "Sofia Reyes", role: "Yoga & Mobility", experience: "6 Yrs", specialty: "Flexibility & Recovery" },
+    ],
+  },
+  "koramangala-team": {
+    name: "Koramangala Team",
+    location: "Koramangala, Bangalore",
+    description: "Our Koramangala Team combines experience, dedication, and patient-focused care to deliver outstanding physiotherapy treatment. With a passion for helping people recover stronger and healthier, the team creates a positive and motivating healing environment.",
+    members: [
+      { name: "Patricia Woodrum", role: "Cardio & Conditioning", experience: "8 Yrs", specialty: "Endurance Training" },
+      { name: "Hannaz Stone", role: "Fitness Coach", experience: "6 Yrs", specialty: "Body Recomposition" },
+      { name: "Luke Brennan", role: "Physiotherapist", experience: "7 Yrs", specialty: "Sports Rehab" },
+    ],
+  },
+  "indiranagar-team": {
+    name: "Indiranagar Team",
+    location: "Indiranagar, Bangalore",
+    description: "The Indiranagar Team is known for its friendly approach, expert guidance, and commitment to every patient's recovery journey. Their teamwork and dedication ensure that every patient receives the highest quality care and support.",
+    members: [
+      { name: "Aisha Patel", role: "Yoga & Mobility", experience: "7 Yrs", specialty: "Flexibility & Recovery" },
+      { name: "Rohan Mehta", role: "Physiotherapist", experience: "5 Yrs", specialty: "Sports Injury" },
+      { name: "Priya Nair", role: "Strength Coach", experience: "4 Yrs", specialty: "Functional Training" },
+    ],
+  },
+  "whitefield-team": {
+    name: "Whitefield Team",
+    location: "Whitefield, Bangalore",
+    description: "The Whitefield Team is committed to delivering high-quality physiotherapy care through expertise, dedication, and compassion. Their patient-first approach and focus on long-term recovery help individuals regain strength, mobility, and confidence.",
+    members: [
+      { name: "Tom Reeves", role: "Youth Performance", experience: "11 Yrs", specialty: "Youth Athletics" },
+      { name: "Ananya Kumar", role: "Rehab Specialist", experience: "6 Yrs", specialty: "Post-Surgery Rehab" },
+      { name: "Vikram Das", role: "S&C Coach", experience: "8 Yrs", specialty: "Athletic Performance" },
+    ],
+  },
+  "admin-team": {
+    name: "Admin Team",
+    location: "All Centres",
+    description: "The Admin Team is dedicated to providing a smooth and stress-free experience for every visitor. Their friendly approach, quick assistance, and strong coordination ensure that patients feel supported from the moment they walk in.",
+    members: [
+      { name: "Sneha Rao", role: "Centre Manager", experience: "5 Yrs", specialty: "Operations" },
+      { name: "Kiran Shetty", role: "Front Desk", experience: "3 Yrs", specialty: "Patient Support" },
+      { name: "Deepa Iyer", role: "Billing & Admin", experience: "4 Yrs", specialty: "Finance & Coordination" },
+    ],
+  },
+  "founders": {
+    name: "Founders",
+    location: "Bangalore",
+    description: "The Founders envisioned a centre built on trust, care, and excellence in physiotherapy. Through their dedication, leadership, and passion for improving lives, they have created a place focused on healing, recovery, and patient well-being.",
+    members: [
+      { name: "Somya Rout", role: "Co-Founder & Head Physio", experience: "12+ Yrs", specialty: "Musculoskeletal Rehab" },
+      { name: "Arjun Menon", role: "Co-Founder & S&C Lead", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
+    ],
+  },
+};
+
 /* ─── Styles ─── */
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -194,6 +257,39 @@ const globalStyles = `
   .explore-sm{display:inline-block;border:2px solid var(--red);color:var(--red);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 16px;border-radius:30px;transition:background .3s,color .3s;}
   .explore-sm:hover{background:var(--red);color:var(--light);}
 
+  /* ── TEAM MEMBER LIST (collapsed) ── */
+  .tm-list{display:flex;flex-direction:column;gap:0;max-width:760px;margin:0 auto;}
+  .tm-row{display:flex;align-items:center;gap:18px;padding:14px 20px;border-radius:14px;cursor:pointer;transition:background .2s;position:relative;}
+  .tm-row:not(:last-child)::after{content:'';position:absolute;bottom:0;left:20px;right:20px;height:1px;background:rgba(0,0,0,.07);}
+  .tm-row:hover{background:rgba(232,55,44,.04);}
+  .tm-row.active{background:rgba(232,55,44,.06);}
+  .tm-thumb{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f0f0f0,#e0e0e0);border:2.5px solid rgba(232,55,44,.25);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:1.3rem;transition:border-color .2s;}
+  .tm-row.active .tm-thumb,.tm-row:hover .tm-thumb{border-color:var(--red);}
+  .tm-info{flex:1;text-align:left;}
+  .tm-info .tm-name{font-family:var(--font-display);font-size:1.05rem;letter-spacing:1.5px;text-transform:uppercase;color:#111;line-height:1.1;margin-bottom:3px;}
+  .tm-info .tm-role{font-size:.78rem;color:#888;letter-spacing:.5px;}
+  .tm-play{width:40px;height:40px;border-radius:50%;border:2px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;color:#888;font-size:.78rem;flex-shrink:0;transition:background .2s,border-color .2s,color .2s;}
+  .tm-row:hover .tm-play,.tm-row.active .tm-play{background:var(--red);border-color:var(--red);color:#fff;}
+
+  /* ── EXPANDED PANEL ── */
+  .tm-expand-wrap{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .35s ease;opacity:0;}
+  .tm-expand-wrap.open{max-height:600px;opacity:1;}
+  .tm-expand{background:#fff;border-radius:20px;margin:4px 0 12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.10);}
+  .tm-expand-top{position:relative;height:200px;background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 100%);display:flex;align-items:flex-end;padding:24px;}
+  .tm-expand-top-avatar{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#333,#222);border:3px solid var(--red);display:flex;align-items:center;justify-content:center;color:rgba(232,55,44,.5);font-size:2.2rem;flex-shrink:0;}
+  .tm-expand-top-text{margin-left:20px;}
+  .tm-expand-top-text h3{font-family:var(--font-display);font-size:1.8rem;letter-spacing:2px;text-transform:uppercase;color:#fff;line-height:1;margin-bottom:6px;}
+  .tm-expand-top-text .te-role{color:var(--red);font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+  .tm-expand-top-badge{position:absolute;top:18px;right:18px;background:var(--red);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;}
+  .tm-expand-body{padding:24px 28px;}
+  .tm-expand-body .te-bio{color:#555;font-size:.92rem;line-height:1.85;margin-bottom:20px;}
+  .tm-expand-stats{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+  .te-stat{background:#f8f8f8;border-radius:12px;padding:12px 20px;text-align:center;min-width:100px;}
+  .te-stat .te-num{font-family:var(--font-display);font-size:1.5rem;color:var(--red);line-height:1;display:block;}
+  .te-stat .te-lbl{font-size:.65rem;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;display:block;}
+  .te-book-btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 24px;border-radius:50px;text-decoration:none;transition:background .2s;border:none;cursor:pointer;}
+  .te-book-btn:hover{background:#c0251b;}
+
   /* FOOTER */
   #footer{background:var(--dark);padding:60px 60px 30px;color:#aaa;}
   .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:40px;margin-bottom:40px;}
@@ -264,7 +360,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   );
 }
 
-/* ─── Page Hero ─── */
+/* ─── Page Hero (individual trainer) ─── */
 function PageHero({ trainer }: { trainer: typeof trainers[0] }) {
   const firstName = trainer.name.split(" ")[0];
   const lastName = trainer.name.split(" ").slice(1).join(" ");
@@ -432,6 +528,140 @@ function Footer() {
   );
 }
 
+/* ─── MemberList: compact list with click-to-expand ─── */
+function MemberList({ members }: { members: { name: string; role: string; experience: string; specialty: string }[] }) {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  const bios: Record<string, string> = {
+    "Marvin Joiner":   "Expert CrossFit & strength coach with 10+ years developing elite athletes through progressive overload and movement quality.",
+    "Derek Hale":      "Competitive powerlifter and certified coach programming for all levels — from first-time lifters to state champions.",
+    "Sofia Reyes":     "Yoga and mobility specialist helping clients move freely, recover faster, and maintain long-term athletic health.",
+    "Patricia Woodrum":"Former marathon runner coaching aerobic base building, zone training, and race preparation for all distances.",
+    "Hannaz Stone":    "Body recomposition expert guiding clients through science-backed, sustainable transformation programs.",
+    "Luke Brennan":    "Sports rehab physiotherapist bridging the gap between injury recovery and return to full athletic performance.",
+    "Aisha Patel":     "Holistic mobility and yoga coach working at the intersection of flexibility, fascia, and athletic recovery.",
+    "Rohan Mehta":     "Physiotherapist specialising in acute and chronic sports injuries with a focus on quick, lasting recovery.",
+    "Priya Nair":      "Functional training coach building real-world strength and movement competency for everyday athletes.",
+    "Tom Reeves":      "Youth performance specialist developing young athletes with age-appropriate, sport-specific training programs.",
+    "Ananya Kumar":    "Post-surgery rehab specialist guiding patients from initial recovery back to full strength and mobility.",
+    "Vikram Das":      "Strength & conditioning coach dedicated to unlocking peak athletic performance through intelligent programming.",
+    "Sneha Rao":       "Centre manager ensuring smooth operations and a welcoming experience for every patient and visitor.",
+    "Kiran Shetty":    "Front desk coordinator providing attentive patient support and a warm first point of contact.",
+    "Deepa Iyer":      "Finance and admin specialist handling billing and coordination with precision and care.",
+    "Somya Rout":      "Co-Founder & Head Physio with 12+ years transforming patient recovery through expert musculoskeletal rehabilitation.",
+    "Arjun Menon":     "Co-Founder & S&C Lead driving the strength and conditioning vision that makes Stairs a centre of excellence.",
+  };
+
+  const toggle = (i: number) => setOpenIdx(openIdx === i ? null : i);
+
+  return (
+    <div className="tm-list reveal" style={{ marginTop: 48 }}>
+      {members.map((m, i) => (
+        <div key={i}>
+          {/* ── Collapsed row ── */}
+          <div
+            className={`tm-row${openIdx === i ? " active" : ""}`}
+            onClick={() => toggle(i)}
+          >
+            <div className="tm-thumb"><i className="fas fa-user" /></div>
+            <div className="tm-info">
+              <div className="tm-name">{m.name}</div>
+              <div className="tm-role">{m.role}</div>
+            </div>
+            <span style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#e8372c", background: "#fef0ef", padding: "3px 10px", borderRadius: 20, flexShrink: 0 }}>{m.specialty}</span>
+            <div className="tm-play">
+              <i className={`fas fa-${openIdx === i ? "chevron-up" : "play"}`} style={{ marginLeft: openIdx === i ? 0 : 2 }} />
+            </div>
+          </div>
+
+          {/* ── Expanded panel ── */}
+          <div className={`tm-expand-wrap${openIdx === i ? " open" : ""}`}>
+            <div className="tm-expand">
+              <div className="tm-expand-top">
+                <div className="tm-expand-top-avatar"><i className="fas fa-user" /></div>
+                <div className="tm-expand-top-text">
+                  <h3>{m.name}</h3>
+                  <span className="te-role">{m.role}</span>
+                </div>
+                <span className="tm-expand-top-badge">{m.specialty}</span>
+              </div>
+              <div className="tm-expand-body">
+                <p className="te-bio">{bios[m.name] || `${m.name} is a dedicated member of the Stairs team, committed to delivering exceptional care and results for every patient.`}</p>
+                <div className="tm-expand-stats">
+                  <div className="te-stat"><span className="te-num">{m.experience}</span><span className="te-lbl">Experience</span></div>
+                  <div className="te-stat"><span className="te-num">100+</span><span className="te-lbl">Clients</span></div>
+                </div>
+                <a href="/contact" className="te-book-btn">Book a Session <i className="fas fa-arrow-right" /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Team View Component ─── */
+function TeamView({ teamSlug }: { teamSlug: string }) {
+  const team = locationTeams[teamSlug];
+  if (!team) return null;
+  return (
+    <>
+      {/* Hero */}
+      <section id="page-hero">
+        <div className="page-hero-bg" />
+        <div className="circle-deco page-hero-circle" />
+        <div className="hero-3d-scene">
+          <svg width="380" height="380" viewBox="0 0 380 380" fill="none">
+            <circle cx="190" cy="190" r="160" stroke="#e8372c" strokeWidth="1" strokeDasharray="6 12" opacity="0.18" style={{ animation: "spin-ring 20s linear infinite", transformOrigin: "190px 190px" }} />
+            <circle cx="190" cy="190" r="120" stroke="#ff6a00" strokeWidth="1" strokeDasharray="3 16" opacity="0.12" style={{ animation: "spin-ring 30s linear infinite reverse", transformOrigin: "190px 190px" }} />
+            <circle cx="190" cy="190" r="80" fill="none" stroke="rgba(232,55,44,0.07)" strokeWidth="50" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "190px 190px" }} />
+            <g style={{ animation: "float1 5s ease-in-out infinite", transformOrigin: "190px 190px" }}>
+              <circle cx="190" cy="130" r="44" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2.5" />
+              <circle cx="190" cy="130" r="32" fill="#1e1e1e" />
+              {[160, 185, 210].map((x, i) => (
+                <circle key={i} cx={x} cy="190" r="16" fill="#1e1e1e" stroke="#e8372c" strokeWidth="1.5" />
+              ))}
+            </g>
+            {[{x:55,y:95,d:"0s"},{x:325,y:110,d:"1s"},{x:75,y:285,d:"1.8s"},{x:305,y:295,d:"0.5s"}].map((p,i)=>(
+              <circle key={i} cx={p.x} cy={p.y} r="3" fill="#ff6a00" style={{animation:`pulse-ring 3s ease-in-out infinite ${p.d}`,transformOrigin:`${p.x}px ${p.y}px`}}/>
+            ))}
+          </svg>
+        </div>
+        <div className="page-hero-content">
+          <span className="sub reveal">Location Team</span>
+          <span className="hero-role-badge reveal" style={{ transitionDelay: "0.05s" }}>{team.location}</span>
+          <h1 className="reveal" style={{ transitionDelay: "0.1s", fontSize: "clamp(2rem, 6vw, 4.5rem)" }}>{team.name.toUpperCase()}</h1>
+          <div className="breadcrumb reveal" style={{ transitionDelay: "0.2s" }}>
+            <a href="/">Home</a><span>/</span>
+            <a href="/trainers">Team</a><span>/</span>
+            <span style={{ color: "#fff" }}>{team.name}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Members */}
+      <section id="profile" style={{ padding: "80px 60px", background: "#f5f5f5" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto", textAlign: "center" }}>
+          <span className="section-label reveal">Our Team</span>
+          <h2 className="section-title reveal" style={{ marginBottom: 20 }}>{team.name}</h2>
+          <p className="reveal" style={{ color: "#666", fontSize: "1rem", lineHeight: 1.9, maxWidth: 700, margin: "0 auto 60px" }}>{team.description}</p>
+
+          {/* Members List — compact, click to expand */}
+          <MemberList members={team.members} />
+
+          {/* Back button */}
+          <div className="reveal" style={{ marginTop: 56 }}>
+            <a href="/trainers" style={{ display: "inline-flex", alignItems: "center", gap: 10, border: "2px solid #111", color: "#111", fontFamily: "var(--font-body)", fontWeight: 700, fontSize: ".85rem", letterSpacing: "1px", textTransform: "uppercase", padding: "12px 28px", borderRadius: "50px", textDecoration: "none", transition: "background 0.3s, color 0.3s" }}>
+              <i className="fas fa-arrow-left" /> Back to All Teams
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 /* ─── Main Page ─── */
 export default function TrainerProfilePage() {
   const params = useParams();
@@ -439,6 +669,20 @@ export default function TrainerProfilePage() {
   const trainer = trainers.find((t) => t.slug === slug);
   const [menuOpen, setMenuOpen] = useState(false);
   useReveal();
+
+  // Check if this is a location team slug — render team members view
+  const isTeamSlug = slug in locationTeams;
+  if (isTeamSlug) {
+    return (
+      <>
+        <style>{globalStyles}</style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <TeamView teamSlug={slug} />
+        <Footer />
+      </>
+    );
+  }
 
   if (!trainer) {
     return (

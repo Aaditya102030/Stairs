@@ -286,8 +286,13 @@ const globalStyles = `
   /* ── BOTTOM ROW: 2 location teams ── */
   .bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 
+  /* loc-card map visual */
+  .loc-map-wrap{width:100%;border-radius:12px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(232,55,44,.2);position:relative;height:140px;}
+  .loc-map-wrap iframe{width:100%;height:100%;border:none;display:block;border-radius:12px;filter:grayscale(0.3) contrast(1.1);}
+  .loc-map-overlay{position:absolute;inset:0;border-radius:12px;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(232,55,44,.25);}
+
   /* shared explore btn */
-  .explore-btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 10px 10px 22px;border-radius:50px;cursor:pointer;transition:background .3s,transform .2s;text-decoration:none;border:none;}
+  .explore-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 16px;border-radius:50px;cursor:pointer;transition:background .3s,transform .2s;text-decoration:none;border:none;width:100%;}
   .explore-btn:hover{background:#c0251b;transform:translateY(-2px);}
   .explore-btn .play-icon{width:30px;height:30px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .explore-btn .play-icon i{color:var(--red);font-size:.6rem;margin-left:2px;}
@@ -360,12 +365,12 @@ const globalStyles = `
 `;
 
 const trainers = [
-  { slug: "marvin-joiner", name: "ULSOOR TEAM",   bio: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness." },
-  { slug: "patricia-woodrum", name: "KORAMANGALA TEAM",  bio: "Our Koramangala Team combines experience, dedication, and patient-focused care to deliver outstanding physiotherapy treatment. With a passion for helping people recover stronger and healthier, the team creates a positive and motivating healing environment." },
-  { slug: "hannaz-stone", name: "INDIRANAGAR TEAM",  bio: "The Indiranagar Team is known for its friendly approach, expert guidance, and commitment to every patients’ recovery journey. Their teamwork and dedication ensure that every patient receives the highest quality care and support." },
-  { slug: "derek-hale", name: "WHITEFIELD TEAM",  bio: "The Whitefield Team is committed to delivering high-quality physiotherapy care through expertise, dedication, and compassion. Their patient-first approach and focus on long-term recovery help individuals regain strength, mobility, and confidence" },
-  { slug: "aisha-patel", name: "ADMIN TEAM", bio: "The Admin Team is dedicated to providing a smooth and stress-free experience for every visitor. Their friendly approach, quick assistance, and strong coordination ensure that patients feel supported from the moment they walk in" },
-  { slug: "tom-reeves", name: "FOUNDERS",  bio: "The Founders envisioned a centre built on trust, care, and excellence in physiotherapy. Through their dedication, leadership, and passion for improving lives, they have created a place focused on healing, recovery, and patient well-being" },
+  { slug: "ulsoor-team", name: "ULSOOR TEAM",   bio: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness." },
+  { slug: "koramangala-team", name: "KORAMANGALA TEAM",  bio: "Our Koramangala Team combines experience, dedication, and patient-focused care to deliver outstanding physiotherapy treatment. With a passion for helping people recover stronger and healthier, the team creates a positive and motivating healing environment." },
+  { slug: "indiranagar-team", name: "INDIRANAGAR TEAM",  bio: "The Indiranagar Team is known for its friendly approach, expert guidance, and commitment to every patients’ recovery journey. Their teamwork and dedication ensure that every patient receives the highest quality care and support." },
+  { slug: "whitefield-team", name: "WHITEFIELD TEAM",  bio: "The Whitefield Team is committed to delivering high-quality physiotherapy care through expertise, dedication, and compassion. Their patient-first approach and focus on long-term recovery help individuals regain strength, mobility, and confidence" },
+  { slug: "admin-team", name: "ADMIN TEAM", bio: "The Admin Team is dedicated to providing a smooth and stress-free experience for every visitor. Their friendly approach, quick assistance, and strong coordination ensure that patients feel supported from the moment they walk in" },
+  { slug: "founders", name: "FOUNDERS",  bio: "The Founders envisioned a centre built on trust, care, and excellence in physiotherapy. Through their dedication, leadership, and passion for improving lives, they have created a place focused on healing, recovery, and patient well-being" },
 ];
 
 function useReveal() {
@@ -493,24 +498,43 @@ function PageHero() {
 }
 
 function TrainersFull() {
-  const admin   = trainers.find(t => t.slug === "aisha-patel")!;
-  const founder = trainers.find(t => t.slug === "tom-reeves")!;
-  const ulsoor  = trainers.find(t => t.slug === "marvin-joiner")!;
-  const kora    = trainers.find(t => t.slug === "patricia-woodrum")!;
-  const indira  = trainers.find(t => t.slug === "hannaz-stone")!;
-  const white   = trainers.find(t => t.slug === "derek-hale")!;
+  const admin   = trainers.find(t => t.slug === "admin-team")!;
+  const founder = trainers.find(t => t.slug === "founders")!;
+  const ulsoor  = trainers.find(t => t.slug === "ulsoor-team")!;
+  const kora    = trainers.find(t => t.slug === "koramangala-team")!;
+  const indira  = trainers.find(t => t.slug === "indiranagar-team")!;
+  const white   = trainers.find(t => t.slug === "whitefield-team")!;
 
   const locIcons: Record<string, string> = {
-    "marvin-joiner":   "fas fa-map-marker-alt",
-    "patricia-woodrum":"fas fa-map-marker-alt",
-    "hannaz-stone":    "fas fa-map-marker-alt",
-    "derek-hale":      "fas fa-map-marker-alt",
+    "ulsoor-team":       "fas fa-map-marker-alt",
+    "koramangala-team": "fas fa-map-marker-alt",
+    "indiranagar-team": "fas fa-map-marker-alt",
+    "whitefield-team":  "fas fa-map-marker-alt",
+  };
+
+  // Real OSM embed URLs for each location (zoom=17, marker at exact coords)
+  const mapEmbeds: Record<string, string> = {
+    "ulsoor-team":      "https://www.openstreetmap.org/export/embed.html?bbox=77.6170%2C12.9748%2C77.6210%2C12.9778&layer=mapnik&marker=12.9763%2C77.6190",
+    "koramangala-team": "https://www.openstreetmap.org/export/embed.html?bbox=77.6265%2C12.9285%2C77.6305%2C12.9315&layer=mapnik&marker=12.9300%2C77.6285",
+    "indiranagar-team": "https://www.openstreetmap.org/export/embed.html?bbox=77.6390%2C12.9765%2C77.6430%2C12.9795&layer=mapnik&marker=12.9780%2C77.6410",
+    "whitefield-team":  "https://www.openstreetmap.org/export/embed.html?bbox=77.7490%2C12.9685%2C77.7530%2C12.9715&layer=mapnik&marker=12.9700%2C77.7510",
   };
 
   const LocCard = ({ t, num }: { t: typeof trainers[0]; num: number }) => (
     <div className="loc-card reveal">
       <span className="loc-num">{String(num).padStart(2,"0")}</span>
-      <div className="loc-icon"><i className={locIcons[t.slug] || "fas fa-users"} /></div>
+
+      {/* ── Real OpenStreetMap embed ── */}
+      <div className="loc-map-wrap">
+        <iframe
+          src={mapEmbeds[t.slug]}
+          loading="lazy"
+          title={`Map – ${t.name}`}
+          scrolling="no"
+        />
+        <div className="loc-map-overlay" />
+      </div>
+
       <span className="loc-tag">Location Team</span>
       <h3>{t.name}</h3>
       <p>{t.bio}</p>

@@ -242,6 +242,35 @@ const globalStyles = `
   .pricing-body ul li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; color: #555; }
   .pricing-body ul li i { color: var(--red); font-size: 0.8rem; }
 
+  /* PROGRAMME CARD (home) */
+  .prog-card{position:relative;border-radius:16px;overflow:visible;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 16px rgba(0,0,0,.07);z-index:0;background:#fff;}
+  .prog-card::before{content:'';position:absolute;inset:-3px;border-radius:18px;background:linear-gradient(135deg,#e8372c,#ff6b35,#ffb347,#e8372c,#8b0000);background-size:300% 300%;z-index:-1;opacity:0;transition:opacity .4s ease;animation:gradientSpin 3s ease infinite;}
+  .prog-card:hover::before{opacity:1;}
+  .prog-card::after{content:'';position:absolute;inset:2px;border-radius:14px;background:#fff;z-index:-1;}
+  .prog-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(232,55,44,.35);}
+  .prog-slider{position:relative;height:180px;overflow:hidden;border-radius:14px 14px 0 0;background:#000;}
+  .prog-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s ease;}
+  .prog-slide.active{opacity:1;}
+  .prog-slide-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.4);}
+  .prog-slide-content{position:relative;z-index:2;text-align:center;padding:0 16px;}
+  .prog-slide-content h4{font-family:var(--font-display);font-size:1.5rem;letter-spacing:3px;color:#fff;text-transform:uppercase;line-height:1.1;text-shadow:0 2px 12px rgba(0,0,0,.8);}
+  .prog-slide-content h4 span{color:var(--red);display:block;}
+  .prog-slide-content p{color:rgba(255,255,255,.65);font-size:.72rem;margin-top:5px;}
+  .prog-nav{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:3;}
+  .prog-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);border:none;cursor:pointer;padding:0;transition:background .3s;}
+  .prog-dot.active{background:var(--red);}
+  .prog-arr{position:absolute;top:50%;transform:translateY(-50%);width:26px;height:26px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem;cursor:pointer;z-index:3;transition:background .2s;}
+  .prog-arr:hover{background:var(--red);border-color:var(--red);}
+  .prog-arr.left{left:8px;}.prog-arr.right{right:8px;}
+  .prog-body{padding:46px 24px 28px;text-align:center;position:relative;z-index:1;}
+  .prog-body h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:2px;text-transform:uppercase;color:#111;margin-bottom:6px;}
+  .prog-body .prog-sub{color:var(--red);font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:18px;}
+  .prog-body ul{margin-bottom:24px;}
+  .prog-body ul li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:.88rem;color:#555;}
+  .prog-body ul li i{color:var(--red);font-size:.78rem;flex-shrink:0;}
+  .prog-enroll{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 28px;border-radius:50px;cursor:pointer;transition:background .2s;text-decoration:none;border:none;width:100%;}
+  .prog-enroll:hover{background:#c0251b;}
+
   /* TRAINERS */
   #trainers { background: var(--red); padding: 80px 60px; text-align: center; }
   #trainers .section-label { color: rgba(255,255,255,0.7); }
@@ -382,11 +411,41 @@ const services = [
   { href: "/services/group-session", bg: "url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80')", vertical: "Group Session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
 ];
 
-const pricingPlans = [
-  { img: "pricing-basic.png", price: "$45", title: "Basic Gym" },
-  { img: "pricing-standard.png", price: "$50", title: "Standard Gym" },
-  { img: "pricing-premium.png", price: "$60", title: "Premium Gym" },
+const massageSlides = [
+  { name: "Manjushree", role: "Masseur", bg: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80" },
+  { name: "Ashok HR",    role: "Masseur", bg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" },
+  { name: "John Peter", role: "Masseur", bg: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80" },
 ];
+
+const massageFeatures = ["Personalized massage therapy", "Deep tissue & sports massage", "Myofascial release", "Pre & post event massage", "Relaxation & recovery sessions"];
+
+const fitToRunSlides = [
+  { label: "EXPERIENCE", sub: "TRAIL & ROAD RUNNING", detail: "Build endurance, conquer every terrain", bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80" },
+  { label: "RUNNING", sub: "COACHED SESSIONS", detail: "Mon, Wed, Fri · 6:00 AM", bg: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=800&q=80" },
+  { label: "LEVELS", sub: "ALL ABILITIES WELCOME", detail: "Beginner to advanced programs", bg: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80" },
+  { label: "BEST TEAM", sub: "EXPERT COACHES", detail: "Physiotherapists & conditioning coaches", bg: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" },
+];
+
+const fitToRunFeatures = ["Strength & conditioning training", "Injury prevention & physiotherapy", "Nutrition guidance for runners", "Recovery & sleep optimization", "Step into Good Shoes guidance"];
+
+const pricingPlans = [
+  {
+    price: "$50", title: "Standard Gym", featured: true,
+    features: ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"]
+  },
+  {
+    price: "$60", title: "Premium Gym", featured: false,
+    features: ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"]
+  },
+];
+
+const programmeSlides = [
+  { bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80", title: "ONLINE", sub: "STRENGTH TRAINING", detail: "Mon, Wed, Fri · 6:00 AM" },
+  { bg: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80", title: "ONLINE", sub: "FITNESS CLASSES", detail: "Tue, Thu · 7:00 AM" },
+  { bg: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80", title: "ONLINE", sub: "PHYSIOTHERAPY", detail: "Mon – Sat · Flexible slots" },
+  { bg: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80", title: "ONLINE", sub: "RECOVERY SESSION", detail: "Weekends · 8:00 AM" },
+];
+const programmeFeatures = ["1-on-1 video coaching sessions", "Personalised training plan", "Physiotherapy consultations", "Diet & recovery guidance", "Flexible scheduling"];
 
 const trainers = [
   { img: "coach1.png", name: "Marvin Joiner", role: "CrossFit Coach" },
@@ -1006,29 +1065,174 @@ function Testimonials() {
   );
 }
 
+/* ─── Programme Card (home) ─── */
+function ProgrammeCard() {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % programmeSlides.length), 3200);
+    return () => clearInterval(t);
+  }, []);
+
+  const prev = () => setIdx((i) => (i - 1 + programmeSlides.length) % programmeSlides.length);
+  const next = () => setIdx((i) => (i + 1) % programmeSlides.length);
+
+  return (
+    <div className="prog-card reveal">
+      <div className="prog-slider">
+        {programmeSlides.map((s, i) => (
+          <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
+            <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
+            <div className="prog-slide-content">
+              <h4>{s.title}<span>{s.sub}</span></h4>
+              <p><i className="fas fa-clock" style={{ marginRight: 5, color: "#e8372c" }} />{s.detail}</p>
+            </div>
+          </div>
+        ))}
+        <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
+        <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
+        <div className="prog-nav">
+          {programmeSlides.map((_, i) => (
+            <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
+          ))}
+        </div>
+      </div>
+      <div className="prog-body">
+        <h3>Online Programme</h3>
+        <span className="prog-sub">Stairs Rehab &amp; Fitness</span>
+        <ul>
+          {programmeFeatures.map((f, i) => (
+            <li key={i}><i className="fas fa-check" />{f}</li>
+          ))}
+        </ul>
+        <a href="/contact" className="prog-enroll">Enroll Now &nbsp;<i className="fas fa-arrow-right" /></a>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Massage Card (home pricing) ─── */
+function MassageCard() {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % massageSlides.length), 3200);
+    return () => clearInterval(t);
+  }, []);
+
+  const prev = () => setIdx((i) => (i - 1 + massageSlides.length) % massageSlides.length);
+  const next = () => setIdx((i) => (i + 1) % massageSlides.length);
+
+  return (
+    <div className="prog-card reveal">
+      <div className="prog-slider">
+        {massageSlides.map((s, i) => (
+          <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
+            <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
+            <div className="prog-slide-content">
+              <h4>{s.name}<span style={{ fontSize: "1rem", letterSpacing: "2px" }}>{s.role}</span></h4>
+              <p><i className="fas fa-spa" style={{ marginRight: 5, color: "#e8372c" }} />Read More &rarr;</p>
+            </div>
+          </div>
+        ))}
+        <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
+        <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
+        <div className="prog-nav">
+          {massageSlides.map((_, i) => (
+            <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
+          ))}
+        </div>
+      </div>
+      <div className="prog-body">
+        <h3>Massage Therapy</h3>
+        <span className="prog-sub">Feel Better, Move Better</span>
+        <ul>
+          {massageFeatures.map((f, i) => (
+            <li key={i}><i className="fas fa-check" />{f}</li>
+          ))}
+        </ul>
+        <a href="/contact" className="prog-enroll">Book Now &nbsp;<i className="fas fa-arrow-right" /></a>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Fit To Run Card (home pricing) ─── */
+function FitToRunCard() {
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % fitToRunSlides.length), 3200);
+    return () => clearInterval(t);
+  }, []);
+
+  const prev = () => setIdx((i) => (i - 1 + fitToRunSlides.length) % fitToRunSlides.length);
+  const next = () => setIdx((i) => (i + 1) % fitToRunSlides.length);
+
+  return (
+    <div className="prog-card reveal">
+      <div className="prog-slider">
+        {fitToRunSlides.map((s, i) => (
+          <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
+            <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
+            <div className="prog-slide-content">
+              <h4>{s.label}<span>{s.sub}</span></h4>
+              <p><i className="fas fa-running" style={{ marginRight: 5, color: "#e8372c" }} />{s.detail}</p>
+            </div>
+          </div>
+        ))}
+        <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
+        <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
+        <div className="prog-nav">
+          {fitToRunSlides.map((_, i) => (
+            <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
+          ))}
+        </div>
+      </div>
+      <div className="prog-body">
+        <h3>Fit To Run</h3>
+        <span className="prog-sub">Step Into A New You</span>
+        <ul>
+          {fitToRunFeatures.map((f, i) => (
+            <li key={i}><i className="fas fa-check" />{f}</li>
+          ))}
+        </ul>
+        <a href="/contact" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Pricing ─── */
 function Pricing() {
   return (
     <section id="pricing">
       <div className="pricing-header">
-        <span className="section-label reveal">Pricing Tables</span>
-        <h2 className="section-title reveal">Choose Your Pricing Plan</h2>
+        <span className="section-label reveal">Program Tables</span>
+        <h2 className="section-title reveal">our programs</h2>
       </div>
       <div className="pricing-grid stagger">
-        {pricingPlans.map((plan, i) => (
+        {/* Programme card */}
+        <ProgrammeCard />
+        {/* Massage Therapy card */}
+        <MassageCard />
+        {/* Fit To Run card */}
+        <FitToRunCard />
+        {/* hidden – kept for data ref */}
+        {pricingPlans.slice(2).map((plan, i) => (
           <div className="pricing-card reveal" key={i}>
             <div className="card-img">
-              <div className="img-placeholder"><i className="fas fa-image" />{plan.img}</div>
+              <div className="img-placeholder"><i className="fas fa-image" />{plan.title}</div>
               <div className="price-badge">{plan.price}<small>Monthly</small></div>
             </div>
             <div className="pricing-body">
               <h3>{plan.title}</h3>
               <ul>
-                {pricingFeatures.map((f, j) => (
+                {plan.features.map((f, j) => (
                   <li key={j}><i className="fas fa-check" /> {f}</li>
                 ))}
               </ul>
-              <a href="#contact" className="btn-outline">Join now</a>
+              <a href="/contact" className="btn-outline">Join now</a>
             </div>
           </div>
         ))}
