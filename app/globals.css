@@ -65,7 +65,7 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: oklch(1 0 0); /* white — prevents black flash on page load */
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -138,9 +138,25 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Performance: GPU-accelerate all animated elements */
+.reveal, .reveal-left, .reveal-right, .reveal-scale,
+.neon-orbit, .org-track, .hero-circle-ring,
+.circle-deco, .prog-slide, .testi-profile-img {
+  will-change: transform, opacity;
+}
+
+/* Reduce animation on low-power devices */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

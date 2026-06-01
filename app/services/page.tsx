@@ -40,7 +40,7 @@ const globalStyles = `
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
   .nav-links a.active, .nav-links a:hover { color: var(--red); }
   .nav-links .contact-btn { border: 2px solid var(--red); padding: 7px 20px; border-radius: 30px; color: var(--light); transition: background 0.3s; }
-  .nav-links .contact-btn:hover { background: var(--red); }
+  .nav-links .contact-btn:hover { background: var(--red); color: #111; }
   .nav-links .contact-btn::after { display: none; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { display: block; width: 26px; height: 2px; background: var(--light); }
@@ -85,18 +85,18 @@ const globalStyles = `
   .service-detail .read-more { color: var(--light); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; }
 
   /* SERVICE CARDS ROW */
-  #service-cards { padding: 80px 60px; background: var(--darker); }
-  #service-cards .section-title { color: var(--light); text-align: center; margin-bottom: 50px; }
+  #service-cards { padding: 80px 60px; background: #ffffff; }
+  #service-cards .section-title { color: var(--dark); text-align: center; margin-bottom: 50px; }
   #service-cards .section-label { color: var(--red); display: block; text-align: center; margin-bottom: 10px; }
   .sc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
-  .sc-card { display: block; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 32px 28px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
-  .sc-card:hover { border-color: var(--red); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(232,55,44,0.2); }
-  .sc-card .icon { width: 56px; height: 56px; background: rgba(232,55,44,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: background 0.3s; }
+  .sc-card { display: block; background: #f7f7f7; border: 1px solid #e8e8e8; border-radius: 14px; padding: 32px 28px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+  .sc-card:hover { border-color: var(--red); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(232,55,44,0.15); }
+  .sc-card .icon { width: 56px; height: 56px; background: rgba(232,55,44,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: background 0.3s; }
   .sc-card:hover .icon { background: var(--red); }
   .sc-card .icon i { font-size: 1.4rem; color: var(--red); transition: color 0.3s; }
   .sc-card:hover .icon i { color: var(--light); }
-  .sc-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--light); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
-  .sc-card p { color: rgba(255,255,255,0.6); font-size: 0.88rem; line-height: 1.7; }
+  .sc-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--dark); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .sc-card p { color: #666; font-size: 0.88rem; line-height: 1.7; }
 
   /* FOOTER */
   #footer { background: var(--dark); padding: 60px 60px 30px; color: #aaa; }
@@ -347,8 +347,8 @@ function Footer() {
     <footer id="footer">
       <div className="footer-grid reveal">
         <div className="footer-brand">
-          <div className="logo"><div className="logo-icon"><i className="fas fa-dumbbell" /></div><span>Stairs</span></div>
-          <p>Fulatrumat est aun dolorem ipsum natus dolor sit amet...</p>
+          <div className="logo"><img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} /></div>
+          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
           <div className="footer-social">
             <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
           </div>
@@ -369,7 +369,7 @@ function Footer() {
           <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
         </div>
       </div>
-      <div className="footer-bottom"><p>Copyright 2024 Stairs. All Rights Reserved.</p></div>
+      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
     </footer>
   );
 }

@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 import { motion } from "motion/react";
 
 import { NoiseBackground } from "@/components/ui/noise-background";
+import blogPosts from "@/lib/blogPosts";
+import type { BlogPost } from "@/lib/blogPosts";
 
 /* ─── Inline CSS ─── */
 const globalStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
   @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
   :root {
@@ -18,8 +20,8 @@ const globalStyles = `
     --light: #ffffff;
     --gray: #888888;
     --bg-light: #f5f5f5;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'Barlow', sans-serif;
+    --font-display: var(--font-bebas), 'Bebas Neue', sans-serif;
+    --font-body: var(--font-barlow), 'Barlow', sans-serif;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,8 +66,9 @@ const globalStyles = `
     text-decoration: none; transition: background 0.3s; position: relative; z-index: 1; }
   .glow-btn-inner:hover { background: #1a1a1a; }
 
-  .btn-outline { display: inline-block; border: 2px solid var(--red); color: var(--red); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; padding: 10px 28px; border-radius: 30px; transition: background 0.3s, color 0.3s; }
-  .btn-outline:hover { background: var(--red); color: var(--light); }
+  .btn-primary { display: inline-flex; align-items: center; gap: 12px; background: var(--red); color: var(--light); font-family: var(--font-body); font-weight: 700; font-size: 0.88rem; letter-spacing: 2px; text-transform: uppercase; padding: 14px 36px; border-radius: 50px; border: none; cursor: pointer; transition: background 0.3s, transform 0.2s; }
+  .btn-primary:hover { background: #c0251b; transform: translateY(-2px); }
+  .btn-primary .play-icon { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.25); display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; }
   .circle-deco { position: absolute; border-radius: 50%; border: 20px solid var(--red); opacity: 0.85; }
 
   /* NAVBAR */
@@ -80,7 +83,7 @@ const globalStyles = `
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
   .nav-links a.active, .nav-links a:hover { color: var(--red); }
   .nav-links .contact-btn { border: 2px solid var(--red); padding: 7px 20px; border-radius: 30px; color: var(--light); transition: background 0.3s; }
-  .nav-links .contact-btn:hover { background: var(--red); }
+  .nav-links .contact-btn:hover { background: var(--red); color: #111; }
   .nav-links .contact-btn::after { display: none; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { display: block; width: 26px; height: 2px; background: var(--light); transition: 0.3s; }
@@ -215,6 +218,11 @@ const globalStyles = `
   .testimonial-content .section-title { color: var(--light); margin-bottom: 32px; }
   .testimonial-content .quote-icon { font-size: 3rem; color: var(--red); line-height: 1; margin-bottom: 10px; display: block; }
   .testimonial-content blockquote { color: #ccc; font-size: 0.95rem; line-height: 1.8; font-style: italic; margin-bottom: 24px; border: none; transition: opacity 0.5s; }
+  .testi-profile-wrap { display: flex; align-items: center; gap: 30px; margin-bottom: 28px; }
+  .testi-profile-img { width: 170px; height: 170px; border-radius: 50%; border: 4px solid var(--red); object-fit: cover; flex-shrink: 0; box-shadow: 0 0 0 6px rgba(232,55,44,0.2); transition: opacity 0.4s, transform 0.4s; }
+  .testi-profile-img.faded { opacity: 0; transform: scale(0.85); }
+  .testi-heading-text .section-label { color: var(--red); }
+  .testi-heading-text .section-title { color: var(--light); }
   .testi-author strong { display: block; color: var(--light); font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; border-top: 2px solid var(--light); padding-top: 10px; margin-bottom: 4px; }
   .testi-author span { color: var(--gray); font-size: 0.8rem; }
   .testi-nav { display: flex; gap: 12px; margin-top: 28px; }
@@ -309,19 +317,130 @@ const globalStyles = `
   .contact-form textarea { height: 110px; resize: none; }
   .form-submit { margin-top: 20px; }
 
+  /* BLOG MODAL */
+  .blog-modal-backdrop {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    animation: modal-fade-in 0.3s ease;
+  }
+  @keyframes modal-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  .blog-modal {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%; max-width: 720px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modal-slide-up 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+  }
+  @keyframes modal-slide-up { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .blog-modal-header {
+    position: relative;
+    height: 220px;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+    display: flex; align-items: flex-end;
+    padding: 24px 32px;
+  }
+  .blog-modal-header-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #1a0a08, #111);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(232,55,44,0.08); font-size: 9rem;
+    font-family: var(--font-display); letter-spacing: -4px;
+    pointer-events: none; user-select: none;
+  }
+  .blog-modal-header::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 100%);
+  }
+  .blog-modal-meta {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .blog-modal-cat {
+    background: var(--red); color: #fff;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 20px;
+  }
+  .blog-modal-date-badge {
+    background: rgba(255,255,255,0.15); color: #fff;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1px;
+    padding: 4px 12px; border-radius: 20px; backdrop-filter: blur(4px);
+  }
+  .blog-modal-readtime {
+    color: rgba(255,255,255,0.6); font-size: 0.78rem; letter-spacing: 1px;
+  }
+  .blog-modal-close {
+    position: absolute; top: 16px; right: 16px; z-index: 10;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); border: none; cursor: pointer;
+    color: #fff; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .blog-modal-close:hover { background: var(--red); }
+  .blog-modal-body { padding: 32px 36px 40px; }
+  .blog-modal-title {
+    font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.2rem);
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--dark); line-height: 1.1; margin-bottom: 10px;
+  }
+  .blog-modal-title.featured { color: var(--red); }
+  .blog-modal-author {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 24px; padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .blog-modal-author-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #fef0ef; display: flex; align-items: center; justify-content: center;
+  }
+  .blog-modal-author-icon i { color: var(--red); font-size: 0.85rem; }
+  .blog-modal-author span { font-size: 0.85rem; font-weight: 700; color: #555; letter-spacing: 0.5px; }
+  .blog-modal-content {
+    color: #444; font-size: 0.95rem; line-height: 1.9;
+    white-space: pre-line;
+  }
+  .blog-modal-footer {
+    margin-top: 32px; padding-top: 24px;
+    border-top: 1px solid #f0f0f0;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .blog-modal-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--red); color: #fff;
+    font-family: var(--font-body); font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 10px 24px; border-radius: 50px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .blog-modal-cta:hover { background: #c0251b; }
+  .blog-modal-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 2px solid #ddd; color: #555;
+    font-family: var(--font-body); font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 10px 22px; border-radius: 50px;
+    cursor: pointer; background: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .blog-modal-back:hover { border-color: var(--red); color: var(--red); }
+
   /* BLOG */
-  #blog { padding: 90px 60px; background: var(--light); }
+  #blog { padding: 90px 60px; background: #f5f5f5; }
   #blog .blog-header { text-align: center; margin-bottom: 50px; }
   #blog .section-label { color: var(--red); }
   .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1000px; margin: 0 auto; }
-  .blog-card { position: relative; border-radius: 16px; overflow: visible; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.07); z-index: 0; }
-  .blog-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c, #8b0000); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; animation: gradientSpin 3s ease infinite; }
-  .blog-card::after { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: #ffffff; z-index: -1; }
+  .blog-card { position: relative; border-radius: 16px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.07); background: #ffffff; }
+  .blog-card::before { display: none; }
+  .blog-card::after { display: none; }
   .blog-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(232,55,44,0.25); }
-  .blog-card:hover::before { opacity: 1; }
-  .blog-card .blog-img { height: 180px; background: #ddd; position: relative; overflow: hidden; border-radius: 14px 14px 0 0; }
-  .blog-card .blog-img .img-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(0,0,0,0.2); font-size: 0.75rem; letter-spacing: 1px; }
-  .blog-card .blog-img .img-placeholder i { font-size: 2rem; margin-bottom: 8px; }
+  .blog-card .blog-img { height: 180px; background: #ddd; position: relative; overflow: hidden; border-radius: 0; flex-shrink: 0; }
   .date-badge { position: absolute; top: 12px; left: 12px; background: var(--red); color: var(--light); border-radius: 50%; width: 54px; height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.3rem; line-height: 1; }
   .date-badge small { font-size: 0.55rem; font-family: var(--font-body); letter-spacing: 1px; }
   .blog-body { padding: 24px 22px; }
@@ -379,11 +498,11 @@ const globalStyles = `
 
 /* ─── Data ─── */
 const testimonials = [
-  { quote: "STAIRS is God-sent for me. Absolutely awesome team and time at Stairs. Just can't wait for my next session every single time. You guys make it so interesting and work towards the need and goal of the client, that ensures I skip my work but not my workout. Keep rocking TEAM STAIRS!", name: "Sanjay Rajpal", role: "Businessman" },
-  { quote: "I have personally grown to understand my body better because of Somya. There is a warm environment that the trainers and therapists foster that is conducive to progress. Every person working in Stairs is kind and helpful and I love the place! I highly recommend coming to Stairs.", name: "Rukmini Vilayakumar", role: "Actor, Dancer" },
-  { quote: "I'm proud to have a coach like Somya Rout, the team he is building and someone to speak to and someone who listens to me especially when you are in a profession it's the other way around all the time. To coach and to be coached is a perfect balance of learning & teaching.", name: "Shreyas Karnad", role: "Running Coach" },
-  { quote: "Stairs is like my second home. Entire team at Stairs is so diligent & proficient. They not only strengthen us but understand the needs of our sport and train us efficaciously such that we are able to pursue our goals.", name: "Pragathi Gupta", role: "Runner" },
-  { quote: "Stairs isn't just a fitness space; it's a home. Grateful for dedicated trainers, physios, and supportive members ensuring peak performance. Thank you, Team Stairs, for fostering excellence and positivity.", name: "Janani Ananthakumar", role: "Athlete, Badminton (India)" },
+  { img: "/images/SANJAY RAJPAL.avif", quote: "STAIRS is God-sent for me. Absolutely awesome team and time at Stairs. Just can't wait for my next session every single time. You guys make it so interesting and work towards the need and goal of the client, that ensures I skip my work but not my workout. Keep rocking TEAM STAIRS!", name: "Sanjay Rajpal", role: "Businessman" },
+  { img: "/images/RUKMINI VIJAYAKUMAR.avif", quote: "I have personally grown to understand my body better because of Somya. There is a warm environment that the trainers and therapists foster that is conducive to progress. Every person working in Stairs is kind and helpful and I love the place! I highly recommend coming to Stairs.", name: "Rukmini Vilayakumar", role: "Actor, Dancer" },
+  { img: "/images/SHREYAS KARNAD.avif", quote: "I'm proud to have a coach like Somya Rout, the team he is building and someone to speak to and someone who listens to me especially when you are in a profession it's the other way around all the time. To coach and to be coached is a perfect balance of learning & teaching.", name: "Shreyas Karnad", role: "Running Coach" },
+  { img: "/images/PRAGATHI GUPTA.png", quote: "Stairs is like my second home. Entire team at Stairs is so diligent & proficient. They not only strengthen us but understand the needs of our sport and train us efficaciously such that we are able to pursue our goals.", name: "Pragathi Gupta", role: "Runner" },
+  { img: "/images/JANANI ANANTHAKUMAR.jpg", quote: "Stairs isn't just a fitness space; it's a home. Grateful for dedicated trainers, physios, and supportive members ensuring peak performance. Thank you, Team Stairs, for fostering excellence and positivity.", name: "Janani Ananthakumar", role: "Athlete, Badminton (India)" },
 ];
 
 const orgs = [
@@ -396,10 +515,10 @@ const orgs = [
 ];
 
 const features = [
-  { icon: "fas fa-child", title: "Abdominal Sessions", text: "Ruis voluptas sit asper natur aut odit aut fugi sed quia consuntu ma gni dolores eos." },
-  { icon: "fas fa-weight-hanging", title: "Weight Lifting", text: "Ruis voluptas sit asper natur aut odit aut fugi sed quia consuntu ma gni dolores eos." },
-  { icon: "fas fa-fist-raised", title: "Flex Muscle", text: "Quia voluptas sit asper natur aut odit aut fugi sed quia consuntu ma gni dolores ea." },
-  { icon: "fas fa-pills", title: "Powerful Vitamins", text: "Aula voluptas sit asper natur aut odit aut fugi sed quia consuntu ma gni dolores eos." },
+  { icon: "fas fa-child", title: "Abdominal Sessions", text: "Strengthen your core with targeted abdominal training. Our sessions improve posture, reduce lower back pain, and build a stable foundation for every movement your body makes." },
+  { icon: "fas fa-weight-hanging", title: "Weight Lifting", text: "Build real strength with progressive, coach-guided weight training. We design programs that improve muscle balance, joint health, and athletic performance safely." },
+  { icon: "fas fa-fist-raised", title: "Flex & Mobility", text: "Regain full range of motion through expert-led flexibility and mobility work. We combine myofascial release and corrective exercise to help your body move pain-free." },
+  { icon: "fas fa-pills", title: "Recovery & Nutrition", text: "Optimal recovery starts from within. Our experts guide you on nutrition, sleep, and supplementation strategies to accelerate healing and sustain peak performance." },
 ];
 
 const services = [
@@ -451,12 +570,6 @@ const trainers = [
   { img: "coach1.png", name: "Marvin Joiner", role: "CrossFit Coach" },
   { img: "coach2.png", name: "Patricia Woodrum", role: "Cardio & Conditioning" },
   { img: "coach3.png", name: "Hannaz Stone", role: "Fitness Coach" },
-];
-
-const blogPosts = [
-  { img: "blog1.png", date: "23", month: "Jan", title: "Soluta Nobis Qse Aligen Optio Cumue", featured: false },
-  { img: "blog2.png", date: "07", month: "Feb", title: "Quis Autcm Vea Eum Iure Reprehenderit", featured: true },
-  { img: "blog3.png", date: "12", month: "Apr", title: "Reprehenderit In Vouta Velit Esse Cillum", featured: false },
 ];
 
 const pricingFeatures = ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"];
@@ -532,7 +645,7 @@ function Navbar({
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
       <div className="nav-logo">
-        <img src="logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} />
+        <Image src="/logo.png" alt="Stairs" width={120} height={60} style={{ height: 60, width: "auto" }} priority />
       </div>
       <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => (
@@ -559,14 +672,18 @@ function Hero() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    let innerTimer: ReturnType<typeof setTimeout>;
     const pause = setTimeout(() => {
       setVisible(false);
-      setTimeout(() => {
+      innerTimer = setTimeout(() => {
         setIdx((i) => (i + 1) % slides.length);
         setVisible(true);
       }, 500);
     }, 3500);
-    return () => clearTimeout(pause);
+    return () => {
+      clearTimeout(pause);
+      clearTimeout(innerTimer);
+    };
   }, [idx]);
 
   const s = slides[idx];
@@ -713,6 +830,7 @@ function Hero() {
           {slides.map((_, i) => (
             <button
               key={i}
+              suppressHydrationWarning
               onClick={() => { setVisible(false); setTimeout(() => { setIdx(i); setVisible(true); }, 400); }}
               style={{ width: i === idx ? 28 : 8, height: 8, borderRadius: 4, border: "none", cursor: "pointer", background: i === idx ? "#e8372c" : "rgba(255,255,255,0.3)", transition: "all 0.4s", padding: 0 }}
             />
@@ -725,7 +843,7 @@ function Hero() {
           style={{ display: "inline-block" }}
         >
           <div className="glow-btn-wrap">
-            <a href="#contact" className="glow-btn-inner">Join Us Now</a>
+            <a href="#services" className="glow-btn-inner">Join Us Now</a>
           </div>
         </motion.div>
       </div>
@@ -786,7 +904,7 @@ function WhyChooseUs() {
             <div className="icon-wrap"><i className={f.icon} /></div>
             <h3>{f.title}</h3>
             <p>{f.text}</p>
-            <a href="#" className="read-more">Read more <i className="fas fa-arrow-right" /></a>
+
           </div>
         ))}
       </div>
@@ -896,7 +1014,7 @@ function About() {
           <div className="stat-item reveal"><h3>1000+</h3><p>Happy Clients</p></div>
           <div className="stat-item reveal"><h3>400+</h3><p>Perfect Bodies</p></div>
         </div>
-        <div className="glow-btn-wrap"><a href="#contact" className="glow-btn-inner">Read more <span className="play-icon"><i className="fas fa-play" /></span></a></div>
+        <div className="glow-btn-wrap"><a href="/about" className="glow-btn-inner">Read more <span className="play-icon"><i className="fas fa-play" /></span></a></div>
       </div>
     </section>
   );
@@ -965,8 +1083,8 @@ function Services() {
       </div>
       <div className="services-join reveal">
         <div className="glow-btn-wrap">
-          <a href="#contact" className="glow-btn-inner">
-            Join us now <span className="play-icon"><i className="fas fa-play" /></span>
+          <a href="/services" className="glow-btn-inner">
+            Go To Services <span className="play-icon"><i className="fas fa-arrow-right" /></span>
           </a>
         </div>
       </div>
@@ -978,17 +1096,29 @@ function Services() {
 function Testimonials() {
   const [idx, setIdx] = useState(0);
   const [fade, setFade] = useState(true);
+  const [imgFade, setImgFade] = useState(true);
+  const changeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const changeTo = (newIdx: number) => {
     setFade(false);
-    setTimeout(() => { setIdx(newIdx); setFade(true); }, 200);
+    setImgFade(false);
+    if (changeTimerRef.current) clearTimeout(changeTimerRef.current);
+    changeTimerRef.current = setTimeout(() => {
+      setIdx(newIdx);
+      setFade(true);
+      setImgFade(true);
+    }, 300);
   };
+
   const next = () => changeTo((idx + 1) % testimonials.length);
   const prev = () => changeTo((idx - 1 + testimonials.length) % testimonials.length);
 
   useEffect(() => {
     const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      if (changeTimerRef.current) clearTimeout(changeTimerRef.current);
+    };
   }, [idx]);
 
   const parallaxRef = useParallax(0.06);
@@ -1048,8 +1178,19 @@ function Testimonials() {
         </div>
       </div>
       <div className="testimonial-content reveal-left">
-        <span className="section-label">Testimonials</span>
-        <h2 className="section-title">What Our Clients<br />Say About Us</h2>
+        <div className="testi-profile-wrap">
+          <div className="testi-heading-text">
+            <span className="section-label">Testimonials</span>
+            <h2 className="section-title">What Our Clients<br />Say About Us</h2>
+          </div>
+          <Image
+            src={t.img}
+            alt={t.name}
+            width={170}
+            height={170}
+            className={`testi-profile-img${imgFade ? "" : " faded"}`}
+          />
+        </div>
         <span className="quote-icon">"</span>
         <blockquote id="testi-quote" style={{ opacity: fade ? 1 : 0 }}>{t.quote}</blockquote>
         <div className="testi-author">
@@ -1105,7 +1246,7 @@ function ProgrammeCard() {
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
-        <a href="/contact" className="prog-enroll">Enroll Now &nbsp;<i className="fas fa-arrow-right" /></a>
+        <a href="/pricing" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
       </div>
     </div>
   );
@@ -1151,7 +1292,7 @@ function MassageCard() {
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
-        <a href="/contact" className="prog-enroll">Book Now &nbsp;<i className="fas fa-arrow-right" /></a>
+        <a href="/pricing" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
       </div>
     </div>
   );
@@ -1197,7 +1338,7 @@ function FitToRunCard() {
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
-        <a href="/contact" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
+        <a href="/pricing" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
       </div>
     </div>
   );
@@ -1290,6 +1431,35 @@ function Trainers() {
 /* ─── Contact ─── */
 function Contact() {
   const parallaxRef = useParallax(0.05);
+  const [form, setForm] = useState({ name: "", phone: "", email: "", subject: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", phone: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact">
       <div className="contact-bg" />
@@ -1347,19 +1517,32 @@ function Contact() {
         <h2 className="section-title">Send Us A Message<br />&amp; Join Our Team</h2>
         <div className="contact-form">
           <div className="form-row">
-            <input type="text" placeholder="Name" />
-            <input type="tel" placeholder="Phone" />
+            <input type="text" name="name" placeholder="Name" value={form.name} onChange={handleChange} />
+            <input type="tel" name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
           </div>
           <div className="form-row">
-            <input type="email" placeholder="Email" />
-            <input type="text" placeholder="Subject" />
+            <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} />
+            <input type="text" name="subject" placeholder="Subject" value={form.subject} onChange={handleChange} />
           </div>
           <div className="form-row single">
-            <textarea placeholder="Message" />
+            <textarea name="message" placeholder="Message" value={form.message} onChange={handleChange} />
           </div>
+          {status === "error" && (
+            <p style={{ color: "#ff6b6b", fontSize: "0.85rem", marginBottom: 8 }}>
+              {!form.name || !form.email || !form.message
+                ? "Please fill in Name, Email and Message."
+                : "Something went wrong. Please try again."}
+            </p>
+          )}
+          {status === "success" && (
+            <p style={{ color: "#4caf50", fontSize: "0.85rem", marginBottom: 8 }}>
+              ✓ Message sent! We&apos;ll get back to you soon.
+            </p>
+          )}
           <div className="form-submit">
-            <button className="btn-primary" type="button">
-              Send now <span className="play-icon"><i className="fas fa-play" /></span>
+            <button className="btn-primary" type="button" onClick={handleSubmit} disabled={status === "loading"}>
+              {status === "loading" ? "Sending..." : "Send"}
+              {status !== "loading" && <span className="play-icon"><i className="fas fa-play" /></span>}
             </button>
           </div>
         </div>
@@ -1368,32 +1551,116 @@ function Contact() {
   );
 }
 
+/* ─── Blog Modal ─── */
+function BlogModal({ post, onClose }: { post: BlogPost; onClose: () => void }) {
+  // Close on Escape key
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", handler); document.body.style.overflow = ""; };
+  }, [onClose]);
+
+  return (
+    <div className="blog-modal-backdrop" onClick={onClose}>
+      <div className="blog-modal" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="blog-modal-header" style={{ backgroundImage: `url('${post.img}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div className="blog-modal-header-bg" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%)' }}>STAIRS</div>
+          <button className="blog-modal-close" onClick={onClose}>
+            <i className="fas fa-times" />
+          </button>
+          <div className="blog-modal-meta">
+            <span className="blog-modal-cat">{post.category}</span>
+            <span className="blog-modal-date-badge">{post.date} {post.month}</span>
+            <span className="blog-modal-readtime"><i className="fas fa-clock" style={{ marginRight: 5 }} />{post.readTime}</span>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="blog-modal-body">
+          <h2 className={`blog-modal-title${post.featured ? " featured" : ""}`}>{post.title}</h2>
+          <div className="blog-modal-author">
+            <div className="blog-modal-author-icon"><i className="fas fa-user" /></div>
+            <span>By {post.author}</span>
+          </div>
+          <p className="blog-modal-content">{post.content}</p>
+          <div className="blog-modal-footer">
+            <a href="/contact" className="blog-modal-cta">
+              Book a Session <i className="fas fa-arrow-right" />
+            </a>
+            <button className="blog-modal-back" onClick={onClose}>
+              <i className="fas fa-arrow-left" /> Back to Blog
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Blog ─── */
 function Blog() {
+  const [activePost, setActivePost] = useState<BlogPost | null>(null);
+  const [page, setPage] = useState(0);
+  const perPage = 3;
+  const totalPages = Math.ceil(blogPosts.length / perPage);
+  const visible = blogPosts.slice(page * perPage, page * perPage + perPage);
+
   return (
     <section id="blog">
+      {activePost && <BlogModal post={activePost} onClose={() => setActivePost(null)} />}
       <div className="blog-header">
-        <span className="section-label reveal">Our News</span>
-        <h2 className="section-title reveal">Latest Blog Posts</h2>
+        <span className="section-label">Our News</span>
+        <h2 className="section-title">Latest Blog Posts</h2>
       </div>
       <div className="blog-grid stagger">
-        {blogPosts.map((post, i) => (
-          <div className={`blog-card reveal${post.featured ? " featured" : ""}`} key={i}>
-            <div className="blog-img">
-              <div className="img-placeholder"><i className="fas fa-image" />{post.img}</div>
+        {visible.map((post, i) => (
+          <div
+            className={`blog-card${post.featured ? " featured" : ""}`}
+            key={`${page}-${i}`}
+            style={{ cursor: "pointer" }}
+            onClick={() => setActivePost(post)}
+          >
+            <div className="blog-img" style={{ backgroundImage: `url('${post.img}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
               <div className="date-badge">{post.date}<small>{post.month}</small></div>
             </div>
             <div className="blog-body">
               <h3>{post.title}</h3>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-              <a href="#" className="read-more">Read more</a>
+              <p>{post.excerpt}</p>
+              <span className="read-more" style={{ cursor: "pointer" }}>Read more</span>
             </div>
           </div>
         ))}
       </div>
-      <div className="blog-nav reveal">
-        <button><i className="fas fa-chevron-left" /></button>
-        <button><i className="fas fa-chevron-right" /></button>
+      <div className="blog-nav">
+        <button
+          onClick={() => setPage((p) => Math.max(0, p - 1))}
+          disabled={page === 0}
+          style={{ opacity: page === 0 ? 0.35 : 1, width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <i className="fas fa-chevron-left" />
+        </button>
+        {Array.from({ length: totalPages }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setPage(i)}
+            style={{
+              background: i === page ? 'var(--red)' : 'var(--dark)',
+              width: 40, height: 40,
+              borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '0.8rem', fontWeight: 700, color: 'var(--light)'
+            }}
+          >{i + 1}</button>
+        ))}
+        <button
+          onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+          disabled={page === totalPages - 1}
+          style={{ opacity: page === totalPages - 1 ? 0.35 : 1, width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+          <i className="fas fa-chevron-right" />
+        </button>
       </div>
     </section>
   );
@@ -1406,10 +1673,9 @@ function Footer() {
       <div className="footer-grid reveal">
         <div className="footer-brand">
           <div className="logo">
-            <div className="logo-icon"><i className="fas fa-dumbbell" /></div>
-            <span>Stairs</span>
+            <Image src="/logo.png" alt="Stairs" width={120} height={60} style={{ height: 60, width: "auto" }} />
           </div>
-          <p>Fulatrumat est aun dolorem ipsum natus dolor sit amet...</p>
+          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
           <div className="footer-social">
             <a href="#"><i className="fab fa-facebook-f" /></a>
             <a href="#"><i className="fab fa-twitter" /></a>
@@ -1437,7 +1703,7 @@ function Footer() {
           <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
         </div>
       </div>
-      <div className="footer-bottom"><p>Copyright 2022 xtremefitness.com All Rights Reserved.</p></div>
+      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
     </footer>
   );
 }
@@ -1451,7 +1717,6 @@ export default function App() {
   return (
     <>
       <style>{globalStyles}</style>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <Hero />
       <Organisations />

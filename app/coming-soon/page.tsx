@@ -25,7 +25,7 @@ const globalStyles = `
   .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
   .nav-links a.active,.nav-links a:hover{color:var(--red);}
   .nav-links .contact-btn{border:2px solid var(--red);padding:7px 20px;border-radius:30px;color:var(--light);transition:background .3s;}
-  .nav-links .contact-btn:hover{background:var(--red);}
+  .nav-links .contact-btn:hover{background:var(--red);color:#111;}
   .nav-links .contact-btn::after{display:none;}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}

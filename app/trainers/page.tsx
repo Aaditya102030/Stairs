@@ -32,7 +32,7 @@ const globalStyles = `
   .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
   .nav-links a.active,.nav-links a:hover{color:var(--red);}
   .nav-links .contact-btn{border:2px solid var(--red);padding:7px 20px;border-radius:30px;color:var(--light);transition:background .3s;}
-  .nav-links .contact-btn:hover{background:var(--red);}
+  .nav-links .contact-btn:hover{background:var(--red);color:#111;}
   .nav-links .contact-btn::after{display:none;}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
@@ -625,8 +625,8 @@ function Footer() {
     <footer id="footer">
       <div className="footer-grid reveal">
         <div className="footer-brand">
-          <div className="logo"><div className="logo-icon"><i className="fas fa-dumbbell" /></div><span>Stairs</span></div>
-          <p>Fulatrumat est aun dolorem ipsum natus dolor sit amet...</p>
+          <div className="logo"><img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} /></div>
+          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
           <div className="footer-social">
             <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
           </div>
@@ -647,7 +647,7 @@ function Footer() {
           <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
         </div>
       </div>
-      <div className="footer-bottom"><p>Copyright 2024 Stairs. All Rights Reserved.</p></div>
+      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
     </footer>
   );
 }

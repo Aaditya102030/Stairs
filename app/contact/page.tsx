@@ -27,7 +27,7 @@ const globalStyles = `
   .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
   .nav-links a.active,.nav-links a:hover{color:var(--red);}
   .nav-links .contact-btn{border:2px solid var(--red);padding:7px 20px;border-radius:30px;color:var(--light);transition:background .3s;}
-  .nav-links .contact-btn:hover{background:var(--red);}
+  .nav-links .contact-btn:hover{background:var(--red);color:#111;}
   .nav-links .contact-btn::after{display:none;}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
@@ -239,6 +239,35 @@ function PageHero() {
 }
 
 function ContactFull() {
+  const [form, setForm] = useState({ name: "", phone: "", email: "", subject: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", phone: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact-full">
       <div className="contact-bg" />
@@ -251,19 +280,38 @@ function ContactFull() {
         <h2 className="section-title">Send Us A Message<br />&amp; Join Our Team</h2>
         <div className="contact-form">
           <div className="form-row">
-            <input type="text" placeholder="Your Name" />
-            <input type="tel" placeholder="Phone Number" />
+            <input type="text" name="name" placeholder="Your Name" value={form.name} onChange={handleChange} />
+            <input type="tel" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} />
           </div>
           <div className="form-row">
-            <input type="email" placeholder="Email Address" />
-            <input type="text" placeholder="Subject" />
+            <input type="email" name="email" placeholder="Email Address" value={form.email} onChange={handleChange} />
+            <input type="text" name="subject" placeholder="Subject" value={form.subject} onChange={handleChange} />
           </div>
           <div className="form-row single">
-            <textarea placeholder="Your Message" />
+            <textarea name="message" placeholder="Your Message" value={form.message} onChange={handleChange} />
           </div>
+          {status === "error" && (
+            <p style={{ color: "#ff6b6b", fontSize: ".85rem", marginBottom: 8 }}>
+              {!form.name || !form.email || !form.message
+                ? "Please fill in Name, Email and Message."
+                : "Something went wrong. Please try again."}
+            </p>
+          )}
+          {status === "success" && (
+            <p style={{ color: "#4caf50", fontSize: ".85rem", marginBottom: 8 }}>
+              ✓ Message sent! We&apos;ll get back to you soon.
+            </p>
+          )}
           <div className="form-submit">
-            <motion.button whileTap={{ scale: 0.95 }} className="btn-primary" type="button">
-              Send Now <span className="play-icon"><i className="fas fa-play" /></span>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              className="btn-primary"
+              type="button"
+              onClick={handleSubmit}
+              disabled={status === "loading"}
+            >
+              {status === "loading" ? "Sending..." : "Send Now"}
+              {status !== "loading" && <span className="play-icon"><i className="fas fa-play" /></span>}
             </motion.button>
           </div>
         </div>
@@ -297,8 +345,8 @@ function Footer() {
     <footer id="footer">
       <div className="footer-grid reveal">
         <div className="footer-brand">
-          <div className="logo"><div className="logo-icon"><i className="fas fa-dumbbell" /></div><span>Stairs</span></div>
-          <p>Fulatrumat est aun dolorem ipsum natus dolor sit amet...</p>
+          <div className="logo"><img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} /></div>
+          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
           <div className="footer-social">
             <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
           </div>
@@ -319,7 +367,7 @@ function Footer() {
           <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
         </div>
       </div>
-      <div className="footer-bottom"><p>Copyright 2024 Stairs. All Rights Reserved.</p></div>
+      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
     </footer>
   );
 }
