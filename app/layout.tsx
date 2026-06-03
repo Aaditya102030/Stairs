@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Barlow } from "next/font/google";
 import "./globals.css";
+import BfcacheHandler from "./BfcacheHandler";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -35,7 +36,10 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <BfcacheHandler />
+        {children}
+      </body>
     </html>
   );
 }

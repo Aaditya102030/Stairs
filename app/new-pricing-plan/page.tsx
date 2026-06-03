@@ -371,8 +371,10 @@ export default function NewPricingPage() {
           </div>
           <div className="footer-col footer-contact">
             <h4>Contact Us</h4>
-            <div className="contact-item"><strong>Email:</strong><span>info@stairs.com</span></div>
-            <div className="contact-item"><strong>Phone:</strong><span>+91 XXXXX XXXXX</span></div>
+            <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
+            <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
+            <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
+            <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
           </div>
         </div>
         <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>

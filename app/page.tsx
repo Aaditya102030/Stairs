@@ -72,25 +72,25 @@ const globalStyles = `
   .circle-deco { position: absolute; border-radius: 50%; border: 20px solid var(--red); opacity: 0.85; }
 
   /* NAVBAR */
-  #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; transition: background 0.4s, padding 0.4s; }
-  #navbar.scrolled { background: rgba(10,10,10,0.95); padding: 12px 60px; backdrop-filter: blur(8px); }
+  #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 22px 72px; transition: background 0.4s, padding 0.4s, box-shadow 0.4s; }
+  #navbar.scrolled { background: rgba(10,10,10,0.96); padding: 14px 72px; backdrop-filter: blur(12px); box-shadow: 0 2px 40px rgba(0,0,0,0.4); }
   .nav-logo { display: flex; align-items: center; gap: 10px; color: var(--light); }
   .nav-logo .logo-icon { width: 40px; height: 40px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--light); }
   .nav-logo span { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 2px; }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a { color: var(--light); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; position: relative; transition: color 0.3s; }
-  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
+  .nav-links { display: flex; align-items: center; gap: 38px; }
+  .nav-links a { color: var(--light); font-size: 0.78rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; position: relative; transition: color 0.3s; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
   .nav-links a.active, .nav-links a:hover { color: var(--red); }
-  .nav-links .contact-btn { border: 2px solid var(--red); padding: 7px 20px; border-radius: 30px; color: var(--light); transition: background 0.3s; }
-  .nav-links .contact-btn:hover { background: var(--red); color: #111; }
+  .nav-links .contact-btn { border: 2px solid var(--red); padding: 9px 26px; border-radius: 30px; color: var(--light); font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; transition: background 0.3s, color 0.3s; }
+  .nav-links .contact-btn:hover { background: var(--red); color: #fff; }
   .nav-links .contact-btn::after { display: none; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { display: block; width: 26px; height: 2px; background: var(--light); transition: 0.3s; }
 
   /* HERO */
   #hero { position: relative; min-height: 100vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .hero-bg-img { position: absolute; inset: 0; background: url('images/hero-bg.png') center/cover no-repeat; opacity: 0.55; }
+  .hero-bg-img { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80') center/cover no-repeat; opacity: 0.55; }
   .hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.2) 100%); }
   .hero-circle { width: 580px; height: 580px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 30px; pointer-events: none; animation: spin-slow 20s linear infinite; }
   .hero-circle-wrap { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 580px; height: 580px; pointer-events: none; z-index: 2; }
@@ -158,7 +158,7 @@ const globalStyles = `
 
   /* ABOUT */
   #about { position: relative; min-height: 500px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .about-bg { position: absolute; inset: 0; background: url('images/about-bg.png') center/cover no-repeat; opacity: 0.4; }
+  .about-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=80') center/cover no-repeat; opacity: 0.4; }
   .about-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.92) 55%); }
   .about-circle { width: 460px; height: 460px; left: 2%; top: 50%; transform: translateY(-50%); border-width: 25px; pointer-events: none; opacity: 0.7; }
   /* SECTION ILLUSTRATIONS */
@@ -209,7 +209,7 @@ const globalStyles = `
 
   /* TESTIMONIALS */
   #testimonials { position: relative; min-height: 420px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .testimonials-bg { position: absolute; inset: 0; background: url('images/testimonials-bg.png') center/cover no-repeat; opacity: 0.3; }
+  .testimonials-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=1600&q=80') center/cover no-repeat; opacity: 0.3; }
   .testi-circle { width: 400px; height: 400px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 20px; pointer-events: none; opacity: 0.65; }
   .testi-img-placeholder .img-box i { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.3; }
   /* kept for mobile fallback */
@@ -301,7 +301,7 @@ const globalStyles = `
 
   /* CONTACT */
   #contact { position: relative; min-height: 460px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .contact-bg { position: absolute; inset: 0; background: url('images/contact-bg.png') center/cover no-repeat; opacity: 0.35; }
+  .contact-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=80') center/cover no-repeat; opacity: 0.35; }
   .contact-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.25) 0%, rgba(10,10,10,0.88) 50%); }
   .contact-circle { width: 360px; height: 360px; left: 5%; top: 50%; transform: translateY(-50%); border-width: 20px; opacity: 0.6; pointer-events: none; }
   .contact-img-placeholder .img-box i { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.3; }
@@ -474,8 +474,8 @@ const globalStyles = `
 
   /* RESPONSIVE */
   @media (max-width: 1024px) {
-    #navbar { padding: 16px 30px; }
-    #navbar.scrolled { padding: 10px 30px; }
+    #navbar { padding: 18px 30px; }
+    #navbar.scrolled { padding: 12px 30px; }
     .hero-content { padding: 0 30px; }
     #organisations, #why, #services, #pricing, #trainers, #blog, #footer { padding-left: 30px; padding-right: 30px; }
     .features-grid { grid-template-columns: repeat(2, 1fr); }
@@ -567,9 +567,9 @@ const programmeSlides = [
 const programmeFeatures = ["1-on-1 video coaching sessions", "Personalised training plan", "Physiotherapy consultations", "Diet & recovery guidance", "Flexible scheduling"];
 
 const trainers = [
-  { img: "coach1.png", name: "Marvin Joiner", role: "CrossFit Coach" },
-  { img: "coach2.png", name: "Patricia Woodrum", role: "Cardio & Conditioning" },
-  { img: "coach3.png", name: "Hannaz Stone", role: "Fitness Coach" },
+  { img: "/images/PRAGATHI GUPTA.png", name: "Marvin Joiner", role: "CrossFit Coach" },
+  { img: "/images/JANANI ANANTHAKUMAR.jpg", name: "Patricia Woodrum", role: "Cardio & Conditioning" },
+  { img: "/images/RUKMINI VIJAYAKUMAR.avif", name: "Hannaz Stone", role: "Fitness Coach" },
 ];
 
 const pricingFeatures = ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"];
@@ -645,7 +645,7 @@ function Navbar({
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
       <div className="nav-logo">
-        <Image src="/logo.png" alt="Stairs" width={120} height={60} style={{ height: 60, width: "auto" }} priority />
+        <Image src="/logo.png" alt="Stairs" width={140} height={70} style={{ height: 70, width: "auto" }} priority />
       </div>
       <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => (
@@ -693,7 +693,7 @@ function Hero() {
       <div className="hero-bg-img" />
       <div className="circle-deco hero-circle" />
       <div className="hero-3d-scene">
-        <svg width="520" height="520" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="520" height="520" viewBox="-40 -40 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Ambient glow rings */}
           <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
           <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
@@ -951,56 +951,58 @@ function About() {
                 <stop offset="100%" stopColor="#1a1a1a"/>
               </linearGradient>
             </defs>
-            {/* glow blob */}
-            <ellipse cx="210" cy="240" rx="160" ry="180" fill="url(#aGlow)"/>
-            {/* orbit rings */}
-            <circle cx="210" cy="240" r="160" stroke="#e8372c" strokeWidth="1" strokeDasharray="6 12" opacity="0.2" style={{animation:"spin-ring 22s linear infinite",transformOrigin:"210px 240px"}}/>
-            <circle cx="210" cy="240" r="130" stroke="#ff6a00" strokeWidth="1" strokeDasharray="3 16" opacity="0.15" style={{animation:"spin-ring 32s linear infinite reverse",transformOrigin:"210px 240px"}}/>
-            {/* orbiting dumbbell dot */}
-            <g style={{animation:"orbit 8s linear infinite",transformOrigin:"210px 240px"}}>
-              <circle cx="210" cy="240" r="10" fill="#e8372c"/>
-              <rect x="204" y="237" width="12" height="6" rx="3" fill="#fff" opacity="0.6"/>
+            {/* Center everything at 210,240 */}
+            <g transform="translate(210,240)">
+              {/* glow blob */}
+              <ellipse cx="0" cy="0" rx="160" ry="170" fill="url(#aGlow)"/>
+              {/* orbit rings */}
+              <circle cx="0" cy="0" r="155" stroke="#e8372c" strokeWidth="1" strokeDasharray="6 12" opacity="0.2" style={{animation:"spin-ring 22s linear infinite",transformOrigin:"0px 0px"}}/>
+              <circle cx="0" cy="0" r="125" stroke="#ff6a00" strokeWidth="1" strokeDasharray="3 16" opacity="0.15" style={{animation:"spin-ring 32s linear infinite reverse",transformOrigin:"0px 0px"}}/>
+              {/* orbiting dots */}
+              <g style={{animation:"orbit 8s linear infinite",transformOrigin:"0px 0px"}}>
+                <circle cx="0" cy="-155" r="9" fill="#e8372c"/>
+                <rect x="-6" y="-158" width="12" height="6" rx="3" fill="#fff" opacity="0.6"/>
+              </g>
+              <g style={{animation:"orbit2 12s linear infinite",transformOrigin:"0px 0px"}}>
+                <circle cx="0" cy="-125" r="7" fill="#ff6a00"/>
+              </g>
+              <g style={{animation:"orbit3 16s linear infinite",transformOrigin:"0px 0px"}}>
+                <circle cx="0" cy="-95" r="5" fill="#fff" opacity="0.5"/>
+              </g>
+              {/* athlete silhouette — translated so it sits centred at 0,0 */}
+              <g style={{animation:"bob 4s ease-in-out infinite",transformOrigin:"0px 60px"}}>
+                {/* head (was at cx=210,cy=130 → shift by -210,-240 → cx=0,cy=-110) */}
+                <circle cx="0" cy="-110" r="30" fill="url(#aBody)" stroke="#e8372c" strokeWidth="2"/>
+                <circle cx="0" cy="-110" r="20" fill="#2a2a2a"/>
+                {/* body */}
+                <path d="M-32 -78 Q0 -85 32 -78 L42 20 Q0 35 -42 20 Z" fill="url(#aBody)" stroke="#333" strokeWidth="1"/>
+                {/* red chest stripe */}
+                <path d="M-20 -70 Q0 -75 20 -70 L18 -30 Q0 -22 -18 -30 Z" fill="#e8372c" opacity="0.7"/>
+                {/* left arm curling dumbbell */}
+                <path d="M-32 -65 Q-62 -45 -72 -10" stroke="#555" strokeWidth="16" strokeLinecap="round" fill="none"/>
+                <path d="M-32 -65 Q-62 -45 -72 -10" stroke="#e8372c" strokeWidth="2" fill="none"/>
+                {/* dumbbell left hand */}
+                <rect x="-87" y="-16" width="9" height="16" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
+                <rect x="-83" y="-20" width="5" height="24" rx="2" fill="#333"/>
+                <rect x="-78" y="-16" width="9" height="16" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
+                {/* right arm raised */}
+                <path d="M32 -65 Q62 -85 68 -120" stroke="#555" strokeWidth="16" strokeLinecap="round" fill="none"/>
+                <path d="M32 -65 Q62 -85 68 -120" stroke="#e8372c" strokeWidth="2" fill="none"/>
+                {/* dumbbell right hand */}
+                <rect x="58" y="-132" width="9" height="16" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
+                <rect x="62" y="-136" width="5" height="24" rx="2" fill="#333"/>
+                <rect x="71" y="-132" width="9" height="16" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
+                {/* legs */}
+                <path d="M-18 18 L-28 120 L-10 122 L0 60 L10 122 L28 120 L18 18 Z" fill="url(#aBody)" stroke="#333" strokeWidth="1"/>
+                {/* shoes */}
+                <ellipse cx="-20" cy="124" rx="16" ry="7" fill="#222" stroke="#e8372c" strokeWidth="1.5"/>
+                <ellipse cx="20" cy="124" rx="16" ry="7" fill="#222" stroke="#e8372c" strokeWidth="1.5"/>
+              </g>
+              {/* spark particles */}
+              {[{x:-110,y:-80,d:"0s"},{x:110,y:-60,d:"1s"},{x:-130,y:80,d:"1.8s"},{x:130,y:100,d:"0.5s"},{x:-50,y:160,d:"2.2s"}].map((p,i)=>(
+                <circle key={i} cx={p.x} cy={p.y} r="3" fill="#ff6a00" style={{animation:`pulse-ring 3s ease-in-out infinite ${p.d}`,transformOrigin:`${p.x}px ${p.y}px`}}/>
+              ))}
             </g>
-            <g style={{animation:"orbit2 12s linear infinite",transformOrigin:"210px 240px"}}>
-              <circle cx="210" cy="240" r="8" fill="#ff6a00"/>
-            </g>
-            <g style={{animation:"orbit3 16s linear infinite",transformOrigin:"210px 240px"}}>
-              <circle cx="210" cy="240" r="6" fill="#fff" opacity="0.5"/>
-            </g>
-            {/* athlete silhouette */}
-            <g style={{animation:"bob 4s ease-in-out infinite",transformOrigin:"210px 300px"}}>
-              {/* head */}
-              <circle cx="210" cy="130" r="32" fill="url(#aBody)" stroke="#e8372c" strokeWidth="2"/>
-              <circle cx="210" cy="130" r="22" fill="#2a2a2a"/>
-              {/* body */}
-              <path d="M178 162 Q210 155 242 162 L252 260 Q210 275 168 260 Z" fill="url(#aBody)" stroke="#333" strokeWidth="1"/>
-              {/* red chest stripe */}
-              <path d="M190 170 Q210 165 230 170 L228 210 Q210 218 192 210 Z" fill="#e8372c" opacity="0.7"/>
-              {/* left arm curling dumbbell */}
-              <path d="M178 175 Q148 195 138 230" stroke="#555" strokeWidth="18" strokeLinecap="round" fill="none"/>
-              <path d="M178 175 Q148 195 138 230" stroke="#e8372c" strokeWidth="2" fill="none"/>
-              {/* dumbbell in left hand */}
-              <rect x="118" y="224" width="10" height="18" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
-              <rect x="122" y="220" width="6" height="26" rx="2" fill="#333"/>
-              <rect x="132" y="224" width="10" height="18" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
-              <rect x="128" y="230" width="4" height="6" rx="1" fill="url(#aBody)"/>
-              {/* right arm raised */}
-              <path d="M242 175 Q272 155 278 120" stroke="#555" strokeWidth="18" strokeLinecap="round" fill="none"/>
-              <path d="M242 175 Q272 155 278 120" stroke="#e8372c" strokeWidth="2" fill="none"/>
-              {/* dumbbell right hand */}
-              <rect x="258" y="108" width="10" height="18" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
-              <rect x="262" y="104" width="6" height="26" rx="2" fill="#333"/>
-              <rect x="272" y="108" width="10" height="18" rx="3" fill="#444" stroke="#e8372c" strokeWidth="1.5"/>
-              {/* legs */}
-              <path d="M192 258 L182 360 L200 362 L210 300 L220 362 L238 360 L228 258 Z" fill="url(#aBody)" stroke="#333" strokeWidth="1"/>
-              {/* shoes */}
-              <ellipse cx="190" cy="364" rx="18" ry="8" fill="#222" stroke="#e8372c" strokeWidth="1.5"/>
-              <ellipse cx="230" cy="364" rx="18" ry="8" fill="#222" stroke="#e8372c" strokeWidth="1.5"/>
-            </g>
-            {/* spark particles */}
-            {[{x:100,y:160,d:"0s"},{x:320,y:180,d:"1s"},{x:80,y:320,d:"1.8s"},{x:340,y:340,d:"0.5s"},{x:160,y:420,d:"2.2s"}].map((p,i)=>(
-              <circle key={i} cx={p.x} cy={p.y} r="3" fill="#ff6a00" style={{animation:`pulse-ring 3s ease-in-out infinite ${p.d}`,transformOrigin:`${p.x}px ${p.y}px`}}/>
-            ))}
           </svg>
         </div>
       </div>
@@ -1412,7 +1414,7 @@ function Trainers() {
         {trainers.map((t, i) => (
           <div className="trainer-card reveal" key={i}>
             <div className="trainer-img">
-              <div className="img-placeholder"><i className="fas fa-user" />{t.img}</div>
+              <Image src={t.img} alt={t.name} width={160} height={160} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
             </div>
             <h4>{t.name}</h4>
             <p className="role">{t.role}</p>
@@ -1698,9 +1700,10 @@ function Footer() {
         </div>
         <div className="footer-col footer-contact">
           <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Address:</strong><span>121 King Street Melbourne, 3000, Australia</span></div>
-          <div className="contact-item"><strong>Email:</strong><span>info@xtremefitness.com</span></div>
-          <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
+          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
+          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
+          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
+          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
         </div>
       </div>
       <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>

@@ -28,36 +28,44 @@ const globalStyles = `
   .btn-primary:hover { background: #c0251b; transform: translateY(-2px); }
   .btn-primary .play-icon { width: 38px; height: 38px; background: var(--light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .btn-primary .play-icon i { color: var(--red); font-size: 0.72rem; margin-left: 2px; }
-  .circle-deco { position: absolute; border-radius: 50%; border: 20px solid var(--red); opacity: 0.85; }
+
+  /* EQUIPMENT FLOAT ANIMATIONS */
+  @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-20px) rotate(-8deg); } }
+  @keyframes float2 { 0%,100% { transform: translateY(0px) rotate(10deg); } 50% { transform: translateY(-14px) rotate(10deg); } }
+  @keyframes float3 { 0%,100% { transform: translateY(0px) rotate(-3deg); } 50% { transform: translateY(-24px) rotate(-3deg); } }
+  @keyframes float4 { 0%,100% { transform: translateY(0px) rotate(6deg); } 50% { transform: translateY(-12px) rotate(6deg); } }
+  @keyframes float5 { 0%,100% { transform: translateY(0px) rotate(-15deg); } 50% { transform: translateY(-16px) rotate(-15deg); } }
+  @keyframes pulse-dot { 0%,100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.15); } }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  @keyframes spin-ccw  { to { transform: rotate(-360deg); } }
 
   /* NAVBAR */
-  #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; transition: background 0.4s, padding 0.4s; }
-  #navbar.scrolled { background: rgba(10,10,10,0.95); padding: 12px 60px; backdrop-filter: blur(8px); }
+  #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 22px 72px; transition: background 0.4s, padding 0.4s, box-shadow 0.4s; }
+  #navbar.scrolled { background: rgba(10,10,10,0.95); padding: 14px 72px; backdrop-filter: blur(12px); box-shadow: 0 2px 40px rgba(0,0,0,0.4); }
   .nav-logo { display: flex; align-items: center; gap: 10px; color: var(--light); }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a { color: var(--light); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; position: relative; transition: color 0.3s; }
-  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
+  .nav-links { display: flex; align-items: center; gap: 38px; }
+  .nav-links a { color: var(--light); font-size: 0.78rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; position: relative; transition: color 0.3s; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
   .nav-links a.active, .nav-links a:hover { color: var(--red); }
-  .nav-links .contact-btn { border: 2px solid var(--red); padding: 7px 20px; border-radius: 30px; color: var(--light); transition: background 0.3s; }
-  .nav-links .contact-btn:hover { background: var(--red); color: #111; }
+  .nav-links .contact-btn { border: 2px solid var(--red); padding: 9px 26px; border-radius: 30px; color: var(--light); font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; transition: background 0.3s, color 0.3s; }
+  .nav-links .contact-btn:hover { background: var(--red); color: #fff; }
   .nav-links .contact-btn::after { display: none; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { display: block; width: 26px; height: 2px; background: var(--light); }
 
   /* PAGE HERO */
   #page-hero { position: relative; min-height: 60vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
-  .page-hero-bg { position: absolute; inset: 0; background: url('/images/hero-bg.png') center/cover no-repeat; opacity: 0.4; }
-  .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.3) 100%); }
-  .page-hero-circle { width: 420px; height: 420px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 22px; pointer-events: none; animation: spin-slow 20s linear infinite; opacity: 0.7; }
-  .hero-3d-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
-  @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(-8deg); } }
-  @keyframes float2 { 0%,100% { transform: translateY(0px) rotate(12deg); } 50% { transform: translateY(-16px) rotate(12deg); } }
-  @keyframes float3 { 0%,100% { transform: translateY(0px) rotate(-4deg); } 50% { transform: translateY(-28px) rotate(-4deg); } }
-  @keyframes float4 { 0%,100% { transform: translateY(0px) rotate(6deg); } 50% { transform: translateY(-14px) rotate(6deg); } }
-  @keyframes pulse-ring { 0%,100% { opacity: 0.18; transform: scale(1); } 50% { opacity: 0.32; transform: scale(1.06); } }
-  @keyframes spin-ring { to { transform: rotate(360deg); } }
-  @keyframes spin-slow { to { transform: translateY(-50%) rotate(360deg); } }
+  .page-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1800&q=80') center/cover no-repeat; opacity: 0.55; }
+  .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.88) 38%, rgba(10,10,10,0.3) 100%); }
+
+  /* Full-hero equipment SVG layer */
+  .hero-equipment-layer {
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 1;
+  }
+  .hero-equipment-layer svg { width: 100%; height: 100%; }
+
   .page-hero-content { position: relative; z-index: 2; padding: 0 60px; }
   .page-hero-content .sub { font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; letter-spacing: 4px; color: var(--light); text-transform: uppercase; border-left: 4px solid var(--red); padding-left: 14px; margin-bottom: 16px; display: block; }
   .page-hero-content h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); color: var(--light); line-height: 1; letter-spacing: 2px; margin-bottom: 16px; }
@@ -118,7 +126,7 @@ const globalStyles = `
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; text-align: center; font-size: 0.8rem; }
 
   @media (max-width: 1024px) {
-    #navbar { padding: 16px 30px; } #navbar.scrolled { padding: 10px 30px; }
+    #navbar { padding: 18px 30px; } #navbar.scrolled { padding: 12px 30px; }
     #services-full, #service-cards, #footer { padding-left: 30px; padding-right: 30px; }
     .sc-grid { grid-template-columns: repeat(2,1fr); }
     .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -126,10 +134,11 @@ const globalStyles = `
   @media (max-width: 768px) {
     .nav-links { display: none; } .hamburger { display: flex; }
     .page-hero-content { padding: 0 20px; }
+    .hero-equipment-layer { opacity: 0.4; }
     .services-book { flex-direction: column; height: auto; }
     .service-panel { min-width: unset; min-height: 80px; flex: none; }
     .service-panel.is-active { min-height: 280px; }
-    .service-panel .vertical-title { transform: translate(-50%, -50%); white-space: normal; text-align: center; width: 90%; font-size: 1rem; letter-spacing: 1px; }
+    .service-panel .vertical-title { transform: translate(-50%, -50%); white-space: normal; text-align: center; width: 90%; font-size: 1rem; }
     .sc-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
   }
@@ -179,7 +188,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 45, width: "auto" }} /></div>
+      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} /></div>
       <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => <a key={l.href} href={l.href} className={l.href === "/services" ? "active" : ""}>{l.label}</a>)}
         <a href="/contact" className="contact-btn">Contact</a>
@@ -193,83 +202,116 @@ function PageHero() {
   return (
     <section id="page-hero">
       <div className="page-hero-bg" />
-      <div className="circle-deco page-hero-circle" />
-      <div className="hero-3d-scene">
-        <svg width="420" height="420" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
-          <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
-          <circle cx="260" cy="260" r="140" fill="none" stroke="rgba(232,55,44,0.08)" strokeWidth="60" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "260px 260px" }} />
-          <g style={{ animation: "float1 4s ease-in-out infinite", transformOrigin: "130px 155px" }}>
-            <rect x="72" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="76" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="90" y="151" width="80" height="8" rx="4" fill="url(#sBarGrad)"/>
-            <rect x="170" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="174" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="90" y="151" width="80" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <text x="130" y="172" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">20 KG</text>
+
+      {/* ── Equipment scattered across the full hero ── */}
+      <div className="hero-equipment-layer" aria-hidden="true">
+        <svg viewBox="0 0 1400 520" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+          {/* ── DUMBBELL 1 — top-center-right ── */}
+          <g style={{ animation: "float1 4.2s ease-in-out infinite", transformOrigin: "780px 90px" }}>
+            <rect x="720" y="74" width="20" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="724" y="68" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="736" y="83" width="88" height="8" rx="4" fill="url(#sg1)"/>
+            <rect x="824" y="74" width="20" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="828" y="68" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="736" y="83" width="88" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="780" y="104" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue,sans-serif" letterSpacing="1">20 KG</text>
           </g>
-          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "370px 145px" }}>
-            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
-            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
-            <ellipse cx="370" cy="148" rx="32" ry="30" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
-            <ellipse cx="370" cy="148" rx="32" ry="30" fill="url(#sKettleGrad)"/>
-            <rect x="356" y="118" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
-            <text x="370" y="153" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">16KG</text>
+
+          {/* ── KETTLEBELL — far right ── */}
+          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "1260px 130px" }}>
+            <path d="M1235 108 Q1235 85 1260 85 Q1285 85 1285 108" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
+            <path d="M1235 108 Q1235 85 1260 85 Q1285 85 1285 108" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
+            <ellipse cx="1260" cy="138" rx="34" ry="32" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
+            <ellipse cx="1260" cy="138" rx="34" ry="32" fill="url(#sk1)"/>
+            <rect x="1246" y="108" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
+            <ellipse cx="1248" cy="128" rx="8" ry="6" fill="rgba(255,255,255,0.1)" transform="rotate(-20,1248,128)"/>
+            <text x="1260" y="143" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue,sans-serif" letterSpacing="1">16KG</text>
           </g>
-          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "260px 265px" }}>
-            <rect x="82" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
-            <rect x="86" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
-            <rect x="104" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
-            <rect x="118" y="258" width="284" height="12" rx="6" fill="url(#sBarGrad2)"/>
-            <rect x="118" y="258" width="284" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
-            <rect x="402" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
-            <rect x="410" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
-            <rect x="412" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
-            {[170,190,210,230,250,270,290,310,330,350].map((x: number, i: number) => (
-              <rect key={i} x={x} y="258" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
+
+          {/* ── BARBELL — middle spanning wide ── */}
+          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "850px 260px" }}>
+            <rect x="540" y="242" width="30" height="54" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            <rect x="544" y="236" width="20" height="66" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="564" y="250" width="16" height="42" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="580" y="254" width="540" height="12" rx="6" fill="url(#sg2)"/>
+            <rect x="580" y="254" width="540" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
+            <rect x="1120" y="250" width="16" height="42" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
+            <rect x="1136" y="236" width="20" height="66" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
+            <rect x="1140" y="242" width="30" height="54" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
+            {[640,680,720,760,800,840,880,920,960,1000,1040,1080].map((x, i) => (
+              <rect key={i} x={x} y="254" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
             ))}
-            <text x="260" y="290" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue, sans-serif" letterSpacing="2">STAIRS GYM</text>
+            <text x="850" y="286" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue,sans-serif" letterSpacing="2">STAIRS GYM</text>
           </g>
-          <g style={{ animation: "float4 4.5s ease-in-out infinite", transformOrigin: "370px 380px" }}>
-            <rect x="312" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="316" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="328" y="373" width="84" height="8" rx="4" fill="url(#sBarGrad)"/>
-            <rect x="412" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="412" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="328" y="373" width="84" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <text x="370" y="393" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">12 KG</text>
+
+          {/* ── DUMBBELL 2 — bottom-right ── */}
+          <g style={{ animation: "float4 4.8s ease-in-out infinite", transformOrigin: "1120px 400px" }}>
+            <rect x="1058" y="384" width="20" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="1062" y="378" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="1074" y="391" width="92" height="8" rx="4" fill="url(#sg1)"/>
+            <rect x="1166" y="384" width="20" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="1170" y="378" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="1074" y="391" width="92" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <text x="1120" y="411" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue,sans-serif" letterSpacing="1">12 KG</text>
           </g>
-          <g style={{ animation: "float1 5.5s ease-in-out infinite 1s", transformOrigin: "140px 385px" }}>
-            <circle cx="108" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-            <circle cx="108" cy="375" r="5" fill="#e8372c"/>
-            <path d="M118 375 Q150 345 180 375 Q210 405 240 375" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
-            <circle cx="250" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-            <circle cx="250" cy="375" r="5" fill="#e8372c"/>
+
+          {/* ── DUMBBELL 3 — top-far-right ── */}
+          <g style={{ animation: "float5 5.5s ease-in-out infinite 0.8s", transformOrigin: "1300px 380px" }}>
+            <rect x="1240" y="366" width="18" height="28" rx="4" fill="#2a2a2a" stroke="#e8372c" strokeWidth="1.5"/>
+            <rect x="1244" y="360" width="10" height="40" rx="3" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <rect x="1254" y="374" width="80" height="7" rx="3" fill="url(#sg1)"/>
+            <rect x="1334" y="366" width="18" height="28" rx="4" fill="#2a2a2a" stroke="#e8372c" strokeWidth="1.5"/>
+            <rect x="1338" y="360" width="10" height="40" rx="3" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
+            <text x="1294" y="392" textAnchor="middle" fill="#e8372c" fontSize="6" fontFamily="Bebas Neue,sans-serif" letterSpacing="1">8 KG</text>
           </g>
+
+          {/* ── JUMP ROPE — bottom-center ── */}
+          <g style={{ animation: "float1 5.8s ease-in-out infinite 1.2s", transformOrigin: "900px 420px" }}>
+            <circle cx="820" cy="418" r="11" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="820" cy="418" r="5" fill="#e8372c"/>
+            <path d="M831 418 Q865 385 900 418 Q935 451 970 418" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
+            <path d="M831 418 Q865 385 900 418 Q935 451 970 418" stroke="rgba(255,255,255,0.18)" strokeWidth="1" fill="none" strokeLinecap="round"/>
+            <circle cx="980" cy="418" r="11" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
+            <circle cx="980" cy="418" r="5" fill="#e8372c"/>
+          </g>
+
+          {/* ── Subtle ambient rings (right-center) ── */}
+          <circle cx="1050" cy="260" r="180" stroke="rgba(232,55,44,0.07)" strokeWidth="1" strokeDasharray="8 16"
+            style={{ animation: "spin-slow 25s linear infinite", transformOrigin: "1050px 260px" }} />
+          <circle cx="1050" cy="260" r="130" stroke="rgba(255,106,0,0.06)" strokeWidth="1" strokeDasharray="4 22"
+            style={{ animation: "spin-ccw 35s linear infinite", transformOrigin: "1050px 260px" }} />
+
+          {/* ── Floating spark particles ── */}
           {[
-            { cx: 180, cy: 210, r: 3, delay: "0s" },
-            { cx: 310, cy: 190, r: 2, delay: "0.8s" },
-            { cx: 420, cy: 300, r: 3, delay: "1.4s" },
-            { cx: 150, cy: 320, r: 2, delay: "2s" },
-            { cx: 350, cy: 400, r: 2.5, delay: "0.4s" },
-          ].map((p: { cx: number; cy: number; r: number; delay: string }, i: number) => (
+            { cx: 700,  cy: 160, r: 3,   d: "0s"   },
+            { cx: 950,  cy: 80,  r: 2.5, d: "0.7s" },
+            { cx: 1150, cy: 200, r: 3,   d: "1.3s" },
+            { cx: 1320, cy: 300, r: 2,   d: "0.4s" },
+            { cx: 850,  cy: 460, r: 2.5, d: "1.9s" },
+            { cx: 1200, cy: 450, r: 2,   d: "2.4s" },
+            { cx: 660,  cy: 380, r: 2,   d: "1.1s" },
+            { cx: 1060, cy: 130, r: 2.5, d: "2.8s" },
+          ].map((p, i) => (
             <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#ff6a00"
-              style={{ animation: `pulse-ring 3s ease-in-out infinite ${p.delay}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
+              style={{ animation: `pulse-dot 3s ease-in-out infinite ${p.d}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
             />
           ))}
+
           <defs>
-            <linearGradient id="sBarGrad" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#666"/><stop offset="40%" stopColor="#999"/><stop offset="100%" stopColor="#444"/>
             </linearGradient>
-            <linearGradient id="sBarGrad2" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#777"/><stop offset="40%" stopColor="#aaa"/><stop offset="100%" stopColor="#555"/>
             </linearGradient>
-            <radialGradient id="sKettleGrad" cx="40%" cy="35%">
+            <radialGradient id="sk1" cx="40%" cy="35%">
               <stop offset="0%" stopColor="#444"/><stop offset="100%" stopColor="#111"/>
             </radialGradient>
           </defs>
         </svg>
       </div>
+
       <div className="page-hero-content">
         <span className="sub reveal">Stairs</span>
         <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>OUR<br />SERVICES</h1>
@@ -364,9 +406,10 @@ function Footer() {
         </div>
         <div className="footer-col footer-contact">
           <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Address:</strong><span>121 King Street Melbourne, 3000, Australia</span></div>
-          <div className="contact-item"><strong>Email:</strong><span>info@stairs.com</span></div>
-          <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
+          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
+          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
+          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
+          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
         </div>
       </div>
       <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>

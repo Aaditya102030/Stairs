@@ -41,16 +41,16 @@ const globalStyles = `
   .circle-deco { position: absolute; border-radius: 50%; border: 20px solid var(--red); opacity: 0.85; }
 
   /* NAVBAR */
-  #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 18px 60px; transition: background 0.4s, padding 0.4s; }
-  #navbar.scrolled { background: rgba(10,10,10,0.95); padding: 12px 60px; backdrop-filter: blur(8px); }
+  #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 22px 72px; transition: background 0.4s, padding 0.4s, box-shadow 0.4s; }
+  #navbar.scrolled { background: rgba(10,10,10,0.95); padding: 14px 72px; backdrop-filter: blur(12px); box-shadow: 0 2px 40px rgba(0,0,0,0.4); }
   .nav-logo { display: flex; align-items: center; gap: 10px; color: var(--light); }
-  .nav-links { display: flex; align-items: center; gap: 32px; }
-  .nav-links a { color: var(--light); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; position: relative; transition: color 0.3s; }
-  .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
+  .nav-links { display: flex; align-items: center; gap: 38px; }
+  .nav-links a { color: var(--light); font-size: 0.78rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; position: relative; transition: color 0.3s; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
   .nav-links a.active, .nav-links a:hover { color: var(--red); }
-  .nav-links .contact-btn { border: 2px solid var(--red); padding: 7px 20px; border-radius: 30px; color: var(--light); transition: background 0.3s; }
-  .nav-links .contact-btn:hover { background: var(--red); color: #111; }
+  .nav-links .contact-btn { border: 2px solid var(--red); padding: 9px 26px; border-radius: 30px; color: var(--light); font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; transition: background 0.3s, color 0.3s; }
+  .nav-links .contact-btn:hover { background: var(--red); color: #fff; }
   .nav-links .contact-btn::after { display: none; }
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { display: block; width: 26px; height: 2px; background: var(--light); }
@@ -68,16 +68,17 @@ const globalStyles = `
 
   /* PAGE HERO (inner pages) */
   #page-hero { position: relative; min-height: 60vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
-  .page-hero-bg { position: absolute; inset: 0; background: url('/images/hero-bg.png') center/cover no-repeat; opacity: 0.4; }
-  .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.3) 100%); }
-  .page-hero-circle { width: 420px; height: 420px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 22px; pointer-events: none; animation: spin-slow 20s linear infinite; opacity: 0.7; }
-  .hero-3d-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
-  @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(-8deg); } }
-  @keyframes float2 { 0%,100% { transform: translateY(0px) rotate(12deg); } 50% { transform: translateY(-16px) rotate(12deg); } }
-  @keyframes float3 { 0%,100% { transform: translateY(0px) rotate(-4deg); } 50% { transform: translateY(-28px) rotate(-4deg); } }
-  @keyframes float4 { 0%,100% { transform: translateY(0px) rotate(6deg); } 50% { transform: translateY(-14px) rotate(6deg); } }
-  @keyframes pulse-ring { 0%,100% { opacity: 0.18; transform: scale(1); } 50% { opacity: 0.32; transform: scale(1.06); } }
-  @keyframes spin-ring { to { transform: rotate(360deg); } }
+  .page-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1800&q=80') center/cover no-repeat; opacity: 0.55; }
+  .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.2) 100%); }
+  .page-hero-circle-wrap { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 420px; height: 420px; pointer-events: none; z-index: 2; }
+  .page-hero-circle-ring { position: absolute; inset: 0; border-radius: 50%; border: 22px solid var(--red); opacity: 0.85; }
+  .page-hero-neon-orbit { position: absolute; inset: -11px; border-radius: 50%; animation: neon-spin 3s linear infinite; }
+  .page-hero-neon-ball { position: absolute; top: 0px; left: 50%; transform: translateX(-50%); width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fff8e0, #ff8c00 40%, #ff4500); box-shadow: 0 0 10px 5px rgba(255,120,0,0.95), 0 0 24px 10px rgba(255,80,0,0.55); }
+  @keyframes neon-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes spin-slow-ph { to { transform: translateY(-50%) rotate(360deg); } }
+  @keyframes ph-spin-cw { to { transform: rotate(360deg); } }
+  @keyframes ph-spin-ccw { to { transform: rotate(-360deg); } }
+  @keyframes ph-pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
   .page-hero-content { position: relative; z-index: 2; padding: 0 60px; }
   .page-hero-content .sub { font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; letter-spacing: 4px; color: var(--light); text-transform: uppercase; border-left: 4px solid var(--red); padding-left: 14px; margin-bottom: 16px; display: block; }
   .page-hero-content h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem); color: var(--light); line-height: 1; letter-spacing: 2px; margin-bottom: 16px; }
@@ -90,8 +91,7 @@ const globalStyles = `
   #about-detail { padding: 90px 60px; background: var(--bg-light); }
   .about-detail-grid { display: grid; grid-template-columns: minmax(320px, 1.05fr) minmax(320px, 0.95fr); gap: 70px; align-items: start; }
   .about-img-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
-  .about-img-wrap .img-box { width: 100%; height: 460px; background: #e8e8e8; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: rgba(0,0,0,0.3); font-size: 0.95rem; flex-direction: column; gap: 12px; }
-  .about-img-wrap .img-box i { font-size: 2.7rem; }
+  .about-img-wrap img { width: 100%; height: 460px; object-fit: cover; border-radius: 22px; display: block; }
   .about-img-wrap .exp-badge { position: absolute; bottom: -24px; right: -24px; background: var(--red); color: var(--light); border-radius: 50%; width: 110px; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2rem; line-height: 1; text-align: center; box-shadow: 0 18px 40px rgba(0,0,0,0.18); }
   .about-img-wrap .exp-badge small { font-size: 0.6rem; font-family: var(--font-body); letter-spacing: 1px; }
   .about-text { display: flex; flex-direction: column; }
@@ -152,8 +152,8 @@ const globalStyles = `
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; text-align: center; font-size: 0.8rem; }
 
   @media (max-width: 1024px) {
-    #navbar { padding: 16px 30px; }
-    #navbar.scrolled { padding: 10px 30px; }
+    #navbar { padding: 18px 30px; }
+    #navbar.scrolled { padding: 12px 30px; }
     .page-hero-content, .about-detail-grid, #stats-banner, #team, #footer { padding-left: 30px; padding-right: 30px; }
     .about-detail-grid { grid-template-columns: 1fr; }
     .stats-banner-grid { grid-template-columns: repeat(2, 1fr); }
@@ -202,7 +202,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
       <div className="nav-logo">
-        <img src="/logo.png" alt="Stairs" style={{ height: 45, width: "auto" }} />
+        <img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} />
       </div>
       <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => (
@@ -221,84 +221,6 @@ function PageHero() {
   return (
     <section id="page-hero">
       <div className="page-hero-bg" />
-      <div className="circle-deco page-hero-circle" />
-      <div className="hero-3d-scene">
-        <svg width="420" height="420" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
-          <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
-          <circle cx="260" cy="260" r="140" fill="none" stroke="rgba(232,55,44,0.08)" strokeWidth="60" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "260px 260px" }} />
-          <g style={{ animation: "float1 4s ease-in-out infinite", transformOrigin: "130px 155px" }}>
-            <rect x="72" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="76" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="90" y="151" width="80" height="8" rx="4" fill="url(#aBarGrad)"/>
-            <rect x="170" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="174" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="90" y="151" width="80" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <text x="130" y="172" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">20 KG</text>
-          </g>
-          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "370px 145px" }}>
-            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
-            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
-            <ellipse cx="370" cy="148" rx="32" ry="30" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
-            <ellipse cx="370" cy="148" rx="32" ry="30" fill="url(#aKettleGrad)"/>
-            <rect x="356" y="118" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
-            <ellipse cx="358" cy="138" rx="8" ry="6" fill="rgba(255,255,255,0.1)" transform="rotate(-20,358,138)"/>
-            <text x="370" y="153" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">16KG</text>
-          </g>
-          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "260px 265px" }}>
-            <rect x="82" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
-            <rect x="86" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
-            <rect x="104" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
-            <rect x="118" y="258" width="284" height="12" rx="6" fill="url(#aBarGrad2)"/>
-            <rect x="118" y="258" width="284" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
-            <rect x="402" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
-            <rect x="410" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
-            <rect x="412" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
-            {[170,190,210,230,250,270,290,310,330,350].map((x: number, i: number) => (
-              <rect key={i} x={x} y="258" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
-            ))}
-            <text x="260" y="290" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue, sans-serif" letterSpacing="2">STAIRS GYM</text>
-          </g>
-          <g style={{ animation: "float4 4.5s ease-in-out infinite", transformOrigin: "370px 380px" }}>
-            <rect x="312" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="316" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="328" y="373" width="84" height="8" rx="4" fill="url(#aBarGrad)"/>
-            <rect x="412" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="412" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="328" y="373" width="84" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <text x="370" y="393" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">12 KG</text>
-          </g>
-          <g style={{ animation: "float1 5.5s ease-in-out infinite 1s", transformOrigin: "140px 385px" }}>
-            <circle cx="108" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-            <circle cx="108" cy="375" r="5" fill="#e8372c"/>
-            <path d="M118 375 Q150 345 180 375 Q210 405 240 375" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
-            <circle cx="250" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-            <circle cx="250" cy="375" r="5" fill="#e8372c"/>
-          </g>
-          {[
-            { cx: 180, cy: 210, r: 3, delay: "0s" },
-            { cx: 310, cy: 190, r: 2, delay: "0.8s" },
-            { cx: 420, cy: 300, r: 3, delay: "1.4s" },
-            { cx: 150, cy: 320, r: 2, delay: "2s" },
-            { cx: 350, cy: 400, r: 2.5, delay: "0.4s" },
-          ].map((p: { cx: number; cy: number; r: number; delay: string }, i: number) => (
-            <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#ff6a00"
-              style={{ animation: `pulse-ring 3s ease-in-out infinite ${p.delay}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
-            />
-          ))}
-          <defs>
-            <linearGradient id="aBarGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#666"/><stop offset="40%" stopColor="#999"/><stop offset="100%" stopColor="#444"/>
-            </linearGradient>
-            <linearGradient id="aBarGrad2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#777"/><stop offset="40%" stopColor="#aaa"/><stop offset="100%" stopColor="#555"/>
-            </linearGradient>
-            <radialGradient id="aKettleGrad" cx="40%" cy="35%">
-              <stop offset="0%" stopColor="#444"/><stop offset="100%" stopColor="#111"/>
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
       <div className="page-hero-content">
         <span className="sub reveal">Stairs</span>
         <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>WHO<br />WE ARE</h1>
@@ -315,7 +237,7 @@ function AboutDetail() {
     <section id="about-detail">
       <div className="about-detail-grid">
         <div className="about-img-wrap reveal-left">
-          <div className="img-box"><i className="fas fa-image" /><span>about-team.jpg</span></div>
+          <img src="/images/youth-athletes.png" alt="Stairs Team" style={{ width: "100%", height: "460px", objectFit: "cover", borderRadius: "22px", display: "block" }} />
           <div className="exp-badge">15+<small>Years<br />Exp.</small></div>
         </div>
         <div className="about-text reveal-right">
@@ -456,9 +378,10 @@ function Footer() {
         </div>
         <div className="footer-col footer-contact">
           <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Address:</strong><span>121 King Street Melbourne, 3000, Australia</span></div>
-          <div className="contact-item"><strong>Email:</strong><span>info@stairs.com</span></div>
-          <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
+          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
+          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
+          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
+          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
         </div>
       </div>
       <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>

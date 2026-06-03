@@ -18,31 +18,30 @@ const globalStyles = `
   .btn-primary .play-icon{width:38px;height:38px;background:var(--light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .btn-primary .play-icon i{color:var(--red);font-size:.72rem;margin-left:2px;}
   .circle-deco{position:absolute;border-radius:50%;border:20px solid var(--red);opacity:.85;}
-  #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;transition:background .4s,padding .4s;}
-  #navbar.scrolled{background:rgba(10,10,10,.95);padding:12px 60px;backdrop-filter:blur(8px);}
+  #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:22px 72px;transition:background .4s,padding .4s,box-shadow .4s;}
+  #navbar.scrolled{background:rgba(10,10,10,.95);padding:14px 72px;backdrop-filter:blur(12px);box-shadow:0 2px 40px rgba(0,0,0,.4);}
   .nav-logo{display:flex;align-items:center;gap:10px;color:var(--light);}
-  .nav-links{display:flex;align-items:center;gap:32px;}
-  .nav-links a{color:var(--light);font-size:.85rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;position:relative;transition:color .3s;}
-  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--red);transition:width .3s;}
+  .nav-links{display:flex;align-items:center;gap:38px;}
+  .nav-links a{color:var(--light);font-size:.78rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;position:relative;transition:color .3s;}
+  .nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--red);transition:width .3s;}
   .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
   .nav-links a.active,.nav-links a:hover{color:var(--red);}
-  .nav-links .contact-btn{border:2px solid var(--red);padding:7px 20px;border-radius:30px;color:var(--light);transition:background .3s;}
-  .nav-links .contact-btn:hover{background:var(--red);color:#111;}
+  .nav-links .contact-btn{border:2px solid var(--red);padding:9px 26px;border-radius:30px;color:var(--light);font-size:.78rem;font-weight:700;letter-spacing:2px;transition:background .3s,color .3s;}
+  .nav-links .contact-btn:hover{background:var(--red);color:#fff;}
   .nav-links .contact-btn::after{display:none;}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
   #page-hero{position:relative;min-height:60vh;background:var(--darker);display:flex;align-items:center;overflow:hidden;padding-top:80px;}
-  .page-hero-bg{position:absolute;inset:0;background:url('/images/hero-bg.png') center/cover no-repeat;opacity:.4;}
-  .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.9) 50%,rgba(10,10,10,.3) 100%);}
-  .page-hero-circle{width:420px;height:420px;right:5%;top:50%;transform:translateY(-50%);border-width:22px;pointer-events:none;animation:spin-slow 20s linear infinite;opacity:.7;}
-  .hero-3d-scene{position:absolute;right:0;top:0;bottom:0;width:55%;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;}
-  @keyframes float1{0%,100%{transform:translateY(0px) rotate(-8deg);}50%{transform:translateY(-22px) rotate(-8deg);}}
-  @keyframes float2{0%,100%{transform:translateY(0px) rotate(12deg);}50%{transform:translateY(-16px) rotate(12deg);}}
-  @keyframes float3{0%,100%{transform:translateY(0px) rotate(-4deg);}50%{transform:translateY(-28px) rotate(-4deg);}}
-  @keyframes float4{0%,100%{transform:translateY(0px) rotate(6deg);}50%{transform:translateY(-14px) rotate(6deg);}}
-  @keyframes pulse-ring{0%,100%{opacity:.18;transform:scale(1);}50%{opacity:.32;transform:scale(1.06);}}
+  .page-hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1800&q=80') center/cover no-repeat;opacity:.55;}
+  .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.85) 40%,rgba(10,10,10,.2) 100%);}
+  .page-hero-circle-wrap{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:420px;height:420px;pointer-events:none;z-index:2;}
+  @keyframes ph-spin-cw{to{transform:rotate(360deg);}}
+  @keyframes ph-spin-ccw{to{transform:rotate(-360deg);}}
+  @keyframes ph-pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
   @keyframes spin-ring{to{transform:rotate(360deg);}}
-  @keyframes spin-slow{to{transform:translateY(-50%) rotate(360deg);}}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+  @keyframes pulse-ring{0%,100%{opacity:.18;transform:scale(1);}50%{opacity:.32;transform:scale(1.06);}}
+  .contact-scene{position:absolute;left:0;top:0;bottom:0;width:48%;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;overflow:hidden;}
   .page-hero-content{position:relative;z-index:2;padding:0 60px;}
   .page-hero-content .sub{font-family:var(--font-body);font-weight:600;font-size:.9rem;letter-spacing:4px;color:var(--light);text-transform:uppercase;border-left:4px solid var(--red);padding-left:14px;margin-bottom:16px;display:block;}
   .page-hero-content h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);color:var(--light);line-height:1;letter-spacing:2px;margin-bottom:16px;}
@@ -98,7 +97,7 @@ const globalStyles = `
   .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;text-align:center;font-size:.8rem;}
 
   @media(max-width:1024px){
-    #navbar{padding:16px 30px;}#navbar.scrolled{padding:10px 30px;}
+    #navbar{padding:18px 30px;}#navbar.scrolled{padding:12px 30px;}
     #contact-info,#footer{padding-left:30px;padding-right:30px;}
     .contact-form-wrap{padding:60px 30px;}
     .info-grid{grid-template-columns:1fr;}
@@ -136,7 +135,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 45, width: "auto" }} /></div>
+      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} /></div>
       <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
         <a href="/contact" className="contact-btn active">Contact</a>
@@ -150,81 +149,12 @@ function PageHero() {
   return (
     <section id="page-hero">
       <div className="page-hero-bg" />
-      <div className="circle-deco page-hero-circle" />
-      <div className="hero-3d-scene">
-        <svg width="420" height="420" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="260" cy="260" r="210" stroke="#e8372c" strokeWidth="1" strokeDasharray="8 14" opacity="0.18" style={{ animation: "spin-ring 18s linear infinite", transformOrigin: "260px 260px" }} />
-          <circle cx="260" cy="260" r="175" stroke="#ff6a00" strokeWidth="1" strokeDasharray="4 20" opacity="0.12" style={{ animation: "spin-ring 28s linear infinite reverse", transformOrigin: "260px 260px" }} />
-          <circle cx="260" cy="260" r="140" fill="none" stroke="rgba(232,55,44,0.08)" strokeWidth="60" style={{ animation: "pulse-ring 4s ease-in-out infinite", transformOrigin: "260px 260px" }} />
-          <g style={{ animation: "float1 4s ease-in-out infinite", transformOrigin: "130px 155px" }}>
-            <rect x="72" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="76" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="90" y="151" width="80" height="8" rx="4" fill="url(#cBarGrad)"/>
-            <rect x="170" y="138" width="22" height="34" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="174" y="133" width="14" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="90" y="151" width="80" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <text x="130" y="172" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">20 KG</text>
-          </g>
-          <g style={{ animation: "float2 5s ease-in-out infinite", transformOrigin: "370px 145px" }}>
-            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#e8372c" strokeWidth="10" fill="none" strokeLinecap="round"/>
-            <path d="M345 118 Q345 95 370 95 Q395 95 395 118" stroke="#c0251b" strokeWidth="6" fill="none" strokeLinecap="round"/>
-            <ellipse cx="370" cy="148" rx="32" ry="30" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2.5"/>
-            <ellipse cx="370" cy="148" rx="32" ry="30" fill="url(#cKettleGrad)"/>
-            <rect x="356" y="118" width="28" height="10" rx="3" fill="#2a2a2a" stroke="#444" strokeWidth="1"/>
-            <text x="370" y="153" textAnchor="middle" fill="#e8372c" fontSize="8" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">16KG</text>
-          </g>
-          <g style={{ animation: "float3 6s ease-in-out infinite", transformOrigin: "260px 265px" }}>
-            <rect x="82" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
-            <rect x="86" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
-            <rect x="104" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
-            <rect x="118" y="258" width="284" height="12" rx="6" fill="url(#cBarGrad2)"/>
-            <rect x="118" y="258" width="284" height="5" rx="3" fill="rgba(255,255,255,0.1)"/>
-            <rect x="402" y="252" width="14" height="40" rx="4" fill="#2a2a2a" stroke="#555" strokeWidth="1"/>
-            <rect x="410" y="240" width="18" height="64" rx="5" fill="#222" stroke="#444" strokeWidth="1"/>
-            <rect x="412" y="246" width="28" height="52" rx="6" fill="#1a1a1a" stroke="#e8372c" strokeWidth="3"/>
-            {[170,190,210,230,250,270,290,310,330,350].map((x: number, i: number) => (
-              <rect key={i} x={x} y="258" width="2" height="12" rx="1" fill="rgba(255,255,255,0.18)"/>
-            ))}
-            <text x="260" y="290" textAnchor="middle" fill="#e8372c" fontSize="9" fontFamily="Bebas Neue, sans-serif" letterSpacing="2">STAIRS GYM</text>
-          </g>
-          <g style={{ animation: "float4 4.5s ease-in-out infinite", transformOrigin: "370px 380px" }}>
-            <rect x="312" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="316" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="328" y="373" width="84" height="8" rx="4" fill="url(#cBarGrad)"/>
-            <rect x="412" y="364" width="18" height="32" rx="5" fill="#2a2a2a" stroke="#e8372c" strokeWidth="2"/>
-            <rect x="412" y="358" width="12" height="44" rx="4" fill="#1e1e1e" stroke="#555" strokeWidth="1"/>
-            <rect x="328" y="373" width="84" height="3" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <text x="370" y="393" textAnchor="middle" fill="#e8372c" fontSize="7" fontFamily="Bebas Neue, sans-serif" letterSpacing="1">12 KG</text>
-          </g>
-          <g style={{ animation: "float1 5.5s ease-in-out infinite 1s", transformOrigin: "140px 385px" }}>
-            <circle cx="108" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-            <circle cx="108" cy="375" r="5" fill="#e8372c"/>
-            <path d="M118 375 Q150 345 180 375 Q210 405 240 375" stroke="#e8372c" strokeWidth="3" fill="none" strokeLinecap="round"/>
-            <circle cx="250" cy="375" r="10" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-            <circle cx="250" cy="375" r="5" fill="#e8372c"/>
-          </g>
-          {[
-            { cx: 180, cy: 210, r: 3, delay: "0s" },
-            { cx: 310, cy: 190, r: 2, delay: "0.8s" },
-            { cx: 420, cy: 300, r: 3, delay: "1.4s" },
-            { cx: 150, cy: 320, r: 2, delay: "2s" },
-            { cx: 350, cy: 400, r: 2.5, delay: "0.4s" },
-          ].map((p: { cx: number; cy: number; r: number; delay: string }, i: number) => (
-            <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#ff6a00"
-              style={{ animation: `pulse-ring 3s ease-in-out infinite ${p.delay}`, transformOrigin: `${p.cx}px ${p.cy}px` }}
-            />
-          ))}
-          <defs>
-            <linearGradient id="cBarGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#666"/><stop offset="40%" stopColor="#999"/><stop offset="100%" stopColor="#444"/>
-            </linearGradient>
-            <linearGradient id="cBarGrad2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#777"/><stop offset="40%" stopColor="#aaa"/><stop offset="100%" stopColor="#555"/>
-            </linearGradient>
-            <radialGradient id="cKettleGrad" cx="40%" cy="35%">
-              <stop offset="0%" stopColor="#444"/><stop offset="100%" stopColor="#111"/>
-            </radialGradient>
-          </defs>
+      <div className="page-hero-circle-wrap">
+        <svg width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="210" cy="210" r="200" stroke="rgba(232,55,44,0.15)" strokeWidth="1" style={{animation:"ph-pulse 3s ease-in-out infinite",transformOrigin:"210px 210px"}} />
+          <circle cx="210" cy="210" r="178" stroke="#e8372c" strokeWidth="3" strokeLinecap="round" strokeDasharray="1118 373" style={{animation:"ph-spin-cw 8s linear infinite",transformOrigin:"210px 210px"}} />
+          <circle cx="210" cy="210" r="155" stroke="rgba(232,55,44,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="487 487" style={{animation:"ph-spin-ccw 12s linear infinite",transformOrigin:"210px 210px"}} />
+          <circle cx="210" cy="210" r="132" stroke="rgba(255,100,50,0.12)" strokeWidth="28" style={{animation:"ph-pulse 5s ease-in-out infinite 1s",transformOrigin:"210px 210px"}} />
         </svg>
       </div>
       <div className="page-hero-content">
@@ -271,9 +201,41 @@ function ContactFull() {
   return (
     <section id="contact-full">
       <div className="contact-bg" />
-      <div className="circle-deco contact-circle" />
-      <div className="contact-img-placeholder">
-        <div className="contact-img-box"><i className="fas fa-image" />contact-bg.jpg</div>
+      <div className="contact-scene" aria-hidden="true">
+        <svg width="400" height="420" viewBox="0 0 400 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="cGlow2" cx="50%" cy="50%">
+              <stop offset="0%" stopColor="#e8372c" stopOpacity="0.13"/>
+              <stop offset="100%" stopColor="#e8372c" stopOpacity="0"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="200" cy="210" rx="170" ry="180" fill="url(#cGlow2)"/>
+          <circle cx="200" cy="210" r="165" stroke="#e8372c" strokeWidth="1" strokeDasharray="6 14" opacity="0.15" style={{animation:"spin-ring 20s linear infinite",transformOrigin:"200px 210px"}}/>
+          <circle cx="200" cy="210" r="130" stroke="#ff6a00" strokeWidth="1" strokeDasharray="3 18" opacity="0.1" style={{animation:"spin-ring 30s linear infinite reverse",transformOrigin:"200px 210px"}}/>
+          <g style={{animation:"bob 5s ease-in-out infinite",transformOrigin:"200px 200px"}}>
+            <rect x="60" y="130" width="280" height="190" rx="14" fill="#1a1a1a" stroke="#e8372c" strokeWidth="2"/>
+            <path d="M60 130 L200 230 L340 130" fill="none" stroke="#e8372c" strokeWidth="2"/>
+            <rect x="90" y="200" width="220" height="8" rx="4" fill="#2a2a2a"/>
+            <rect x="90" y="220" width="180" height="8" rx="4" fill="#242424"/>
+            <rect x="90" y="240" width="200" height="8" rx="4" fill="#242424"/>
+            <rect x="90" y="260" width="100" height="8" rx="4" fill="#e8372c" opacity="0.6"/>
+            <rect x="90" y="285" width="80" height="24" rx="12" fill="#e8372c" opacity="0.85"/>
+            <rect x="100" y="293" width="50" height="6" rx="3" fill="#fff" opacity="0.7"/>
+          </g>
+          <g style={{animation:"bob 4s ease-in-out infinite 1s",transformOrigin:"320px 110px"}}>
+            <rect x="300" y="70" width="42" height="70" rx="8" fill="#1e1e1e" stroke="#ff6a00" strokeWidth="1.5"/>
+            <rect x="310" y="80" width="22" height="40" rx="3" fill="#2a2a2a"/>
+            <circle cx="321" cy="128" r="4" fill="#ff6a00" opacity="0.8"/>
+          </g>
+          <g style={{animation:"bob 6s ease-in-out infinite 0.5s",transformOrigin:"80px 100px"}}>
+            <circle cx="80" cy="85" r="22" fill="#1e1e1e" stroke="#e8372c" strokeWidth="1.5"/>
+            <circle cx="80" cy="85" r="10" fill="#e8372c" opacity="0.8"/>
+            <path d="M80 107 L72 130 L80 122 L88 130 Z" fill="#e8372c" opacity="0.8"/>
+          </g>
+          {([{x:50,y:300,d:"0s"},{x:360,y:280,d:"1s"},{x:200,y:380,d:"1.8s"},{x:340,y:80,d:"2.2s"}] as {x:number,y:number,d:string}[]).map((p,i)=>(
+            <circle key={i} cx={p.x} cy={p.y} r="3" fill="#ff6a00" style={{animation:`pulse-ring 3s ease-in-out infinite ${p.d}`,transformOrigin:`${p.x}px ${p.y}px`}}/>
+          ))}
+        </svg>
       </div>
       <div className="contact-form-wrap reveal-right">
         <span className="section-label">Get In Touch</span>
@@ -325,9 +287,9 @@ function ContactInfo() {
     <section id="contact-info">
       <div className="info-grid">
         {[
-          { icon: "fas fa-map-marker-alt", title: "Address", text: "121 King Street, Melbourne 3000, Australia" },
-          { icon: "fas fa-phone-alt", title: "Phone", text: "+61 3 8376 6284\n+61 3 8376 6285" },
-          { icon: "fas fa-envelope", title: "Email", text: "info@stairs.com\nsupport@stairs.com" },
+          { icon: "fab fa-instagram", title: "Instagram", text: "@stairs.physio" },
+          { icon: "fas fa-phone-alt", title: "Phone", text: "083103 31077" },
+          { icon: "fas fa-envelope", title: "Email", text: "connect.stairsphysiotherapy@gmail.com" },
         ].map((c, i) => (
           <div className="info-card reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
             <div className="icon"><i className={c.icon} /></div>
@@ -362,9 +324,10 @@ function Footer() {
         </div>
         <div className="footer-col footer-contact">
           <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Address:</strong><span>121 King Street Melbourne</span></div>
-          <div className="contact-item"><strong>Email:</strong><span>info@stairs.com</span></div>
-          <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
+          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
+          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
+          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
+          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
         </div>
       </div>
       <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
