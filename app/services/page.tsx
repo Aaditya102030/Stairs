@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "motion/react";
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -92,20 +91,6 @@ const globalStyles = `
   .service-detail p { color: rgba(255,255,255,0.78); font-size: 0.9rem; line-height: 1.6; max-width: 290px; margin-bottom: 14px; }
   .service-detail .read-more { color: var(--light); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; }
 
-  /* SERVICE CARDS ROW */
-  #service-cards { padding: 80px 60px; background: #ffffff; }
-  #service-cards .section-title { color: var(--dark); text-align: center; margin-bottom: 50px; }
-  #service-cards .section-label { color: var(--red); display: block; text-align: center; margin-bottom: 10px; }
-  .sc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1100px; margin: 0 auto; }
-  .sc-card { display: block; background: #f7f7f7; border: 1px solid #e8e8e8; border-radius: 14px; padding: 32px 28px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
-  .sc-card:hover { border-color: var(--red); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(232,55,44,0.15); }
-  .sc-card .icon { width: 56px; height: 56px; background: rgba(232,55,44,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: background 0.3s; }
-  .sc-card:hover .icon { background: var(--red); }
-  .sc-card .icon i { font-size: 1.4rem; color: var(--red); transition: color 0.3s; }
-  .sc-card:hover .icon i { color: var(--light); }
-  .sc-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--dark); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
-  .sc-card p { color: #666; font-size: 0.88rem; line-height: 1.7; }
-
   /* FOOTER */
   #footer { background: var(--dark); padding: 60px 60px 30px; color: #aaa; }
   .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.3fr; gap: 40px; margin-bottom: 40px; }
@@ -127,8 +112,7 @@ const globalStyles = `
 
   @media (max-width: 1024px) {
     #navbar { padding: 18px 30px; } #navbar.scrolled { padding: 12px 30px; }
-    #services-full, #service-cards, #footer { padding-left: 30px; padding-right: 30px; }
-    .sc-grid { grid-template-columns: repeat(2,1fr); }
+    #services-full, #footer { padding-left: 30px; padding-right: 30px; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 768px) {
@@ -139,7 +123,6 @@ const globalStyles = `
     .service-panel { min-width: unset; min-height: 80px; flex: none; }
     .service-panel.is-active { min-height: 280px; }
     .service-panel .vertical-title { transform: translate(-50%, -50%); white-space: normal; text-align: center; width: 90%; font-size: 1rem; }
-    .sc-grid { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
   }
 `;
@@ -151,15 +134,6 @@ const services = [
   { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
   { href: "/services/sports-specific-training", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Specific Training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
   { href: "/services/group-session", bg: "url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80')", vertical: "Group Session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
-];
-
-const serviceCards = [
-  { href: "/services/bio-mechanical-assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
-  { href: "/services/physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
-  { href: "/services/strength-conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
-  { href: "/services/myofascial-release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
-  { href: "/services/sports-specific-training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
-  { href: "/services/group-session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
 ];
 
 function useReveal() {
@@ -361,29 +335,6 @@ function ServicesFull() {
   );
 }
 
-function ServiceCards() {
-  return (
-    <section id="service-cards">
-      <span className="section-label reveal">What We Offer</span>
-      <h2 className="section-title reveal">All Services At A Glance</h2>
-      <br /><br />
-      <div className="sc-grid">
-        {serviceCards.map((c, i) => (
-          <a href={c.href} key={i} className="sc-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-            <div className="icon"><i className={c.icon} /></div>
-            <h3>{c.title}</h3><p>{c.desc}</p>
-          </a>
-        ))}
-      </div>
-      <div style={{ textAlign: "center", marginTop: 50 }}>
-        <motion.a href="/contact" whileTap={{ scale: 0.95 }} className="btn-primary">
-          Book a Session <span className="play-icon"><i className="fas fa-play" /></span>
-        </motion.a>
-      </div>
-    </section>
-  );
-}
-
 function Footer() {
   return (
     <footer id="footer">
@@ -427,7 +378,6 @@ export default function ServicesPage() {
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <PageHero />
       <ServicesFull />
-      <ServiceCards />
       <Footer />
     </>
   );

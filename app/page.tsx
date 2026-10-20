@@ -206,6 +206,7 @@ const globalStyles = `
   .service-detail p { color: rgba(255,255,255,0.78); font-size: 0.9rem; line-height: 1.6; max-width: 290px; margin-bottom: 14px; }
   .service-detail .read-more { color: var(--light); font-weight: 700; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 7px; }
   .services-join { text-align: center; margin-top: 50px; }
+  .blog-card.off-page { display: none; }
 
   /* TESTIMONIALS */
   #testimonials { position: relative; min-height: 420px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
@@ -481,6 +482,7 @@ const globalStyles = `
     .features-grid { grid-template-columns: repeat(2, 1fr); }
     .pricing-grid { grid-template-columns: repeat(2, 1fr); }
     .footer-grid { grid-template-columns: 1fr 1fr; }
+    #services .services-header { margin: -90px -30px 50px -30px; padding-left: 30px; padding-right: 30px; }
   }
   @media (max-width: 768px) {
     .nav-links { display: none; }
@@ -493,6 +495,150 @@ const globalStyles = `
     .footer-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .features-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ═══ MOBILE (≤768px): compact sizes, no overlaps, horizontal services slider ═══ */
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; max-width: 100%; }
+    .section-title { font-size: clamp(1.6rem, 7vw, 2.1rem); line-height: 1.1; }
+    .section-label { font-size: 0.72rem; letter-spacing: 2.5px; margin-bottom: 8px; }
+
+    /* section spacing */
+    #organisations, #why, #services, #pricing, #trainers, #blog { padding-left: 18px; padding-right: 18px; }
+    #why, #services, #pricing, #blog, #trainers { padding-top: 56px; padding-bottom: 56px; }
+    #organisations { padding-top: 32px; padding-bottom: 28px; }
+    #footer { padding: 44px 18px 24px; }
+
+    /* navbar */
+    #navbar { padding: 12px 18px; }
+    #navbar.scrolled { padding: 8px 18px; }
+    .nav-logo img { height: 42px !important; width: auto !important; }
+    .nav-links a { font-size: 0.85rem; }
+
+    /* hero: shrink decorations so they sit behind the text, not on it */
+    #hero { min-height: 100svh; }
+    .hero-bg-img { opacity: 0.5; }
+    .hero-bg-img::after { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.85) 100%); }
+    .hero-circle { width: 250px; height: 250px; right: -90px; border-width: 16px; opacity: 0.35; }
+    .hero-3d-scene { width: 100%; opacity: 0.18; }
+    .hero-3d-scene svg { width: 300px; height: 300px; }
+    .hero-content { padding: 96px 20px 48px; max-width: 100%; }
+    .hero-content .sub { font-size: 0.72rem; letter-spacing: 3px; padding-left: 10px; border-left-width: 3px; margin-bottom: 12px; }
+    .hero-content h1 { font-size: clamp(2.9rem, 15vw, 4.2rem); margin-bottom: 12px; letter-spacing: 1px; }
+    .hero-content p { font-size: 0.92rem; line-height: 1.5; margin-bottom: 22px; max-width: 320px; }
+    .glow-btn-wrap { margin-top: 1.25rem; }
+    .glow-btn-inner { font-size: 0.78rem; padding: 10px 26px; gap: 10px; letter-spacing: 1.2px; }
+
+    /* partners */
+    .org-glow-bg { width: 100%; height: 220px; }
+    .org-heading-wrap { margin-bottom: 20px; }
+    .org-title-line1, .org-title-line2 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+    .org-title-line3 { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
+    .org-track { gap: 14px; }
+    .org-card { width: 100px; height: 100px; }
+    .org-card .org-img-box { width: 70px; height: 70px; font-size: 0.55rem; padding: 4px; }
+    .org-card .org-img-box i { font-size: 1.3rem !important; }
+
+    /* why choose us */
+    #why .why-header { margin-bottom: 32px; }
+    .features-grid { gap: 16px; }
+    .feature-card { padding: 22px 18px; }
+    .feature-card .icon-wrap { width: 52px; height: 52px; margin-bottom: 14px; }
+    .feature-card .icon-wrap i { font-size: 1.3rem; }
+    .feature-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.86rem; line-height: 1.6; margin-bottom: 0; }
+
+    /* about: drop the overlapping illustration, stack text */
+    #about { min-height: 0; }
+    .about-bg::after { background: linear-gradient(to bottom, rgba(10,10,10,0.85), rgba(10,10,10,0.92)); }
+    .about-scene, .about-circle { display: none; }
+    .about-content { padding: 56px 20px; }
+    .about-content p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
+    .stats-grid { gap: 16px; margin-bottom: 24px; }
+    .stat-item h3 { font-size: 1.8rem; }
+    .stat-item p { font-size: 0.68rem; letter-spacing: 1.5px; }
+
+    /* services: horizontal swipe slider */
+    #services .services-header { margin: -56px -18px 28px -18px; padding: 40px 18px 34px; }
+    #services .services-header::before { width: 160px; height: 160px; border-width: 30px; top: -40px; right: -40px; }
+    #services .services-header::after { width: 120px; height: 120px; border-width: 22px; bottom: -50px; left: -30px; }
+    .services-book { display: flex; flex-direction: row; justify-content: flex-start; align-items: stretch; gap: 14px; height: auto; max-width: none; margin: 0 -18px; padding: 10px 18px 22px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .services-book::-webkit-scrollbar { display: none; }
+    .service-panel, .service-panel.is-active { flex: 0 0 78%; max-width: 300px; min-width: 0; height: 320px; border-radius: 14px; transform: none; scroll-snap-align: start; box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+    .service-panel::before, .service-panel.is-active::before { filter: grayscale(0); transform: none; }
+    .service-panel::after, .service-panel.is-active::after { opacity: 0.15; }
+    .service-panel .vertical-title, .service-panel.is-active .vertical-title { display: none; }
+    .service-panel .service-detail { opacity: 1; transform: none; inset: auto 18px 20px 18px; }
+    .service-detail .s-icon { width: 36px; height: 36px; margin-bottom: 10px; }
+    .service-detail h3 { font-size: 1.3rem; }
+    .service-detail p { font-size: 0.86rem; line-height: 1.5; max-width: none; margin-bottom: 10px; }
+    .services-join { margin-top: 18px; }
+
+    /* testimonials: drop the overlapping illustration */
+    #testimonials { min-height: 0; }
+    .testi-scene, .testi-circle { display: none; }
+    .testimonial-content { max-width: 100%; width: 100%; padding: 56px 20px; }
+    .testi-profile-wrap { gap: 14px; margin-bottom: 18px; }
+    .testi-heading-text { flex: 1; min-width: 0; }
+    .testi-heading-text .section-title { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+    .testi-profile-img { width: 84px; height: 84px; border-width: 3px; box-shadow: 0 0 0 4px rgba(232,55,44,0.2); }
+    .testimonial-content .quote-icon { font-size: 2.2rem; margin-bottom: 6px; }
+    .testimonial-content blockquote { font-size: 0.88rem; line-height: 1.65; margin-bottom: 16px; }
+    .testi-author strong { font-size: 0.85rem; }
+    .testi-nav { margin-top: 18px; }
+
+    /* programs */
+    #pricing .pricing-header { margin-bottom: 32px; }
+    .pricing-grid { gap: 22px; }
+    .prog-slider { height: 160px; }
+    .prog-slide-content h4 { font-size: 1.3rem; letter-spacing: 2px; }
+    .prog-body { padding: 28px 18px 22px; }
+    .prog-body h3 { font-size: 1.25rem; letter-spacing: 1.5px; }
+    .prog-body ul li { font-size: 0.84rem; padding: 6px 0; }
+
+    /* trainers: horizontal swipe slider */
+    #trainers .section-title { margin-bottom: 0; }
+    #trainers br { display: none; }
+    .trainers-grid { flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; gap: 14px; margin: 24px -18px 0; padding: 8px 18px 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .trainers-grid::-webkit-scrollbar { display: none; }
+    .trainer-card, .trainer-card.reveal { flex: 0 0 62%; max-width: 230px; width: auto; padding: 22px 18px; scroll-snap-align: start; opacity: 1; transform: none; }
+    .trainer-card:hover { transform: none; }
+    .trainer-card .trainer-img { width: 120px; height: 120px; margin-bottom: 12px; }
+
+    /* contact: drop the overlapping illustration */
+    #contact { min-height: 0; }
+    .contact-scene, .contact-circle { display: none; }
+    .contact-bg::after { background: linear-gradient(to bottom, rgba(10,10,10,0.8), rgba(10,10,10,0.9)); }
+    .contact-form-wrap { padding: 56px 20px; }
+    .contact-form-wrap .section-title { margin-bottom: 20px; }
+    .form-row { gap: 12px; margin-bottom: 12px; }
+    .contact-form input, .contact-form textarea { padding: 12px 14px; font-size: 1rem; }
+    .contact-form textarea { height: 96px; }
+    .form-submit { margin-top: 14px; }
+    .btn-primary { padding: 12px 28px; font-size: 0.8rem; }
+
+    /* blog + modal */
+    #blog .blog-header { margin-bottom: 28px; }
+    .blog-grid { gap: 18px; }
+    .blog-card .blog-img { height: 160px; }
+    .blog-body { padding: 18px; }
+    .blog-body h3 { font-size: 1rem; }
+    .blog-grid { display: flex; flex-direction: row; align-items: stretch; gap: 14px; max-width: none; margin: 0 -18px; padding: 6px 18px 18px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .blog-grid::-webkit-scrollbar { display: none; }
+    .blog-card, .blog-card.off-page { display: block; flex: 0 0 80%; max-width: 320px; scroll-snap-align: start; }
+    .blog-card:hover { transform: none; }
+    .blog-nav { display: none; }
+    .blog-modal-backdrop { padding: 12px; }
+    .blog-modal-header { height: 170px; padding: 16px 18px; }
+    .blog-modal-body { padding: 22px 20px 28px; }
+    .blog-modal-content { font-size: 0.9rem; line-height: 1.75; }
+    .blog-modal-footer { flex-direction: column; }
+    .blog-modal-cta, .blog-modal-back { justify-content: center; }
+
+    /* footer */
+    .footer-grid { gap: 28px; margin-bottom: 28px; }
+    .footer-col h4 { margin-bottom: 14px; }
+    .footer-contact .contact-item span, .footer-contact .contact-item a { overflow-wrap: anywhere; }
   }
 `;
 
@@ -647,7 +793,7 @@ function Navbar({
       <div className="nav-logo">
         <Image src="/logo.png" alt="Stairs" width={140} height={70} style={{ height: 70, width: "auto" }} priority />
       </div>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
+      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: "100%", left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => (
           <a key={l.href} href={l.href} className={activeSection === l.href ? "active" : ""}>{l.label}</a>
         ))}
@@ -1607,7 +1753,6 @@ function Blog() {
   const [page, setPage] = useState(0);
   const perPage = 3;
   const totalPages = Math.ceil(blogPosts.length / perPage);
-  const visible = blogPosts.slice(page * perPage, page * perPage + perPage);
 
   return (
     <section id="blog">
@@ -1617,10 +1762,10 @@ function Blog() {
         <h2 className="section-title">Latest Blog Posts</h2>
       </div>
       <div className="blog-grid stagger">
-        {visible.map((post, i) => (
+        {blogPosts.map((post, i) => (
           <div
-            className={`blog-card${post.featured ? " featured" : ""}`}
-            key={`${page}-${i}`}
+            className={`blog-card${post.featured ? " featured" : ""}${Math.floor(i / perPage) === page ? "" : " off-page"}`}
+            key={i}
             style={{ cursor: "pointer" }}
             onClick={() => setActivePost(post)}
           >

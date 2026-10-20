@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 /* ─── Shared styles (same as main site) ─── */
@@ -169,6 +169,65 @@ const globalStyles = `
     .team-grid { flex-direction: column; align-items: center; }
     .footer-grid { grid-template-columns: 1fr; }
   }
+
+  /* ═══ MOBILE (≤768px): compact sizes, content-height cards, horizontal team slider ═══ */
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; max-width: 100%; }
+    .section-title { font-size: clamp(1.6rem, 7vw, 2.1rem); }
+    .section-label { font-size: 0.72rem; letter-spacing: 2.5px; margin-bottom: 8px; }
+
+    /* navbar */
+    #navbar { padding: 12px 18px; }
+    #navbar.scrolled { padding: 8px 18px; }
+    .nav-logo img { height: 42px !important; width: auto !important; }
+    .nav-links a { font-size: 0.85rem; }
+
+    /* page hero */
+    #page-hero { min-height: 44vh; padding-top: 70px; }
+    .page-hero-bg::after { background: linear-gradient(to bottom, rgba(10,10,10,0.7), rgba(10,10,10,0.85)); }
+    .page-hero-content { padding: 0 20px; }
+    .page-hero-content .sub { font-size: 0.72rem; letter-spacing: 3px; padding-left: 10px; border-left-width: 3px; margin-bottom: 10px; }
+    .page-hero-content h1 { font-size: clamp(2.6rem, 13vw, 3.6rem); margin-bottom: 10px; }
+    .breadcrumb { font-size: 0.75rem; }
+
+    /* about detail */
+    #about-detail { padding: 48px 18px; }
+    .about-detail-grid { padding: 0; gap: 28px; }
+    .about-img-wrap img { height: 220px !important; }
+    .about-text h2 { margin-bottom: 14px; }
+    .about-text p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 0; }
+    .about-text .btn-primary { margin-top: 22px; padding: 8px 8px 8px 24px; font-size: 0.8rem; }
+    .btn-primary .play-icon { width: 32px; height: 32px; }
+
+    /* vision / mission / approach cards: size to their own content */
+    .feature-carousel { margin-top: 32px; }
+    .feature-carousel-track { align-items: flex-start; height: var(--card-h, auto); transition: height 0.4s ease, transform 0.8s ease; }
+    .feature-card { flex-direction: column; gap: 14px; padding: 22px 20px 24px; min-height: 0; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
+    .feature-card .icon { width: 46px; height: 46px; border-radius: 14px; }
+    .feature-card p { font-size: 0.88rem; line-height: 1.7; }
+    .feature-carousel-nav { margin-top: 16px; }
+
+    /* stats */
+    #stats-banner { padding: 40px 18px; }
+    .stats-banner-grid { gap: 22px 12px; }
+    .stat-box h3 { font-size: 2.1rem; letter-spacing: 1px; }
+    .stat-box p { font-size: 0.68rem; letter-spacing: 1.5px; }
+
+    /* meet the experts: horizontal swipe slider */
+    #team { padding: 56px 18px; }
+    #team .section-title { margin-bottom: 0; }
+    .team-grid { flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; gap: 14px; margin: 0 -18px; padding: 8px 18px 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .team-grid::-webkit-scrollbar { display: none; }
+    .team-card, .team-card.reveal { flex: 0 0 62%; max-width: 230px; width: auto; padding: 22px 18px; scroll-snap-align: start; opacity: 1; transform: none; }
+    .team-card:hover { transform: none; }
+    .team-card .trainer-img { width: 110px; height: 110px; }
+
+    /* footer */
+    #footer { padding: 44px 18px 24px; }
+    .footer-grid { gap: 28px; margin-bottom: 28px; }
+    .footer-col h4 { margin-bottom: 14px; }
+    .footer-contact .contact-item span, .footer-contact .contact-item a { overflow-wrap: anywhere; }
+  }
 `;
 
 function useReveal() {
@@ -204,7 +263,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
       <div className="nav-logo">
         <img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} />
       </div>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
+      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: "100%", left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
         {links.map((l) => (
           <a key={l.href} href={l.href} className={l.href === "/about" ? "active" : ""}>{l.label}</a>
         ))}
@@ -262,6 +321,19 @@ function FeatureCarousel() {
     { icon: "fas fa-heart", title: "Why STAIRS", text: "We just don't take care of the physical aspect of a person. We also are equally concerned with their mental well-being. Our clients are not just our clients but they are our family. And families take care of each other holistically." },
   ];
   const [activeIndex, setActiveIndex] = useState(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [cardH, setCardH] = useState<number | undefined>(undefined);
+
+  // Track height follows the active card (used on mobile so short cards aren't stretched)
+  useEffect(() => {
+    const measure = () => setCardH(cardRefs.current[activeIndex]?.offsetHeight);
+    const raf = window.requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("resize", measure);
+    };
+  }, [activeIndex]);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -272,9 +344,9 @@ function FeatureCarousel() {
 
   return (
     <div className="feature-carousel reveal">
-      <div className="feature-carousel-track" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+      <div className="feature-carousel-track" style={{ transform: `translateX(-${activeIndex * 100}%)`, "--card-h": cardH ? `${cardH}px` : "auto" } as React.CSSProperties}>
         {cards.map((card, index) => (
-          <div className="feature-card" key={index}>
+          <div className="feature-card" key={index} ref={(el) => { cardRefs.current[index] = el; }}>
             <div className="icon"><i className={card.icon} /></div>
             <div>
               <h4>{card.title}</h4>
