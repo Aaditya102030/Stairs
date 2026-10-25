@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import BranchesFooter, { branches } from "@/components/BranchesFooter";
 import { motion } from "motion/react";
 
 const globalStyles = `
@@ -439,12 +440,21 @@ function TrainersFull() {
     "whitefield-team":  "https://www.openstreetmap.org/export/embed.html?bbox=77.7490%2C12.9685%2C77.7530%2C12.9715&layer=mapnik&marker=12.9700%2C77.7510",
   };
 
+  const branchNameBySlug: Record<string, string> = {
+    "ulsoor-team": "Ulsoor",
+    "koramangala-team": "Koramangala",
+    "indiranagar-team": "Indiranagar",
+    "whitefield-team": "Whitefield",
+  };
+  // Google Maps link for each branch (same list the footer uses)
+  const mapLink = (slug: string) => branches.find((b) => b.name === branchNameBySlug[slug])?.map;
+
   const LocCard = ({ t, num }: { t: typeof trainers[0]; num: number }) => (
     <div className="loc-card reveal">
       <span className="loc-num">{String(num).padStart(2,"0")}</span>
 
       {/* ── Real OpenStreetMap embed ── */}
-      <div className="loc-map-wrap">
+      <div className="loc-map-wrap" style={{ position: "relative" }}>
         <iframe
           src={mapEmbeds[t.slug]}
           loading="lazy"
@@ -452,6 +462,14 @@ function TrainersFull() {
           scrolling="no"
         />
         <div className="loc-map-overlay" />
+        <a
+          href={mapLink(t.slug)}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${t.name} location in Google Maps`}
+          title="Open in Google Maps"
+          style={{ position: "absolute", inset: 0, zIndex: 5, cursor: "pointer" }}
+        />
       </div>
 
       <span className="loc-tag">Location Team</span>
@@ -539,39 +557,6 @@ function JoinCta() {
   );
 }
 
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo"><img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} /></div>
-          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
-          </div>
-        </div>
-        <div className="footer-col" style={{ paddingTop: 0 }}>
-          <h4>Opening Hours</h4>
-          <p style={{ fontSize: "0.85rem", lineHeight: 1.8 }}><strong style={{ color: "#ccc" }}>Mon – Sat:</strong> 12:00 – 14:45</p>
-          <p style={{ fontSize: "0.85rem", lineHeight: 1.8, marginTop: 8 }}><strong style={{ color: "#ccc" }}>Sun – Thu:</strong> 17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>{["about", "services", "trainers", "pricing", "contact"].map((l) => (<li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>))}</ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
-          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
-          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
-          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
-        </div>
-      </div>
-      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
-    </footer>
-  );
-}
-
 export default function TrainersPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   useReveal();
@@ -583,7 +568,7 @@ export default function TrainersPage() {
       <PageHero />
       <TrainersFull />
       <JoinCta />
-      <Footer />
+      <BranchesFooter />
     </>
   );
 }

@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import { NoiseBackground } from "@/components/ui/noise-background";
 import blogPosts from "@/lib/blogPosts";
 import type { BlogPost } from "@/lib/blogPosts";
+import BranchesFooter from "@/components/BranchesFooter";
 
 /* ─── Inline CSS ─── */
 const globalStyles = `
@@ -102,8 +103,8 @@ const globalStyles = `
   @keyframes blink-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
   .hero-content { position: relative; z-index: 2; padding: 0 60px; max-width: 700px; }
   .hero-content .sub { font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; letter-spacing: 4px; color: var(--light); text-transform: uppercase; border-left: 4px solid var(--red); padding-left: 14px; margin-bottom: 16px; display: block; }
-  .hero-content h1 { font-family: var(--font-display); font-size: clamp(4rem, 10vw, 8rem); color: var(--light); line-height: 1; letter-spacing: 2px; margin-bottom: 20px; }
-  .hero-content p { color: #cccccc; font-size: 1.05rem; margin-bottom: 36px; font-weight: 400; }
+  .hero-content h1 { font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); color: var(--light); line-height: 1; letter-spacing: 2px; margin-bottom: 20px; }
+  .hero-content p { color: #cccccc; font-size: 1.05rem; margin-bottom: 36px; font-weight: 400; max-width: 520px; line-height: 1.6; min-height: 4.9em; }
   .hero-img-placeholder { display: none; }
   .hero-3d-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
   @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(-8deg); } }
@@ -134,7 +135,9 @@ const globalStyles = `
   /* WHY */
   #why { padding: 90px 60px; background: var(--bg-light); }
   #why .why-header { text-align: center; margin-bottom: 60px; }
-  .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  #why .why-header .accent { color: var(--red); }
+  #why .why-sub { color: #555; font-size: 1.05rem; margin-top: 14px; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 
   @keyframes gradientSpin {
     0%   { background-position: 0% 50%; }
@@ -189,14 +192,14 @@ const globalStyles = `
   #services .services-header::after { content: ''; position: absolute; bottom: -80px; left: -40px; width: 200px; height: 200px; border-radius: 50%; border: 35px solid rgba(255,255,255,0.05); pointer-events: none; }
   #services .services-header .section-label { color: rgba(255,255,255,0.7); }
   #services .services-header .section-title { color: var(--light); }
-  .services-book { display: flex; gap: 18px; max-width: 920px; height: 440px; margin: 0 auto; align-items: stretch; justify-content: center; }
-  .service-panel { position: relative; flex: 0.52; min-width: 74px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
+  .services-book { display: flex; gap: 12px; max-width: 1300px; height: 440px; margin: 0 auto; align-items: stretch; justify-content: center; }
+  .service-panel { position: relative; flex: 0.52; min-width: 52px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
   .service-panel.is-active { flex: 2.7; transform: translateY(-8px); box-shadow: 0 26px 60px rgba(0,0,0,0.34); outline: none; }
   .service-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.75)), var(--service-bg); background-size: cover; background-position: center; filter: grayscale(0.6); transition: filter 0.55s ease, transform 0.55s ease; }
   .service-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(232,55,44,0.18), rgba(4,22,73,0.36)); opacity: 0.55; transition: opacity 0.55s ease; }
   .service-panel.is-active::before { filter: grayscale(0); transform: scale(1.04); }
   .service-panel.is-active::after { opacity: 0.15; }
-  .service-panel .vertical-title { position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-90deg); transform-origin: center; width: 260px; font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.7px; line-height: 1; text-align: left; white-space: nowrap; text-shadow: 0 2px 10px rgba(0,0,0,0.7); transition: opacity 0.35s ease; }
+  .service-panel .vertical-title { position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-90deg); transform-origin: center; width: 360px; font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.7px; line-height: 1; text-align: center; white-space: nowrap; text-shadow: 0 2px 10px rgba(0,0,0,0.7); transition: opacity 0.35s ease; }
   .service-panel .service-detail { position: absolute; inset: auto 22px 24px 22px; z-index: 3; color: var(--light); opacity: 0; transform: translateY(22px); transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s; text-align: left; }
   .service-panel .service-detail h3, .service-panel .service-detail p, .service-panel .service-detail .read-more { text-shadow: 0 2px 10px rgba(0,0,0,0.65); }
   .service-panel.is-active .service-detail { opacity: 1; transform: translateY(0); }
@@ -279,6 +282,68 @@ const globalStyles = `
   .prog-body ul li i{color:var(--red);font-size:.78rem;flex-shrink:0;}
   .prog-enroll{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 28px;border-radius:50px;cursor:pointer;transition:background .2s;text-decoration:none;border:none;width:100%;}
   .prog-enroll:hover{background:#c0251b;}
+  a.prog-body{display:block;color:inherit;cursor:pointer;padding-bottom:30px;}
+  .prog-card:hover .prog-body h3{color:var(--red);transition:color .3s;}
+
+  /* CLIENT GALLERY */
+  #gallery { position: relative; background: #000; padding: 56px 60px 44px; text-align: center; overflow: hidden; }
+  .gallery-layout { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 70px; max-width: 1050px; margin: 0 auto; }
+  .gallery-text { text-align: left; }
+  .gallery-visual { display: flex; flex-direction: column; align-items: center; }
+  #gallery::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #e8372c, #ff6a00, #ffb347); }
+  #gallery::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 600px 340px at 15% 0%, rgba(232,55,44,0.22), transparent 70%), radial-gradient(ellipse 600px 340px at 85% 100%, rgba(255,106,0,0.16), transparent 70%); }
+  #gallery .section-label, #gallery .section-title, .gallery-intro { position: relative; z-index: 1; }
+  #gallery .section-title { color: var(--light); margin-bottom: 14px; }
+  .gallery-intro { max-width: 520px; margin: 0; color: #e6e6e6; font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.6; font-weight: 300; }
+  /* stacked card deck */
+  .gallery-stage { position: relative; z-index: 1; display: flex; justify-content: center; margin-top: 48px; padding: 0 44px; touch-action: pan-y; }
+  .gallery-stage::before { content: ''; position: absolute; inset: 0; margin: auto; width: 390px; height: 390px; border-radius: 50%; border: 2px dashed rgba(232,55,44,0.55); animation: spin-ring 28s linear infinite; pointer-events: none; z-index: 0; }
+  .gallery-stage::after { content: ''; position: absolute; inset: 0; margin: auto; width: 330px; height: 330px; border-radius: 50%; border: 18px solid rgba(232,55,44,0.2); pointer-events: none; z-index: 0; }
+  .gallery-deck { position: relative; z-index: 1; width: min(280px, 72vw); aspect-ratio: 4 / 4.8; }
+  .deck-card { position: absolute; inset: 0; border-radius: 26px; overflow: hidden; background: #151515; cursor: pointer; transform-origin: 50% 92%; box-shadow: 0 0 0 2px rgba(255,255,255,0.22), 0 22px 44px rgba(0,0,0,0.65); transition: transform 0.7s cubic-bezier(0.22, 0.9, 0.3, 1), opacity 0.6s ease, filter 0.6s ease; will-change: transform, opacity; }
+  .deck-card[data-pos="0"] { transform: translate(0, 0) scale(1); opacity: 1; z-index: 5; box-shadow: 0 0 0 2px rgba(232,55,44,0.85), 0 28px 60px rgba(232,55,44,0.28); }
+  .deck-card[data-pos="1"] { transform: translate(14px, -10px) rotate(6deg) scale(0.97); opacity: 1; z-index: 4; filter: brightness(0.85); }
+  .deck-card[data-pos="2"] { transform: translate(-14px, -16px) rotate(-7deg) scale(0.94); opacity: 1; z-index: 3; filter: brightness(0.7); }
+  .deck-card[data-pos="3"] { transform: translate(22px, -24px) rotate(12deg) scale(0.9); opacity: 0.9; z-index: 2; filter: brightness(0.55); }
+  .deck-card[data-pos="gone"] { transform: translate(-130%, 20px) rotate(-22deg) scale(0.95); opacity: 0; z-index: 6; pointer-events: none; }
+  .deck-card[data-pos="hidden"] { transform: translate(0, -30px) rotate(0deg) scale(0.86); opacity: 0; z-index: 1; pointer-events: none; }
+  .deck-card .g-photo { object-fit: cover; object-position: center top; }
+  .g-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 40%, transparent 65%); }
+  .g-caption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 16px 18px 18px; color: var(--light); text-align: left; }
+  .g-caption::before { content: ''; display: block; width: 44px; height: 3px; border-radius: 2px; background: var(--red); margin-bottom: 12px; }
+  .g-caption h4 { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.05; margin-bottom: 4px; }
+  .g-caption p { font-size: 0.82rem; line-height: 1.35; color: rgba(255,255,255,0.8); }
+  .deck-count { position: absolute; top: 16px; left: 16px; z-index: 2; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); color: var(--light); font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; padding: 6px 12px; border-radius: 20px; }
+  .g-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 20%, rgba(232,55,44,0.45), transparent 55%), linear-gradient(145deg, #3d1511, #140a09 60%, #4a2108); }
+  .g-fallback span { width: 34%; aspect-ratio: 1; min-width: 70px; border-radius: 50%; border: 2px solid var(--red); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2.6rem; letter-spacing: 2px; color: var(--light); background: rgba(232,55,44,0.12); }
+  .gallery-controls { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 22px; }
+  .gallery-arrow { width: 44px; height: 44px; border-radius: 50%; border: none; background: rgba(255,255,255,0.12); color: var(--light); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.25s; }
+  .gallery-arrow:hover { background: var(--red); }
+  .gallery-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 260px; }
+  .gallery-dot { width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; background: rgba(255,255,255,0.3); cursor: pointer; transition: width 0.3s, background 0.3s; }
+  .gallery-dot.active { width: 26px; border-radius: 4px; background: var(--red); }
+  .deck-progress { position: relative; z-index: 1; width: min(280px, 72vw); height: 3px; margin: 14px auto 0; background: rgba(255,255,255,0.12); border-radius: 2px; overflow: hidden; }
+  .deck-progress span { display: block; width: 100%; height: 100%; background: linear-gradient(90deg, #e8372c, #ff6a00); transform-origin: left; animation: deck-progress 3.5s linear forwards; }
+  .deck-progress span.paused { animation: none; transform: scaleX(0); }
+  @keyframes deck-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  @media (max-width: 1024px) {
+    #gallery { padding-left: 30px; padding-right: 30px; }
+  }
+  @media (max-width: 768px) {
+    #gallery { padding: 40px 16px 36px; }
+    .gallery-layout { grid-template-columns: 1fr; gap: 0; justify-items: center; }
+    .gallery-text { text-align: center; }
+    .gallery-intro { margin: 0 auto; font-size: 0.95rem; }
+    .gallery-stage { margin-top: 44px; }
+    .deck-card { border-radius: 20px; }
+    .gallery-stage { padding: 0 30px; }
+    .gallery-stage::before { width: 320px; height: 320px; }
+    .gallery-stage::after { width: 270px; height: 270px; border-width: 14px; }
+    .g-caption { padding: 16px 16px 20px; }
+    .g-caption h4 { font-size: 1.3rem; }
+    .g-caption p { font-size: 0.82rem; }
+  }
 
   /* TRAINERS */
   #trainers { background: var(--red); padding: 80px 60px; text-align: center; }
@@ -474,6 +539,11 @@ const globalStyles = `
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; text-align: center; font-size: 0.8rem; }
 
   /* RESPONSIVE */
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .services-book { gap: 10px; }
+    .service-panel { min-width: 44px; }
+  }
+
   @media (max-width: 1024px) {
     #navbar { padding: 18px 30px; }
     #navbar.scrolled { padding: 12px 30px; }
@@ -524,8 +594,8 @@ const globalStyles = `
     .hero-3d-scene svg { width: 300px; height: 300px; }
     .hero-content { padding: 96px 20px 48px; max-width: 100%; }
     .hero-content .sub { font-size: 0.72rem; letter-spacing: 3px; padding-left: 10px; border-left-width: 3px; margin-bottom: 12px; }
-    .hero-content h1 { font-size: clamp(2.9rem, 15vw, 4.2rem); margin-bottom: 12px; letter-spacing: 1px; }
-    .hero-content p { font-size: 0.92rem; line-height: 1.5; margin-bottom: 22px; max-width: 320px; }
+    .hero-content h1 { font-size: clamp(2rem, 10vw, 3rem); line-height: 1.05; margin-bottom: 12px; letter-spacing: 1px; }
+    .hero-content p { font-size: 0.92rem; line-height: 1.5; margin-bottom: 22px; max-width: 360px; min-height: 6em; }
     .glow-btn-wrap { margin-top: 1.25rem; }
     .glow-btn-inner { font-size: 0.78rem; padding: 10px 26px; gap: 10px; letter-spacing: 1.2px; }
 
@@ -541,6 +611,7 @@ const globalStyles = `
 
     /* why choose us */
     #why .why-header { margin-bottom: 32px; }
+    #why .why-sub { font-size: 0.92rem; margin-top: 10px; }
     .features-grid { gap: 16px; }
     .feature-card { padding: 22px 18px; }
     .feature-card .icon-wrap { width: 52px; height: 52px; margin-bottom: 14px; }
@@ -661,19 +732,25 @@ const orgs = [
 ];
 
 const features = [
-  { icon: "fas fa-child", title: "Abdominal Sessions", text: "Strengthen your core with targeted abdominal training. Our sessions improve posture, reduce lower back pain, and build a stable foundation for every movement your body makes." },
-  { icon: "fas fa-weight-hanging", title: "Weight Lifting", text: "Build real strength with progressive, coach-guided weight training. We design programs that improve muscle balance, joint health, and athletic performance safely." },
-  { icon: "fas fa-fist-raised", title: "Flex & Mobility", text: "Regain full range of motion through expert-led flexibility and mobility work. We combine myofascial release and corrective exercise to help your body move pain-free." },
-  { icon: "fas fa-pills", title: "Recovery & Nutrition", text: "Optimal recovery starts from within. Our experts guide you on nutrition, sleep, and supplementation strategies to accelerate healing and sustain peak performance." },
+  { icon: "fas fa-medal", title: "Ironman & World Major Marathon Runners", text: "Enhance endurance, prevent injuries, and optimize performance" },
+  { icon: "fas fa-running", title: "Runners & Endurance Athletes", text: "Improve mobility, speed recovery, and build strength" },
+  { icon: "fas fa-dumbbell", title: "Athletes & Fitness Enthusiasts", text: "Stay injury-free and perform better" },
+  { icon: "fas fa-film", title: "Film Industry Professionals", text: "Recover, move better, and prevent injuries" },
+  { icon: "fas fa-briefcase", title: "Corporate Leaders & Professionals", text: "Beat posture-related pain and stress" },
+  { icon: "fas fa-landmark", title: "Politicians & Public Figures", text: "Stay active and energized for demanding schedules" },
 ];
 
 const services = [
-  { href: "/services/bio-mechanical-assessment", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Bio Mechanical Assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
-  { href: "/services/physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
-  { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
-  { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
-  { href: "/services/sports-specific-training", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Specific Training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
-  { href: "/services/group-session", bg: "url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80')", vertical: "Group Session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
+  { href: "/services/advanced-physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Advanced Physiotherapy", icon: "fas fa-notes-medical", title: "Advanced Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/postural-ergonomic-correction", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Postural & Ergonomic Correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80')", vertical: "Manual Therapy & Dry Needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
+  { href: "/services/prehab-wellness-programs", bg: "url('https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80')", vertical: "Prehab & Wellness Programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
+  { href: "/services/manual-physiotherapy", bg: "url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80')", vertical: "Manual Physiotherapy", icon: "fas fa-hand-holding-medical", title: "Manual Physiotherapy", desc: "Expert hands-on treatment for pain relief and mobility restoration" },
+  { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
+  { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
 const massageSlides = [
@@ -712,10 +789,24 @@ const programmeSlides = [
 ];
 const programmeFeatures = ["1-on-1 video coaching sessions", "Personalised training plan", "Physiotherapy consultations", "Diet & recovery guidance", "Flexible scheduling"];
 
-const trainers = [
-  { img: "/images/PRAGATHI GUPTA.png", name: "Marvin Joiner", role: "CrossFit Coach" },
-  { img: "/images/JANANI ANANTHAKUMAR.jpg", name: "Patricia Woodrum", role: "Cardio & Conditioning" },
-  { img: "/images/RUKMINI VIJAYAKUMAR.avif", name: "Hannaz Stone", role: "Fitness Coach" },
+/* Client gallery. Photos not yet in /public/images/gallery/ fall back to an initials tile. */
+const galleryClients = [
+  { name: "Sanjay Rajpal", role: "Businessman & Squash Champ", img: "/images/SANJAY RAJPAL.avif" },
+  { name: "Rukmini Vijaykumar", role: "Actress & Dancer", img: "/images/RUKMINI VIJAYAKUMAR.avif" },
+  { name: "Shreyas Karnad", role: "Marathoner & Running Coach", img: "/images/SHREYAS KARNAD.avif" },
+  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/gallery/yasmeen-shaikh.jpg" },
+  { name: "Yash Gowda", role: "Indian Actor", img: "/images/gallery/yash-gowda.jpg" },
+  { name: "Deepika Padukone", role: "Indian Actress", img: "/images/gallery/deepika-padukone.jpg" },
+  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images/gallery/bhavish-aggarwal.jpg" },
+  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images/gallery/anand-dayal-dadu.jpg" },
+  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images/gallery/tejasvi-surya.jpg" },
+  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images/gallery/jacqueline-fernandez.jpg" },
+  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images/gallery/prakash-padukone.jpg" },
+  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images/gallery/anish-sood.jpg" },
+  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images/gallery/pankaj-advani.jpg" },
+  { name: "Rakul Preet", role: "Indian Actress", img: "/images/gallery/rakul-preet.jpg" },
+  { name: "Neha Shetty", role: "Indian Actress", img: "/images/gallery/neha-shetty.jpg" },
+  { name: "Allu Sirish", role: "Indian Actor", img: "/images/gallery/allu-sirish.jpg" },
 ];
 
 const pricingFeatures = ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"];
@@ -809,10 +900,10 @@ function Navbar({
 /* ─── Hero ─── */
 function Hero() {
   const slides = [
-    { label: "Fitness & Health", title: "BE\nSTRONG", desc: "Best GYM & Fitness Center Build Your Health." },
-    { label: "Expert Coaching", title: "TRAIN\nSMARTER", desc: "Train with Expert Coaches & Certified Trainers." },
-    { label: "Your Goals", title: "UNLOCK\nPOTENTIAL", desc: "Tailored Programs Designed Around You." },
-    { label: "Community", title: "JOIN\n2500+", desc: "Trusted by Athletes & Fitness Enthusiasts Worldwide." },
+    { label: "Physiotherapy and Fitness", title: "MOVE BETTER,\nRECOVER\nSTRONGER", desc: "Physiotherapy, rehabilitation and strength training to help you recover from injuries, move with confidence, and get back to what you love." },
+    { label: "Strength & Conditioning", title: "BUILD STRENGTH,\nIMPROVED\nPERFORMANCE", desc: "Structured training to build strength, improve fitness, and prepare your body for the demands of everyday life and sport." },
+    { label: "Movement & Rebuild", title: "RECOVERY &\nRESTORE", desc: "Structured training to build strength, improve fitness, and prepare your body for the demands of everyday life and sport." },
+    { label: "Community & Movement", title: "MORE THAN\nMOVEMENT", desc: "From running communities to fitness initiatives and educational workshops, we bring people together through movement, learning, and a shared commitment to better health." },
   ];
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -825,7 +916,7 @@ function Hero() {
         setIdx((i) => (i + 1) % slides.length);
         setVisible(true);
       }, 500);
-    }, 3500);
+    }, 5500);
     return () => {
       clearTimeout(pause);
       clearTimeout(innerTimer);
@@ -967,7 +1058,7 @@ function Hero() {
           {s.title}
         </h1>
         <p
-          style={{ transitionDelay: "0.16s", transition: "opacity 0.5s, transform 0.5s", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", minHeight: "2rem" }}
+          style={{ transitionDelay: "0.16s", transition: "opacity 0.5s, transform 0.5s", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)" }}
         >
           {s.desc}
         </p>
@@ -1014,7 +1105,9 @@ function Organisations() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title org-title-line1">Sports</h2>
+            <h2 className="section-title org-title-line1">
+              
+            </h2>
             <h2 className="section-title org-title-line2">Organisations</h2>
             <h2 className="section-title org-title-line3">We Have Worked With</h2>
           </motion.div>
@@ -1042,7 +1135,8 @@ function WhyChooseUs() {
     <section id="why">
       <div className="why-header">
         <span className="section-label reveal">Why Choose Us</span>
-        <h2 className="section-title reveal">Build Your Best Body</h2>
+        <h2 className="section-title reveal">Transforming Lives <span className="accent">Across Industries</span></h2>
+        <p className="why-sub reveal">With 10,000+ success stories over 8+ years, we’ve helped:</p>
       </div>
       <div className="features-grid stagger">
         {features.map((f, i) => (
@@ -1155,14 +1249,16 @@ function About() {
       <div className="about-content reveal-right">
         <span className="section-label">About Us</span>
         <h2 className="section-title">Welcome To The<br />Stairs</h2>
-        <p>STAIRS helps people worldwide heal through physiotherapy. We identify imbalances with musculoskeletal assessment, plan injury prevention programs, and use corrective exercise plus myofascial care so clients can move better and reach their goals.</p>
+        <p>
+              At Stairs Physiotherapy & Fitness, we’ve helped 10,000+ clients over the last 6+ years live pain-free, move better, and enhance their performance. From athletes to working professionals, we have transformed lives by focusing on injury recovery, movement correction, strength building, and long-term wellness.
+              With 5 branches across Bengaluru – Ulsoor, Koramangala, Indiranagar, Whitefield and New BEL Road – we are committed to making quality physiotherapy and fitness accessible to everyone. Whether you want to recover from pain, prevent injuries, or improve performance, we are here to support your journey toward a stronger, healthier lifestyle.
+        </p>
         <div className="stats-grid stagger">
           <div className="stat-item reveal"><h3>100K+</h3><p>Working Hours</p></div>
           <div className="stat-item reveal"><h3>100+</h3><p>Success Program</p></div>
           <div className="stat-item reveal"><h3>1000+</h3><p>Happy Clients</p></div>
           <div className="stat-item reveal"><h3>400+</h3><p>Perfect Bodies</p></div>
         </div>
-        <div className="glow-btn-wrap"><a href="/about" className="glow-btn-inner">Read more <span className="play-icon"><i className="fas fa-play" /></span></a></div>
       </div>
     </section>
   );
@@ -1174,6 +1270,18 @@ function Services() {
   const activeIdxRef = useRef(0);
   const isHoveringRef = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const bookRef = useRef<HTMLDivElement>(null);
+  const resumeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // On phones the services are a horizontal row: bring card `i` into view
+  const scrollToCard = (i: number) => {
+    if (typeof window === "undefined" || !window.matchMedia("(max-width: 768px)").matches) return;
+    const el = bookRef.current;
+    const card = el?.children[i] as HTMLElement | undefined;
+    if (!el || !card) return;
+    const left = el.scrollLeft + card.getBoundingClientRect().left - el.getBoundingClientRect().left - 18;
+    el.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+  };
 
   const startCycle = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -1181,12 +1289,40 @@ function Services() {
       const next = (activeIdxRef.current + 1) % services.length;
       activeIdxRef.current = next;
       setActiveIdx(next);
+      scrollToCard(next);
     }, 3000);
+  };
+
+  // Pause auto-scroll while the visitor is touching/swiping, resume a moment after
+  const pauseForTouch = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (resumeRef.current) clearTimeout(resumeRef.current);
+  };
+  const resumeAfterTouch = () => {
+    if (resumeRef.current) clearTimeout(resumeRef.current);
+    resumeRef.current = setTimeout(() => {
+      const el = bookRef.current;
+      if (el) {
+        const elLeft = el.getBoundingClientRect().left;
+        let best = 0;
+        let bestDist = Infinity;
+        Array.from(el.children).forEach((c, i) => {
+          const d = Math.abs(c.getBoundingClientRect().left - elLeft - 18);
+          if (d < bestDist) { bestDist = d; best = i; }
+        });
+        activeIdxRef.current = best;
+        setActiveIdx(best);
+      }
+      startCycle();
+    }, 3500);
   };
 
   useEffect(() => {
     startCycle();
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (resumeRef.current) clearTimeout(resumeRef.current);
+    };
   }, []);
 
   const handleMouseEnter = (i: number) => {
@@ -1209,7 +1345,7 @@ function Services() {
         <span className="section-label">Our Services</span>
         <h2 className="section-title">Solutions For Moving Better<br />&amp; Feeling A Healthier</h2>
       </div>
-      <div className="services-book stagger" id="serviceDetails">
+      <div className="services-book stagger" id="serviceDetails" ref={bookRef} onTouchStart={pauseForTouch} onTouchEnd={resumeAfterTouch} onTouchCancel={resumeAfterTouch}>
         {services.map((s, i) => (
           <a
             key={i}
@@ -1224,7 +1360,6 @@ function Services() {
               <span className="s-icon"><i className={s.icon} /></span>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
-              <span className="read-more">View details <i className="fas fa-arrow-right" /></span>
             </span>
           </a>
         ))}
@@ -1386,7 +1521,7 @@ function ProgrammeCard() {
           ))}
         </div>
       </div>
-      <div className="prog-body">
+      <a href="/pricing" className="prog-body">
         <h3>Online Programme</h3>
         <span className="prog-sub">Stairs Rehab &amp; Fitness</span>
         <ul>
@@ -1394,8 +1529,7 @@ function ProgrammeCard() {
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
-        <a href="/pricing" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
-      </div>
+      </a>
     </div>
   );
 }
@@ -1432,7 +1566,7 @@ function MassageCard() {
           ))}
         </div>
       </div>
-      <div className="prog-body">
+      <a href="/pricing" className="prog-body">
         <h3>Massage Therapy</h3>
         <span className="prog-sub">Feel Better, Move Better</span>
         <ul>
@@ -1440,8 +1574,7 @@ function MassageCard() {
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
-        <a href="/pricing" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
-      </div>
+      </a>
     </div>
   );
 }
@@ -1478,7 +1611,7 @@ function FitToRunCard() {
           ))}
         </div>
       </div>
-      <div className="prog-body">
+      <a href="/pricing" className="prog-body">
         <h3>Fit To Run</h3>
         <span className="prog-sub">Step Into A New You</span>
         <ul>
@@ -1486,8 +1619,7 @@ function FitToRunCard() {
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
-        <a href="/pricing" className="prog-enroll">Explore &nbsp;<i className="fas fa-arrow-right" /></a>
-      </div>
+      </a>
     </div>
   );
 }
@@ -1530,47 +1662,109 @@ function Pricing() {
   );
 }
 
-/* ─── Trainers ─── */
-function Trainers() {
+/* ─── Client Gallery ─── */
+function ClientGallery() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [failed, setFailed] = useState<Record<string, boolean>>({});
+  const touchX = useRef<number | null>(null);
+  const total = galleryClients.length;
+  const go = (d: number) => setCurrent((c) => (c + d + total) % total);
+
+  // auto-advance every 3.5s (matches the progress bar animation); paused while hovering
+  useEffect(() => {
+    if (paused) return;
+    const t = setTimeout(() => setCurrent((c) => (c + 1) % total), 3500);
+    return () => clearTimeout(t);
+  }, [current, paused, total]);
+
+  const initials = (n: string) => n.split(" ").map((w) => w[0]).slice(0, 2).join("");
+
+  const renderPhoto = (c: (typeof galleryClients)[number], sizes: string) =>
+    failed[c.img] ? (
+      <div className="g-fallback"><span>{initials(c.name)}</span></div>
+    ) : (
+      <Image
+        src={c.img}
+        alt={c.name}
+        fill
+        sizes={sizes}
+        className="g-photo"
+        onError={() => setFailed((f) => ({ ...f, [c.img]: true }))}
+      />
+    );
+
   return (
-    <section id="trainers" style={{position:"relative", overflow:"hidden"}}>
-      {/* animated background SVG — purely decorative, behind all cards */}
-      <svg aria-hidden="true" style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:0}} viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice">
-        <circle cx="100" cy="100" r="180" fill="rgba(255,255,255,0.04)" style={{animation:"pulse-ring 6s ease-in-out infinite",transformOrigin:"100px 100px"}}/>
-        <circle cx="1100" cy="400" r="220" fill="rgba(255,255,255,0.04)" style={{animation:"pulse-ring 8s ease-in-out infinite 1s",transformOrigin:"1100px 400px"}}/>
-        <circle cx="600" cy="500" r="150" fill="rgba(0,0,0,0.08)" style={{animation:"pulse-ring 7s ease-in-out infinite 0.5s",transformOrigin:"600px 500px"}}/>
-        <circle cx="600" cy="250" r="400" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="10 20" fill="none" style={{animation:"spin-ring 40s linear infinite",transformOrigin:"600px 250px"}}/>
-        <circle cx="600" cy="250" r="300" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeDasharray="6 18" fill="none" style={{animation:"spin-ring 55s linear infinite reverse",transformOrigin:"600px 250px"}}/>
-        {/* floating dumbbells in bg */}
-        <g opacity="0.06" style={{animation:"float1 7s ease-in-out infinite",transformOrigin:"200px 350px"}}>
-          <rect x="160" y="340" width="14" height="24" rx="3" fill="#fff"/>
-          <rect x="174" y="346" width="60" height="12" rx="6" fill="#fff"/>
-          <rect x="234" y="340" width="14" height="24" rx="3" fill="#fff"/>
-        </g>
-        <g opacity="0.06" style={{animation:"float3 9s ease-in-out infinite",transformOrigin:"1000px 150px"}}>
-          <rect x="960" y="140" width="14" height="24" rx="3" fill="#fff"/>
-          <rect x="974" y="146" width="60" height="12" rx="6" fill="#fff"/>
-          <rect x="1034" y="140" width="14" height="24" rx="3" fill="#fff"/>
-        </g>
-      </svg>
-      <span className="section-label reveal" style={{position:"relative",zIndex:1}}>Team Members</span>
-      <h2 className="section-title reveal" style={{position:"relative",zIndex:1}}>Team Of Expert Coaches</h2>
-      <br /><br />
-      <div className="trainers-grid stagger" style={{position:"relative",zIndex:1}}>
-        {trainers.map((t, i) => (
-          <div className="trainer-card reveal" key={i}>
-            <div className="trainer-img">
-              <Image src={t.img} alt={t.name} width={160} height={160} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
-            </div>
-            <h4>{t.name}</h4>
-            <p className="role">{t.role}</p>
-            <div className="trainer-social">
-              <a href="#"><i className="fab fa-facebook-f" /></a>
-              <a href="#"><i className="fab fa-twitter" /></a>
-              <a href="#"><i className="fas fa-envelope" /></a>
-            </div>
-          </div>
-        ))}
+    <section id="gallery">
+      <div className="gallery-layout">
+      <div className="gallery-text">
+      <span className="section-label reveal">Our Clients</span>
+      <h2 className="section-title reveal">Who We&apos;ve Worked With</h2>
+      <p className="gallery-intro reveal">
+        At Stairs Physiotherapy &amp; Fitness, we take pride in helping people from all walks of life move pain-free, recover faster, and perform at their best. Over the past 8+ years, we&apos;ve worked with:
+      </p>
+      </div>
+      <div className="gallery-visual">
+      <div
+        className="gallery-stage reveal"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={(e) => { touchX.current = e.touches[0].clientX; setPaused(true); }}
+        onTouchEnd={(e) => {
+          if (touchX.current !== null) {
+            const dx = e.changedTouches[0].clientX - touchX.current;
+            if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+          }
+          touchX.current = null;
+          setPaused(false);
+        }}
+      >
+        <div className="gallery-deck">
+          {galleryClients.map((c, i) => {
+            const pos = (i - current + total) % total;
+            const state = pos <= 3 ? String(pos) : pos === total - 1 ? "gone" : "hidden";
+            return (
+              <div
+                key={c.name}
+                className="deck-card"
+                data-pos={state}
+                aria-hidden={pos !== 0}
+                onClick={() => (pos === 0 ? go(1) : pos <= 3 ? setCurrent(i) : undefined)}
+              >
+                {renderPhoto(c, "(max-width: 768px) 78vw, 380px")}
+                <span className="g-overlay" />
+                <span className="deck-count">{String(i + 1).padStart(2, "0")} / {total}</span>
+                <span className="g-caption">
+                  <h4>{c.name}</h4>
+                  <p>{c.role}</p>
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="gallery-controls">
+        <button type="button" className="gallery-arrow" aria-label="Previous" onClick={() => go(-1)}>
+          <i className="fas fa-chevron-left" />
+        </button>
+        <div className="gallery-dots">
+          {galleryClients.map((c, i) => (
+            <button
+              key={c.name}
+              type="button"
+              aria-label={`Show ${c.name}`}
+              className={`gallery-dot${i === current ? " active" : ""}`}
+              onClick={() => setCurrent(i)}
+            />
+          ))}
+        </div>
+        <button type="button" className="gallery-arrow" aria-label="Next" onClick={() => go(1)}>
+          <i className="fas fa-chevron-right" />
+        </button>
+      </div>
+      <div className="deck-progress"><span key={`${current}-${paused}`} className={paused ? "paused" : ""} /></div>
+      </div>
       </div>
     </section>
   );
@@ -1775,7 +1969,6 @@ function Blog() {
             <div className="blog-body">
               <h3>{post.title}</h3>
               <p>{post.excerpt}</p>
-              <span className="read-more" style={{ cursor: "pointer" }}>Read more</span>
             </div>
           </div>
         ))}
@@ -1813,49 +2006,6 @@ function Blog() {
   );
 }
 
-/* ─── Footer ─── */
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo">
-            <Image src="/logo.png" alt="Stairs" width={120} height={60} style={{ height: 60, width: "auto" }} />
-          </div>
-          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a>
-            <a href="#"><i className="fab fa-twitter" /></a>
-            <a href="#"><i className="fab fa-instagram" /></a>
-          </div>
-        </div>
-        <div className="footer-col footer-hours">
-          <h4>Opening Hours</h4>
-          <p><strong style={{ color: "#ccc" }}>Monday – Saturday</strong><br />12:00 – 14:45</p><br />
-          <p><strong style={{ color: "#ccc" }}>Sunday – Thursday</strong><br />17:30 – 00:00</p><br />
-          <p><strong style={{ color: "#ccc" }}>Friday – Saturday</strong><br />17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            {["about", "services", "trainers", "pricing", "contact"].map((l) => (
-              <li key={l}><a href={`#${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>
-            ))}
-          </ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
-          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
-          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
-          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
-        </div>
-      </div>
-      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
-    </footer>
-  );
-}
-
 /* ─── App ─── */
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -1873,10 +2023,10 @@ export default function App() {
       <Services />
       <Testimonials />
       <Pricing />
-      <Trainers />
+      <ClientGallery />
       <Contact />
       <Blog />
-      <Footer />
+      <BranchesFooter />
     </>
   );
 }

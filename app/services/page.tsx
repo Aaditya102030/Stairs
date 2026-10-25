@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import BranchesFooter from "@/components/BranchesFooter";
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -75,14 +76,14 @@ const globalStyles = `
   /* SERVICES ACCORDION GRID */
   #services-full { padding: 90px 60px; background: var(--bg-light); }
   #services-full .services-header { text-align: center; margin-bottom: 60px; }
-  .services-book { display: flex; gap: 18px; max-width: 1100px; height: 500px; margin: 0 auto; align-items: stretch; justify-content: center; }
-  .service-panel { position: relative; display: block; width: 100%; flex: 0.52; min-width: 74px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
+  .services-book { display: flex; gap: 12px; max-width: 1300px; height: 500px; margin: 0 auto; align-items: stretch; justify-content: center; }
+  .service-panel { position: relative; display: block; width: 100%; flex: 0.52; min-width: 52px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
   .service-panel.is-active { flex: 2.7; transform: translateY(-8px); box-shadow: 0 26px 60px rgba(0,0,0,0.34); }
   .service-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.75)), var(--service-bg); background-size: cover; background-position: center; filter: grayscale(0.6); transition: filter 0.55s ease; }
   .service-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(232,55,44,0.18), rgba(4,22,73,0.36)); opacity: 0.55; transition: opacity 0.55s ease; }
   .service-panel.is-active::before { filter: grayscale(0); }
   .service-panel.is-active::after { opacity: 0.15; }
-  .service-panel .vertical-title { position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-90deg); width: 260px; font-family: var(--font-display); font-size: 1.05rem; white-space: nowrap; text-shadow: 0 2px 10px rgba(0,0,0,0.7); transition: opacity 0.35s ease; }
+  .service-panel .vertical-title { position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%) rotate(-90deg); width: 360px; text-align: center; font-family: var(--font-display); font-size: 1.05rem; white-space: nowrap; text-shadow: 0 2px 10px rgba(0,0,0,0.7); transition: opacity 0.35s ease; }
   .service-panel .service-detail { position: absolute; inset: auto 22px 24px 22px; z-index: 3; color: var(--light); opacity: 0; transform: translateY(22px); transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s; }
   .service-panel.is-active .service-detail { opacity: 1; transform: translateY(0); }
   .service-panel.is-active .vertical-title { opacity: 0; }
@@ -110,6 +111,11 @@ const globalStyles = `
   .footer-contact .contact-item strong { color: var(--light); font-size: 0.85rem; margin-bottom: 2px; }
   .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; text-align: center; font-size: 0.8rem; }
 
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .services-book { gap: 10px; }
+    .service-panel { min-width: 44px; }
+  }
+
   @media (max-width: 1024px) {
     #navbar { padding: 18px 30px; } #navbar.scrolled { padding: 12px 30px; }
     #services-full, #footer { padding-left: 30px; padding-right: 30px; }
@@ -128,12 +134,16 @@ const globalStyles = `
 `;
 
 const services = [
-  { href: "/services/bio-mechanical-assessment", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Bio Mechanical Assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
-  { href: "/services/physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
-  { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
-  { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
-  { href: "/services/sports-specific-training", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Specific Training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
-  { href: "/services/group-session", bg: "url('https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80')", vertical: "Group Session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
+  { href: "/services/advanced-physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Advanced Physiotherapy", icon: "fas fa-notes-medical", title: "Advanced Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/postural-ergonomic-correction", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Postural & Ergonomic Correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80')", vertical: "Manual Therapy & Dry Needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
+  { href: "/services/prehab-wellness-programs", bg: "url('https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80')", vertical: "Prehab & Wellness Programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
+  { href: "/services/manual-physiotherapy", bg: "url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80')", vertical: "Manual Physiotherapy", icon: "fas fa-hand-holding-medical", title: "Manual Physiotherapy", desc: "Expert hands-on treatment for pain relief and mobility restoration" },
+  { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
+  { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
 function useReveal() {
@@ -335,39 +345,6 @@ function ServicesFull() {
   );
 }
 
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo"><img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} /></div>
-          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
-          </div>
-        </div>
-        <div className="footer-col footer-hours">
-          <h4>Opening Hours</h4>
-          <p><strong style={{ color: "#ccc" }}>Monday – Saturday</strong><br />12:00 – 14:45</p><br />
-          <p><strong style={{ color: "#ccc" }}>Sunday – Thursday</strong><br />17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>{["about", "services", "trainers", "pricing", "contact"].map((l) => (<li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>))}</ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
-          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
-          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
-          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
-        </div>
-      </div>
-      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
-    </footer>
-  );
-}
-
 export default function ServicesPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   useReveal();
@@ -378,7 +355,7 @@ export default function ServicesPage() {
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <PageHero />
       <ServicesFull />
-      <Footer />
+      <BranchesFooter />
     </>
   );
 }

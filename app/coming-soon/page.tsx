@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import BranchesFooter from "@/components/BranchesFooter";
 import { motion } from "motion/react";
 
 const globalStyles = `
@@ -200,6 +201,7 @@ export default function ComingSoonPage() {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <ComingSoonContent />
+      <BranchesFooter />
     </>
   );
 }

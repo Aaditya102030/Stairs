@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
 import { use } from "react";
 import React from "react";
+import BranchesFooter from "@/components/BranchesFooter";
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -186,57 +187,9 @@ interface ServiceData {
 }
 
 const serviceDetails: Record<string, ServiceData> = {
-  "bio-mechanical-assessment": {
-    title: "Bio Mechanical Assessment",
-    subtitle: "Body Assessment",
-    description: "Biomechanics is a fancy term for the science of how and why your body moves the way that it does. We use biomechanics to determine the best way to complete movements and identify imbalances before they become bigger problems.",
-    icon: "fas fa-ruler-horizontal",
-    heroImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80",
-    sections: [
-      {
-        tag: "What Is It",
-        heading: "Understanding Biomechanics",
-        body: [
-          "Biomechanics is a word you've probably heard if you have visited a physiotherapist before, but may not have understood what role it plays in your rehab and everyday life. Biomechanics is a fancy term for the science of how and why your body moves the way that it does.",
-          "In a real life setting, we use biomechanics to determine the best way to complete movements and to understand the forces acting on your body during exercise and daily activities.",
-        ],
-        image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80",
-        imageAlt: "Physiotherapist performing body assessment",
-      },
-      {
-        tag: "The Examination",
-        heading: "Biomechanical Examination",
-        body: [
-          "A physiotherapist would use an observation test to analyze and take their best understanding regarding differences in motion and imbalances which might be present. We measure your movements and imbalances to exact degrees.",
-          "This allows us to spot even minor imbalances before they lead to larger problems — giving you the most complete picture of how your body currently moves.",
-        ],
-        image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80",
-        imageAlt: "Assessment in progress",
-        reverse: true,
-      },
-      {
-        tag: "What to Expect",
-        heading: "Your Assessment Session",
-        body: [
-          "Expect to move! The only way for a physio to know how you move is to watch and measure it. This means you should wear comfortable clothes and your favourite workout shoes.",
-          "Also be prepared to answer questions about your life and potential problem areas — your work setup, how often you exercise, any concerns, past injuries, and areas of recurring pain.",
-        ],
-        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80",
-        imageAlt: "Patient during physiotherapy session",
-      },
-    ],
-    keyPoints: [
-      { icon: "fas fa-search", title: "Motion Analysis", desc: "Detailed observation of movement patterns across all planes of motion" },
-      { icon: "fas fa-ruler-combined", title: "Precise Measurement", desc: "We measure imbalances to exact degrees for accurate diagnosis" },
-      { icon: "fas fa-shield-alt", title: "Injury Prevention", desc: "Spot minor issues before they escalate into serious problems" },
-      { icon: "fas fa-clipboard-list", title: "Full History Review", desc: "Work setup, exercise habits, injury history, and recurring pain areas" },
-      { icon: "fas fa-chart-line", title: "Personalised Plan", desc: "Findings used to build a training and recovery plan tailored to you" },
-      { icon: "fas fa-user-md", title: "Expert Physio", desc: "Conducted by skilled physiotherapists with hands-on expertise" },
-    ],
-  },
-  physiotherapy: {
-    title: "Physiotherapy",
-    subtitle: "Prehab / Rehab",
+  "advanced-physiotherapy": {
+    title: "Advanced Physiotherapy",
+    subtitle: "Pain Relief / Rehab / Recovery",
     description: "At Stairs, we are committed to bringing access to quality physio care through manual therapies and high-skilled practitioners. Our world-class therapists keep a strong focus on patient needs and deliver the highest level of care.",
     icon: "fas fa-notes-medical",
     heroImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80",
@@ -331,8 +284,8 @@ const serviceDetails: Record<string, ServiceData> = {
     ],
   },
   "myofascial-release": {
-    title: "Myofascial Release",
-    subtitle: "Treatment / Release",
+    title: "Myofascial Release Therapy (MFR)",
+    subtitle: "Relieving Tightness / Improving Mobility",
     description: "Myofascial release is a soft tissue massage treatment to help increase myofascial mobility and reduce pain within the musculoskeletal system. Massage therapists working at STAIRS use MFR to treat many conditions.",
     icon: "fas fa-hand-holding-heart",
     heroImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&q=80",
@@ -378,9 +331,9 @@ const serviceDetails: Record<string, ServiceData> = {
       { icon: "fas fa-check-circle", title: "Treat Acute & Post-Surgery", desc: "Effective for acute pain, post injury, and post surgery care" },
     ],
   },
-  "sports-specific-training": {
-    title: "Sports Specific Training",
-    subtitle: "Training Specific to Sport",
+  "sports-rehab-injury-prevention": {
+    title: "Sports Rehab & Injury Prevention",
+    subtitle: "Get Back to Peak Performance Safely",
     description: "We've made sure that our sports health modules cover the whole spectrum, from the specific needs of athletes who represent their countries on the global stage, all the way to those seeking an active lifestyle.",
     icon: "fas fa-basketball-ball",
     heroImage: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&q=80",
@@ -426,63 +379,247 @@ const serviceDetails: Record<string, ServiceData> = {
       { icon: "fas fa-redo", title: "Post-Recovery", desc: "Performance enhancement after injury treatment and recovery" },
     ],
   },
-  "group-session": {
-    title: "Group Session",
-    subtitle: "Runners, Triathlete or Any Sport",
-    description: "Our group sessions bring together like-minded athletes in a high-energy, coach-led environment. Whether you're training for a marathon, triathlon, or simply want to get fitter with others — there's a place for you here.",
-    icon: "fas fa-users",
-    heroImage: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1200&q=80",
+  "postural-ergonomic-correction": {
+    title: "Postural & Ergonomic Correction",
+    subtitle: "Reduce Workplace Injuries & Discomfort",
+    description: "Long hours at a desk, on a screen or on your feet can quietly strain the body. Our postural and ergonomic correction programs help reduce workplace injuries and everyday discomfort.",
+    icon: "fas fa-chair",
+    heroImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80",
     sections: [
       {
-        tag: "Why Group Training",
-        heading: "Better Together",
+        tag: "Posture",
+        heading: "Understanding Your Posture",
         body: [
-          "Training with others creates accountability, energy, and a sense of community that solo sessions simply can't replicate. Our group sessions are structured by experienced coaches who keep every workout purposeful, safe, and engaging.",
-          "Whether you're a complete beginner or a seasoned competitor, our coaches scale the intensity to suit your level — so nobody gets left behind, and nobody holds back.",
+          "Posture is how your body holds itself while sitting, standing and moving. Habits built over years, such as slouching at a desk or looking down at a phone, can lead to muscle imbalances, stiffness and pain.",
+          "We assess how you hold and move your body, then identify the habits and imbalances that may be contributing to your discomfort.",
         ],
-        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80",
-        imageAlt: "Group fitness session",
+        image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80",
+        imageAlt: "Posture assessment",
       },
       {
-        tag: "What We Cover",
-        heading: "Strength, Endurance & Mobility",
+        tag: "Ergonomics",
+        heading: "Ergonomics for Work & Daily Life",
         body: [
-          "Each session blends functional strength, cardiovascular conditioning, and mobility work — giving you a complete training stimulus in a single hour. Sessions are periodised across the week so you're always progressing, not just sweating.",
-          "We cater to runners looking to build speed and resilience, triathletes preparing for multi-discipline events, and general fitness enthusiasts who want structure and variety in their weekly routine.",
+          "Ergonomics is about fitting your workspace and daily routine to your body. Small changes to your desk, chair, screen height and work habits can make a real difference to how you feel at the end of the day.",
+          "We combine practical workstation advice with corrective exercises and mobility work, so you can build healthier habits that last.",
         ],
-        image: "https://images.unsplash.com/photo-1526401485004-46910ecc8e51?w=800&q=80",
-        imageAlt: "Endurance group training",
+        image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80",
+        imageAlt: "Ergonomic workstation advice",
         reverse: true,
-      },
-      {
-        tag: "Community",
-        heading: "A Community That Pushes You",
-        body: [
-          "Some of the best gains come not from sets and reps, but from having people around you who push you further than you'd push yourself. Our group sessions foster a culture of encouragement, discipline, and mutual respect.",
-          "Regular group training has been shown to improve adherence, boost motivation, and make exercise genuinely enjoyable — which is ultimately the foundation of long-term progress.",
-        ],
-        image: "https://images.unsplash.com/photo-1539794830467-1f1755804d13?w=800&q=80",
-        imageAlt: "Fitness community group",
       },
     ],
     keyPoints: [
-      { icon: "fas fa-users", title: "All Levels Welcome", desc: "Sessions scaled for beginners through to competitive athletes" },
-      { icon: "fas fa-running", title: "Runners & Triathletes", desc: "Structured endurance and strength work for multi-sport athletes" },
-      { icon: "fas fa-dumbbell", title: "Functional Strength", desc: "Resistance and conditioning work in every session" },
-      { icon: "fas fa-heartbeat", title: "Cardio Conditioning", desc: "Build aerobic capacity and stamina alongside your peers" },
-      { icon: "fas fa-calendar-check", title: "Flexible Schedule", desc: "Multiple time slots throughout the week to suit your routine" },
-      { icon: "fas fa-fire", title: "High Energy Coaching", desc: "Expert coaches who bring intensity, fun, and accountability" },
+      { icon: "fas fa-search", title: "Posture Assessment", desc: "Review how you sit, stand and move through your day" },
+      { icon: "fas fa-chair", title: "Workstation Advice", desc: "Practical changes to your desk, chair and screen setup" },
+      { icon: "fas fa-dumbbell", title: "Corrective Exercises", desc: "Targeted exercises to rebalance muscles and improve alignment" },
+      { icon: "fas fa-sync-alt", title: "Mobility Work", desc: "Ease stiffness from long periods of sitting or standing" },
+      { icon: "fas fa-band-aid", title: "Discomfort Relief", desc: "Address neck, back and shoulder strain from daily habits" },
+      { icon: "fas fa-check-circle", title: "Healthy Habits", desc: "Simple routines you can keep up at work and at home" },
+    ],
+  },
+  "manual-therapy-dry-needling": {
+    title: "Manual Therapy & Dry Needling",
+    subtitle: "Hands-On Techniques for Faster Healing",
+    description: "Manual therapy and dry needling are hands-on techniques used by our physiotherapists to ease pain, release tight muscles and support faster healing as part of a complete treatment plan.",
+    icon: "fas fa-hands",
+    heroImage: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=1200&q=80",
+    sections: [
+      {
+        tag: "Manual Therapy",
+        heading: "Skilled Hands-On Treatment",
+        body: [
+          "Manual therapy uses skilled hands-on techniques to mobilise joints and soft tissues. It is used to reduce pain, ease stiffness and improve movement.",
+          "It works best alongside exercise and education, so every treatment is tailored to your condition and your goals.",
+        ],
+        image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80",
+        imageAlt: "Manual therapy treatment",
+      },
+      {
+        tag: "Dry Needling",
+        heading: "What Is Dry Needling?",
+        body: [
+          "Dry needling uses thin, sterile needles placed in tight or irritated areas of muscle, often called trigger points, to help release tension and reduce pain.",
+          "It is carried out by a trained physiotherapist alongside other treatments. Your therapist will explain the technique and whether it is suitable for you before starting.",
+        ],
+        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80",
+        imageAlt: "Dry needling session",
+        reverse: true,
+      },
+    ],
+    keyPoints: [
+      { icon: "fas fa-hands", title: "Joint Mobilisation", desc: "Gentle hands-on techniques to ease stiff joints" },
+      { icon: "fas fa-hand-holding-heart", title: "Soft Tissue Release", desc: "Relieve tight muscles and restricted tissue" },
+      { icon: "fas fa-bullseye", title: "Trigger Point Treatment", desc: "Targeted treatment of tight, irritated muscle areas" },
+      { icon: "fas fa-band-aid", title: "Pain Relief", desc: "Reduce pain and improve how you move" },
+      { icon: "fas fa-redo", title: "Supports Healing", desc: "Part of a complete plan for faster, safer recovery" },
+      { icon: "fas fa-user-md", title: "Tailored Treatment", desc: "Explained and adapted to your condition and goals" },
+    ],
+  },
+  "prehab-wellness-programs": {
+    title: "Prehab & Wellness Programs",
+    subtitle: "Prevent Injuries Before They Happen",
+    description: "Prehab and wellness programs focus on preventing injuries before they happen by building strength, mobility and healthy movement habits.",
+    icon: "fas fa-heart",
+    heroImage: "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=1200&q=80",
+    sections: [
+      {
+        tag: "Prehab",
+        heading: "Prevent Injuries Before They Happen",
+        body: [
+          "Prehabilitation means building strength, mobility and control before problems appear, or before a surgery or a demanding sport season.",
+          "By finding weak links early, we help you move with confidence and reduce the chance of avoidable injuries.",
+        ],
+        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80",
+        imageAlt: "Prehabilitation exercise",
+      },
+      {
+        tag: "Wellness",
+        heading: "Wellness for Everyday Life",
+        body: [
+          "Our wellness programs support overall health through regular movement, strength work and mobility, for people of every age and fitness level.",
+          "Programs are designed around your lifestyle and goals, so staying active feels manageable and sustainable.",
+        ],
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80",
+        imageAlt: "Wellness training session",
+        reverse: true,
+      },
+    ],
+    keyPoints: [
+      { icon: "fas fa-search", title: "Movement Screening", desc: "Find weak links and imbalances before they cause problems" },
+      { icon: "fas fa-dumbbell", title: "Strength Building", desc: "Build the strength your body needs for daily life and sport" },
+      { icon: "fas fa-sync-alt", title: "Mobility & Flexibility", desc: "Keep joints and muscles moving freely" },
+      { icon: "fas fa-notes-medical", title: "Pre-Surgery Preparation", desc: "Be better prepared for surgery and the recovery that follows" },
+      { icon: "fas fa-shield-alt", title: "Injury Prevention", desc: "Reduce the chance of avoidable injuries" },
+      { icon: "fas fa-heartbeat", title: "Long-Term Wellness", desc: "Sustainable habits for lasting health" },
+    ],
+  },
+  "manual-physiotherapy": {
+    title: "Manual Physiotherapy",
+    subtitle: "Expert Hands-On Treatment",
+    description: "Manual physiotherapy is expert hands-on treatment for pain relief and mobility restoration, delivered by skilled therapists with a strong focus on your needs.",
+    icon: "fas fa-hand-holding-medical",
+    heroImage: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=1200&q=80",
+    sections: [
+      {
+        tag: "Hands-On Care",
+        heading: "Expert Hands-On Treatment",
+        body: [
+          "Manual physiotherapy uses skilled hands-on techniques to assess and treat muscles, joints and soft tissues. It helps relieve pain and restore normal movement.",
+          "Our therapists adapt every session to how your body responds, combining hands-on treatment with exercise guidance.",
+        ],
+        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
+        imageAlt: "Manual physiotherapy session",
+      },
+      {
+        tag: "Mobility",
+        heading: "Restoring Mobility",
+        body: [
+          "Stiff joints and tight tissues can limit how you move and exercise. Manual techniques help ease restrictions so you can move more freely.",
+          "Together with a progressive exercise plan, this helps you return to daily activities, work and sport with confidence.",
+        ],
+        image: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80",
+        imageAlt: "Mobility restoration treatment",
+        reverse: true,
+      },
+    ],
+    keyPoints: [
+      { icon: "fas fa-band-aid", title: "Pain Relief", desc: "Hands-on treatment to reduce pain and discomfort" },
+      { icon: "fas fa-sync-alt", title: "Joint Mobility", desc: "Ease stiffness and restore a natural range of movement" },
+      { icon: "fas fa-hands", title: "Soft Tissue Treatment", desc: "Relieve tight muscles and restricted tissue" },
+      { icon: "fas fa-search", title: "Hands-On Assessment", desc: "Find the source of the problem through skilled assessment" },
+      { icon: "fas fa-dumbbell", title: "Exercise Guidance", desc: "Progressive exercises to keep the benefits of treatment" },
+      { icon: "fas fa-user-md", title: "Personalised Care", desc: "Every session adapted to your needs and progress" },
+    ],
+  },
+  "nutrition-support": {
+    title: "Nutrition Support",
+    subtitle: "Fuel Your Recovery & Performance",
+    description: "Nutrition support provides personalised guidance to help fuel your recovery and performance, alongside your physiotherapy and training.",
+    icon: "fas fa-apple-alt",
+    heroImage: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&q=80",
+    sections: [
+      {
+        tag: "Recovery",
+        heading: "Nutrition for Recovery",
+        body: [
+          "What you eat affects how well your body recovers from injury, surgery and hard training. Good nutrition supports healing, energy and overall well-being.",
+          "We provide practical, personalised guidance that fits alongside your treatment plan.",
+        ],
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
+        imageAlt: "Healthy food for recovery",
+      },
+      {
+        tag: "Performance",
+        heading: "Eat for Performance",
+        body: [
+          "Whether you are an athlete or just starting to train, the right fuelling helps you train consistently and perform at your best.",
+          "Guidance is tailored to your goals, schedule and preferences, with a focus on habits you can keep up over time.",
+        ],
+        image: "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80",
+        imageAlt: "Training and performance",
+        reverse: true,
+      },
+    ],
+    keyPoints: [
+      { icon: "fas fa-user-check", title: "Personalised Guidance", desc: "Advice built around your body, goals and routine" },
+      { icon: "fas fa-redo", title: "Recovery Support", desc: "Nutrition that supports healing after injury or surgery" },
+      { icon: "fas fa-bolt", title: "Performance Fuelling", desc: "Eat to train consistently and perform at your best" },
+      { icon: "fas fa-apple-alt", title: "Practical Habits", desc: "Simple changes you can keep up over time" },
+      { icon: "fas fa-bullseye", title: "Goal-Based Advice", desc: "Guidance matched to what you want to achieve" },
+      { icon: "fas fa-dumbbell", title: "Works With Your Training", desc: "Fits alongside your physiotherapy and exercise plan" },
+    ],
+  },
+  "running-rehab-performance-training": {
+    title: "Running Rehab & Performance Training",
+    subtitle: "Injury Prevention & Strength for Runners",
+    description: "Injury prevention and strength sessions for all levels, from beginners to Ironman and World Major Marathon athletes.",
+    icon: "fas fa-running",
+    heroImage: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1200&q=80",
+    sections: [
+      {
+        tag: "Running Rehab",
+        heading: "Return to Running Safely",
+        body: [
+          "Running injuries often come from a mix of training load, strength and movement patterns. We assess how you run and move to understand what is holding you back.",
+          "Your rehab plan builds strength and control step by step, so you can get back to running safely.",
+        ],
+        image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=80",
+        imageAlt: "Running rehab session",
+      },
+      {
+        tag: "Performance",
+        heading: "Strength & Performance for Runners",
+        body: [
+          "Strength sessions help runners build resilience, improve efficiency and reduce injury risk. We work with all levels, from first-time runners to Ironman and World Major Marathon athletes.",
+          "Sessions are tailored to your event, your schedule and your goals.",
+        ],
+        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80",
+        imageAlt: "Runner strength training",
+        reverse: true,
+      },
+    ],
+    keyPoints: [
+      { icon: "fas fa-search", title: "Running Assessment", desc: "Understand how you run and where the weak links are" },
+      { icon: "fas fa-band-aid", title: "Rehab for Running Injuries", desc: "Step-by-step plans to return to running safely" },
+      { icon: "fas fa-dumbbell", title: "Strength for Runners", desc: "Build resilience and efficiency with targeted strength work" },
+      { icon: "fas fa-shield-alt", title: "Injury Prevention", desc: "Reduce the risk of setbacks in training" },
+      { icon: "fas fa-users", title: "All Levels Welcome", desc: "From beginners to Ironman and World Major Marathon athletes" },
+      { icon: "fas fa-medal", title: "Event-Focused Training", desc: "Sessions shaped around your race, schedule and goals" },
     ],
   },
 };
 
 const allServices = [
-  { slug: "bio-mechanical-assessment", icon: "fas fa-ruler-horizontal", title: "Bio Mechanical Assessment", desc: "Body assessment" },
-  { slug: "physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Prehab / Rehab" },
-  { slug: "strength-conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Mobility / Strength" },
-  { slug: "myofascial-release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release", desc: "Treatment / Release" },
-  { slug: "sports-specific-training", icon: "fas fa-basketball-ball", title: "Sports Specific Training", desc: "Training specific to sport" },
-  { slug: "group-session", icon: "fas fa-users", title: "Group Session", desc: "Runners, triathlete or any sport" },
+  { slug: "advanced-physiotherapy", icon: "fas fa-notes-medical", title: "Advanced Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
+  { slug: "sports-rehab-injury-prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { slug: "strength-conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { slug: "postural-ergonomic-correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
+  { slug: "manual-therapy-dry-needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
+  { slug: "myofascial-release", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
+  { slug: "prehab-wellness-programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
+  { slug: "manual-physiotherapy", icon: "fas fa-hand-holding-medical", title: "Manual Physiotherapy", desc: "Expert hands-on treatment for pain relief and mobility restoration" },
+  { slug: "nutrition-support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
+  { slug: "running-rehab-performance-training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
 function Navbar() {
@@ -506,38 +643,6 @@ function Navbar() {
       </div>
       <div className="hamburger" onClick={() => setMenuOpen((o) => !o)}><span /><span /><span /></div>
     </nav>
-  );
-}
-
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo"><div className="logo-icon"><i className="fas fa-dumbbell" /></div><span>Stairs</span></div>
-          <p>Your trusted partner for biomechanical excellence, rehabilitation, and performance training.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
-          </div>
-        </div>
-        <div className="footer-col footer-hours">
-          <h4>Opening Hours</h4>
-          <p><strong style={{ color: "#ccc" }}>Monday – Saturday</strong><br />12:00 – 14:45</p><br />
-          <p><strong style={{ color: "#ccc" }}>Sunday – Thursday</strong><br />17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>{["about", "services", "trainers", "pricing", "contact"].map((l) => (<li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>))}</ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Address:</strong><span>121 King Street Melbourne, 3000, Australia</span></div>
-          <div className="contact-item"><strong>Email:</strong><span>info@stairs.com</span></div>
-          <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
-        </div>
-      </div>
-      <div className="footer-bottom"><p>Copyright 2024 Stairs. All Rights Reserved.</p></div>
-    </footer>
   );
 }
 
@@ -647,7 +752,7 @@ export default function ServiceDetail({ params }: { params: Promise<{ slug: stri
         </div>
       </section>
 
-      <Footer />
+      <BranchesFooter />
     </>
   );
 }

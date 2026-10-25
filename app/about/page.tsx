@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import BranchesFooter from "@/components/BranchesFooter";
 import { motion } from "motion/react";
 
 /* ─── Shared styles (same as main site) ─── */
@@ -130,6 +131,46 @@ const globalStyles = `
   .trainer-social { display: flex; justify-content: center; gap: 10px; }
   .trainer-social a { width: 32px; height: 32px; background: rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 0.75rem; transition: background 0.3s; }
   .trainer-social a:hover { background: var(--red); }
+
+  /* OUR APPROACH */
+  #approach { position: relative; background: #000; padding: 80px 60px 76px; text-align: center; overflow: hidden; }
+  #approach::before { content: ''; position: absolute; top: -140px; right: -140px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(232,55,44,0.6), transparent 65%); filter: blur(12px); pointer-events: none; }
+  #approach::after { content: ''; position: absolute; bottom: -180px; left: -150px; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(210,10,20,0.75), transparent 65%); filter: blur(12px); pointer-events: none; }
+  #approach > * { position: relative; z-index: 1; }
+  .approach-title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.6rem); line-height: 1; letter-spacing: 2px; text-transform: uppercase; color: var(--light); }
+  .approach-title span { color: var(--red); }
+  .approach-sub { color: var(--light); font-size: clamp(1.1rem, 2.2vw, 1.7rem); margin-top: 14px; font-weight: 400; }
+  .approach-lines { display: flex; flex-direction: column; align-items: center; gap: 9px; margin: 28px auto 0; }
+  .approach-lines span { display: block; height: 2px; background: var(--light); border-radius: 2px; transform: scaleX(0); transition: transform 0.9s ease; position: relative; }
+  .approach-lines span:nth-child(1) { width: 280px; left: -40px; }
+  .approach-lines span:nth-child(2) { width: 530px; max-width: 80vw; transition-delay: 0.15s; }
+  .approach-lines span:nth-child(3) { width: 280px; left: 60px; transition-delay: 0.3s; }
+  .approach-lines.visible span { transform: scaleX(1); }
+  .approach-row { display: flex; align-items: center; justify-content: center; max-width: 1180px; margin: 54px auto 0; }
+  .approach-item { display: flex; align-items: center; }
+  .approach-link { position: relative; display: block; width: 56px; height: 2px; background: var(--light); flex-shrink: 0; }
+  .approach-link::before, .approach-link::after { content: ''; position: absolute; top: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--light); }
+  .approach-link::before { left: -4px; }
+  .approach-link::after { right: -4px; }
+  .approach-step { width: 245px; height: 245px; border-radius: 50%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 34px 30px; color: var(--light); border: 8px solid transparent; transition: transform 0.35s ease, box-shadow 0.35s ease; }
+  .approach-step.solid { background: #000; border-color: var(--red); box-shadow: 0 0 34px rgba(232,55,44,0.3); }
+  .approach-step.fade { background: linear-gradient(#000, #000) padding-box, linear-gradient(160deg, #e8372c 0%, #5a2a26 55%, #0a0a0a 100%) border-box; }
+  .approach-step:hover { transform: scale(1.06); box-shadow: 0 0 46px rgba(232,55,44,0.5); }
+  .approach-step h4 { font-family: var(--font-body); font-weight: 800; font-size: 1.05rem; line-height: 1.2; margin-bottom: 10px; }
+  .approach-step p { font-size: 0.85rem; line-height: 1.45; color: rgba(255,255,255,0.9); }
+  .approach-foot { margin-top: 50px; color: var(--light); font-size: clamp(1rem, 1.8vw, 1.3rem); }
+  .approach-foot strong { font-weight: 800; }
+  @media (max-width: 1150px) {
+    .approach-row { flex-wrap: wrap; gap: 28px; }
+    .approach-link { display: none; }
+  }
+  @media (max-width: 768px) {
+    #approach { padding: 56px 18px 56px; }
+    .approach-lines span:nth-child(1), .approach-lines span:nth-child(3) { width: 150px; left: 0; }
+    .approach-row { margin-top: 36px; gap: 22px; }
+    .approach-step { width: min(260px, 78vw); height: min(260px, 78vw); }
+    .approach-foot { margin-top: 34px; }
+  }
 
   /* FOOTER */
   #footer { background: var(--dark); padding: 60px 60px 30px; color: #aaa; }
@@ -302,7 +343,7 @@ function AboutDetail() {
         <div className="about-text reveal-right">
           <span className="section-label">About Us</span>
           <h2 className="section-title">Who We Are</h2>
-          <p>STAIRS is a platform where people from all across the globe can experience healing through proper physiotherapy. Our aim is to encourage, support and make people aware of their imbalances through musculoskeletal assessment; planning injury prevention programmes and delaying the degeneration process through corrective exercises; improve mental health through myofascial treatment and enable individuals to achieve their goals.</p>
+          <p>We believe that movement is life. At Stairs Physiotherapy &amp; Fitness, we are committed to helping individuals move pain-free, recover faster, and perform better. Whether it’s an athlete, a corporate professional, or someone recovering from an injury. Our expert team is here to support every journey toward better health.</p>
           <motion.a href="/new-pricing-plan" whileTap={{ scale: 0.95 }} className="btn-primary">
             Get Started <span className="play-icon"><i className="fas fa-play" /></span>
           </motion.a>
@@ -390,74 +431,31 @@ function StatsBanner() {
   );
 }
 
-function Team() {
-  const trainers = [
-    { name: "Marvin Joiner", role: "CrossFit Coach" },
-    { name: "Patricia Woodrum", role: "Cardio & Conditioning" },
-    { name: "Hannaz Stone", role: "Fitness Coach" },
-    { name: "Derek Hale", role: "Strength & Power" },
+function Approach() {
+  const steps = [
+    { title: "Detailed Assessments", text: "Understanding your movement patterns and pain points" },
+    { title: "Data-Driven Methods", text: "Evidence-based treatment strategies for faster recovery" },
+    { title: "Holistic Movement Therapy", text: "Strengthening the body for long-term benefits" },
+    { title: "Strengthening the body for long-term benefits", text: "Empowering individuals to take charge of their health" },
   ];
   return (
-    <section id="team">
-      <span className="section-label reveal">Our Team</span>
-      <h2 className="section-title reveal">Meet The Experts</h2>
-      <br /><br />
-      <div className="team-grid">
-        {trainers.map((t, i) => (
-          <div className="team-card reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-            <div className="trainer-img"><i className="fas fa-user" /></div>
-            <h4>{t.name}</h4>
-            <p className="role">{t.role}</p>
-            <div className="trainer-social">
-              <a href="#"><i className="fab fa-facebook-f" /></a>
-              <a href="#"><i className="fab fa-twitter" /></a>
-              <a href="#"><i className="fas fa-envelope" /></a>
+    <section id="approach">
+      <h2 className="approach-title reveal">Our <span>Approach</span></h2>
+      <p className="approach-sub reveal">Healing Through Science, Movement &amp; Personalized Care</p>
+      <div className="approach-lines reveal"><span /><span /><span /></div>
+      <div className="approach-row">
+        {steps.map((s, i) => (
+          <div className="approach-item reveal" key={i} style={{ transitionDelay: `${i * 0.12}s` }}>
+            {i > 0 && <span className="approach-link" />}
+            <div className={`approach-step ${i % 2 === 0 ? "solid" : "fade"}`}>
+              <h4>{s.title}</h4>
+              <p>{s.text}</p>
             </div>
           </div>
         ))}
       </div>
+      <p className="approach-foot reveal">It&apos;s not just about treating pain - <strong>it&apos;s about building a stronger, healthier life</strong></p>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo">
-            <img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} />
-          </div>
-          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a>
-            <a href="#"><i className="fab fa-twitter" /></a>
-            <a href="#"><i className="fab fa-instagram" /></a>
-          </div>
-        </div>
-        <div className="footer-col footer-hours">
-          <h4>Opening Hours</h4>
-          <p><strong style={{ color: "#ccc" }}>Monday – Saturday</strong><br />12:00 – 14:45</p><br />
-          <p><strong style={{ color: "#ccc" }}>Sunday – Thursday</strong><br />17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            {["about", "services", "trainers", "pricing", "contact"].map((l) => (
-              <li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>
-            ))}
-          </ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
-          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
-          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
-          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
-        </div>
-      </div>
-      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
-    </footer>
   );
 }
 
@@ -472,8 +470,8 @@ export default function AboutPage() {
       <PageHero />
       <AboutDetail />
       <StatsBanner />
-      <Team />
-      <Footer />
+      <Approach />
+      <BranchesFooter />
     </>
   );
 }

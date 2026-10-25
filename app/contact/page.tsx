@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import BranchesFooter, { branches } from "@/components/BranchesFooter";
+import AutoScrollRow from "@/components/AutoScrollRow";
 import { motion } from "motion/react";
 
 const globalStyles = `
@@ -79,6 +81,56 @@ const globalStyles = `
   .info-card h4{font-family:var(--font-display);font-size:1.1rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
   .info-card p{color:var(--gray);font-size:.88rem;line-height:1.7;}
 
+  /* FOR APPOINTMENTS */
+  #appointments{position:relative;background:linear-gradient(135deg,#ffffff 0%,#fff1ef 38%,#ffc9c2 72%,#ff8f84 100%);padding:70px 60px 64px;text-align:center;overflow:hidden;}
+  #appointments::before{content:'';position:absolute;top:-150px;right:-150px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(232,55,44,.5),transparent 65%);filter:blur(12px);pointer-events:none;}
+  #appointments::after{content:'';position:absolute;bottom:-190px;left:-160px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(190,10,25,.65),transparent 65%);filter:blur(12px);pointer-events:none;}
+  #appointments > *{position:relative;z-index:1;}
+  .ap-title{font-family:var(--font-display);font-size:clamp(2.6rem,6vw,4.4rem);letter-spacing:2px;text-transform:uppercase;color:#111;line-height:1;}
+  .ap-title span{color:var(--red);}
+  .ap-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;max-width:1200px;margin:48px auto 0;}
+  .ap-card{background:var(--red);border-radius:30px;padding:26px 16px 22px;color:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;box-shadow:0 14px 30px rgba(232,55,44,.28);transition:transform .3s,box-shadow .3s;}
+  .ap-card:hover{transform:translateY(-8px);box-shadow:0 20px 42px rgba(232,55,44,.45);}
+  .ap-card h3{font-family:var(--font-body);font-weight:800;font-size:1.2rem;line-height:1.15;}
+  .ap-card p{font-size:.8rem;line-height:1.5;}
+  .ap-card .ap-addr{flex:1;}
+  .ap-phones{font-weight:700;font-size:.8rem;line-height:1.6;}
+  .ap-phones a:hover{text-decoration:underline;}
+  .ap-card .ap-hours{font-weight:700;font-size:.74rem;}
+  .ap-info{display:flex;justify-content:center;align-items:center;gap:90px;flex-wrap:wrap;max-width:1000px;margin:54px auto 0;}
+  .ap-contact{text-align:left;font-weight:800;font-size:clamp(1.05rem,2.3vw,1.65rem);line-height:1.5;color:#111;overflow-wrap:anywhere;}
+  .ap-contact a{transition:color .25s;}.ap-contact a:hover{color:var(--red);}
+  .ap-social{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .ap-icons{display:flex;gap:12px;}
+  .ap-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem;transition:transform .25s;}
+  .ap-icon:hover{transform:scale(1.12);}
+  .ap-icon.ig{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);}
+  .ap-icon.fb{background:#1877f2;border-radius:50%;}
+  .ap-handle{font-weight:800;color:#111;font-size:1rem;}
+  .ap-lines{display:flex;flex-direction:column;align-items:center;gap:9px;margin:44px auto 0;}
+  .ap-lines span{display:block;height:2px;background:#111;border-radius:2px;transform:scaleX(0);transition:transform .9s ease;position:relative;}
+  .ap-lines span:nth-child(1){width:200px;left:-30px;}
+  .ap-lines span:nth-child(2){width:340px;max-width:80vw;transition-delay:.15s;}
+  .ap-lines span:nth-child(3){width:200px;left:50px;transition-delay:.3s;}
+  .ap-lines.visible span{transform:scaleX(1);}
+  .ap-foot{margin-top:40px;color:#222;font-size:clamp(.95rem,1.8vw,1.3rem);line-height:1.6;}
+  .ap-foot strong{display:block;font-weight:800;}
+  @media(max-width:1100px){
+    .ap-cards{grid-template-columns:repeat(3,1fr);}
+    .ap-info{gap:40px;}
+  }
+  @media(max-width:768px){
+    #appointments{padding:48px 14px 48px;}
+    .ap-cards{display:flex;flex-direction:row;align-items:stretch;gap:14px;margin:32px -14px 0;padding:6px 14px 12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .ap-cards::-webkit-scrollbar{display:none;}
+    .ap-card{flex:0 0 78%;max-width:300px;scroll-snap-align:start;}
+    .ap-card:hover{transform:none;}
+    .ap-info{flex-direction:column;gap:26px;margin-top:36px;}
+    .ap-contact{text-align:center;}
+    .ap-lines{margin-top:34px;}
+    .ap-lines span:nth-child(1),.ap-lines span:nth-child(3){width:120px;left:0;}
+  }
+
   #footer{background:var(--dark);padding:60px 60px 30px;color:#aaa;}
   .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:40px;margin-bottom:40px;}
   .footer-brand .logo{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
@@ -106,7 +158,7 @@ const globalStyles = `
   @media(max-width:768px){
     .nav-links{display:none;}.hamburger{display:flex;}
     .page-hero-content{padding:0 20px;}
-    .contact-img-placeholder{display:none;}
+    .contact-img-placeholder,.contact-scene{display:none;}
     .contact-form-wrap{width:100%;margin:0;padding:60px 20px;}
     .form-row{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr;}
@@ -282,56 +334,47 @@ function ContactFull() {
   );
 }
 
-function ContactInfo() {
+function Appointments() {
   return (
-    <section id="contact-info">
-      <div className="info-grid">
-        {[
-          { icon: "fab fa-instagram", title: "Instagram", text: "@stairs.physio" },
-          { icon: "fas fa-phone-alt", title: "Phone", text: "083103 31077" },
-          { icon: "fas fa-envelope", title: "Email", text: "connect.stairsphysiotherapy@gmail.com" },
-        ].map((c, i) => (
-          <div className="info-card reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-            <div className="icon"><i className={c.icon} /></div>
-            <h4>{c.title}</h4>
-            <p style={{ whiteSpace: "pre-line" }}>{c.text}</p>
+    <section id="appointments">
+      <h2 className="ap-title reveal">For <span>Appointments</span></h2>
+
+      <AutoScrollRow className="ap-cards">
+        {branches.map((b) => (
+          <div className="ap-card" key={b.name}>
+            <h3>{b.name}</h3>
+            <p className="ap-addr">{b.address}</p>
+            <div className="ap-phones">
+              {b.phones.map((p) => (
+                <div key={p}>Call : <a href={`tel:${p.replace(/\s/g, "")}`}>{p}</a></div>
+              ))}
+            </div>
+            <p className="ap-hours">(Monday to Saturday, 9am - 6pm)</p>
           </div>
         ))}
-      </div>
-    </section>
-  );
-}
+      </AutoScrollRow>
 
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo"><img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto" }} /></div>
-          <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
+      <div className="ap-info reveal">
+        <div className="ap-contact">
+          <div>Email: <a href="mailto:info@stairsphysiotherapy.in">info@stairsphysiotherapy.in</a></div>
+          <div>Website: <a href="https://www.stairsphysiotherapy.in" target="_blank" rel="noreferrer">www.stairsphysiotherapy.in</a></div>
+        </div>
+        <div className="ap-social">
+          <div className="ap-icons">
+            <a href="https://www.instagram.com/stairs.physio" target="_blank" rel="noreferrer" className="ap-icon ig" aria-label="Instagram"><i className="fab fa-instagram" /></a>
+            <a href="https://www.facebook.com/stairs.physio" target="_blank" rel="noreferrer" className="ap-icon fb" aria-label="Facebook"><i className="fab fa-facebook-f" /></a>
           </div>
-        </div>
-        <div className="footer-col">
-          <h4>Opening Hours</h4>
-          <p style={{ fontSize: ".85rem", lineHeight: 1.8 }}><strong style={{ color: "#ccc" }}>Mon – Sat:</strong> 12:00 – 14:45</p>
-          <p style={{ fontSize: ".85rem", lineHeight: 1.8, marginTop: 8 }}><strong style={{ color: "#ccc" }}>Sun – Thu:</strong> 17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>{["about","services","trainers","pricing","contact"].map((l)=>(<li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase()+l.slice(1)}</a></li>))}</ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
-          <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
-          <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
-          <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
+          <span className="ap-handle">@stairs.physio</span>
         </div>
       </div>
-      <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
-    </footer>
+
+      <div className="ap-lines reveal"><span /><span /><span /></div>
+
+      <p className="ap-foot reveal">
+        We&apos;d love to partner with you and bring movement, wellness, and recovery to your team!
+        <strong>Let&apos;s build a healthier, stronger, and more active workforce together.</strong>
+      </p>
+    </section>
   );
 }
 
@@ -345,8 +388,8 @@ export default function ContactPage() {
       <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <PageHero />
       <ContactFull />
-      <ContactInfo />
-      <Footer />
+      <Appointments />
+      <BranchesFooter />
     </>
   );
 }

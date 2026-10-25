@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import BranchesFooter from "@/components/BranchesFooter";
 
 const globalStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
-  :root{--red:#e8372c;--dark:#111111;--darker:#0a0a0a;--light:#ffffff;--gray:#888888;--bg-light:#f5f5f5;--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif;}
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+  :root{--red:#e8372c;--dark:#111111;--darker:#0a0a0a;--light:#ffffff;--gray:#888888;--line:#f28b82;--font-display:'Bebas Neue',sans-serif;--font-body:'Barlow',sans-serif;}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:var(--font-body);color:var(--dark);background:var(--light);overflow-x:hidden;}
+  body{font-family:var(--font-body);color:var(--dark);background:#000;overflow-x:hidden;}
   a{text-decoration:none;color:inherit;}ul{list-style:none;}
   img{max-width:100%;display:block;}
 
   .reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease;}
   .reveal.visible{opacity:1;transform:translateY(0);}
-  .section-label{font-family:var(--font-body);font-weight:600;font-size:.85rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:block;margin-bottom:10px;}
 
   /* NAVBAR */
   #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;transition:background .4s,padding .4s;}
@@ -31,176 +31,160 @@ const globalStyles = `
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
 
   /* PAGE HERO */
-  #page-hero{position:relative;min-height:50vh;background:var(--darker);display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:80px;text-align:center;}
+  #page-hero{position:relative;min-height:46vh;background:var(--darker);display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:80px;text-align:center;}
   .page-hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1400&q=80') center/cover no-repeat;opacity:.3;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:rgba(10,10,10,.65);}
   .page-hero-content{position:relative;z-index:2;padding:0 40px;}
   .page-hero-content .sub{font-family:var(--font-body);font-weight:600;font-size:.9rem;letter-spacing:4px;color:var(--light);text-transform:uppercase;border-left:4px solid var(--red);padding-left:14px;margin-bottom:16px;display:inline-block;}
-  .page-hero-content h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);color:var(--light);line-height:1;letter-spacing:2px;margin-bottom:16px;}
+  .page-hero-content h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,5.5rem);color:var(--light);line-height:1;letter-spacing:2px;margin-bottom:16px;}
   .breadcrumb{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:.85rem;letter-spacing:1px;text-transform:uppercase;justify-content:center;}
   .breadcrumb a{color:var(--red);}.breadcrumb span{color:rgba(255,255,255,.4);}
 
-  /* TAB SWITCHER */
-  #tab-section{background:#111;position:sticky;top:72px;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);}
-  .tab-bar{display:flex;justify-content:center;max-width:500px;margin:0 auto;}
-  .tab-btn{flex:1;padding:18px 32px;background:transparent;border:none;color:rgba(255,255,255,.5);font-family:'Barlow',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;position:relative;transition:color .3s;}
-  .tab-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transition:transform .3s;}
-  .tab-btn.active{color:#fff;}
-  .tab-btn.active::after{transform:scaleX(1);}
+  /* QUICK NAV */
+  #pr-nav{position:sticky;top:68px;z-index:100;background:rgba(10,10,10,.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);}
+  .pr-nav-inner{display:flex;justify-content:center;gap:10px;max-width:1200px;margin:0 auto;padding:12px 24px;overflow-x:auto;scrollbar-width:none;}
+  .pr-nav-inner::-webkit-scrollbar{display:none;}
+  .pr-chip{flex-shrink:0;padding:8px 18px;border-radius:30px;border:1.5px solid rgba(232,55,44,.55);color:#fff;font-size:.74rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;transition:background .25s,border-color .25s;}
+  .pr-chip:hover,.pr-chip.active{background:var(--red);border-color:var(--red);}
 
-  /* SECTION WRAPPER */
-  .pricing-section{display:none;}.pricing-section.active{display:block;}
+  /* PRICE SECTIONS */
+  .pr-section{position:relative;background:#000;padding:70px 60px 64px;text-align:center;overflow:hidden;scroll-margin-top:120px;}
+  .pr-section::before{content:'';position:absolute;top:-150px;right:-150px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(232,55,44,.5),transparent 65%);filter:blur(12px);pointer-events:none;}
+  .pr-section::after{content:'';position:absolute;bottom:-190px;left:-160px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(190,10,25,.6),transparent 65%);filter:blur(12px);pointer-events:none;}
+  .pr-section > *{position:relative;z-index:1;}
+  .pr-title{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;letter-spacing:2px;text-transform:uppercase;color:#fff;}
+  .pr-title span{color:var(--red);}
+  .pr-sub{color:#fff;font-size:clamp(1rem,2vw,1.4rem);margin-top:10px;font-weight:400;}
+  .pr-lead{color:#fff;font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.7;max-width:820px;margin:22px auto 0;font-weight:500;}
+  .pr-body{margin:40px auto 0;max-width:1200px;}
+  .pr-body.narrow{max-width:900px;}
+  .pr-body.mid{max-width:1000px;}
+  .pr-two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
 
-  /* ONLINE PLANS */
-  #online-plans{background:var(--darker);padding:90px 60px;}
-  .online-hero-text{text-align:center;margin-bottom:60px;}
-  .online-hero-text h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);color:#fff;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
-  .online-hero-text p{color:rgba(255,255,255,.6);font-size:1rem;max-width:560px;margin:0 auto;}
-  .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:0 auto;}
-  .plan-card{background:#1a1a1a;border-radius:16px;padding:40px 28px 32px;border:1px solid rgba(255,255,255,.08);position:relative;text-align:center;transition:transform .3s,box-shadow .3s;}
-  .plan-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(232,55,44,.2);}
-  .plan-card.featured{background:#1e1e1e;border-color:var(--red);}
-  .best-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:20px;white-space:nowrap;}
-  .plan-name{color:rgba(255,255,255,.65);font-size:.9rem;font-weight:600;letter-spacing:1px;margin-bottom:16px;}
-  .plan-price{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;color:#fff;line-height:1;letter-spacing:-1px;margin-bottom:4px;}
-  .plan-price sup{font-size:1.8rem;vertical-align:super;margin-right:2px;}
-  .plan-validity{color:rgba(255,255,255,.4);font-size:.78rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
-  .plan-desc{color:rgba(255,255,255,.55);font-size:.88rem;line-height:1.7;margin-bottom:28px;}
-  .plan-btn{display:block;width:100%;background:var(--red);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;padding:13px 0;border-radius:50px;border:none;cursor:pointer;transition:background .3s;text-decoration:none;}
-  .plan-btn:hover{background:#c0251b;}
-  .plan-card:not(.featured) .plan-btn{background:rgba(232,55,44,.12);color:var(--red);border:1.5px solid var(--red);}
-  .plan-card:not(.featured) .plan-btn:hover{background:var(--red);color:#fff;}
+  /* TABLES */
+  .pt-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:4px;}
+  .pt{width:100%;border-collapse:collapse;background:#000;color:#fff;border:2px solid var(--line);}
+  .pt th,.pt td{border:2px solid var(--line);padding:14px 12px;text-align:center;vertical-align:middle;}
+  .pt thead th{background:var(--red);color:#fff;font-weight:800;font-size:.95rem;letter-spacing:.5px;}
+  .pt.caps thead th{text-transform:uppercase;font-size:.82rem;}
+  .pt tbody tr{transition:background .25s;}
+  .pt tbody tr:hover{background:rgba(232,55,44,.14);}
+  .pt td{font-size:1rem;}
+  .pt td:first-child{font-weight:500;}
+  .pt .pt-tag{font-size:.68rem;color:rgba(255,255,255,.75);margin-left:4px;}
+  .pt .pt-fee{font-family:var(--font-body);font-weight:700;font-size:1.1rem;white-space:nowrap;}
+  .pt .pt-fee.text{font-size:.82rem;white-space:normal;line-height:1.25;display:inline-block;}
+  .pt .pt-note{display:block;font-size:.62rem;color:rgba(255,255,255,.75);margin-top:2px;}
+  .pt .pt-small{display:block;font-size:.7rem;letter-spacing:.6px;font-style:italic;text-transform:uppercase;color:rgba(255,255,255,.8);margin-top:3px;}
+  .pt.two td:first-child{width:64%;}
+  .pt.pkg{min-width:680px;}
+  .pt.pkg td{font-size:1.05rem;}
+  .pt.pkg td:first-child{font-size:.95rem;text-transform:uppercase;line-height:1.35;}
+  .pt.pkg .pt-fee{font-size:1.15rem;}
+  .pt.inc td:first-child{width:50%;}
+  .pt tr.total td{font-weight:800;text-transform:uppercase;}
 
-  /* FIT TO RUN PLAN */
-  #fit-to-run-plan{position:relative;padding:90px 60px;background:var(--darker);overflow:hidden;}
-  .ftr-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1400&q=80') center/cover no-repeat;opacity:.25;}
-  .ftr-bg::after{content:'';position:absolute;inset:0;background:rgba(10,10,10,.7);}
-  .ftr-wrap{position:relative;z-index:1;max-width:700px;margin:0 auto;text-align:center;}
-  .ftr-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--red);font-style:italic;letter-spacing:2px;margin-bottom:8px;}
-  .ftr-subtitle{color:#fff;font-weight:700;font-size:1.1rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
-  .ftr-price{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);color:var(--red);letter-spacing:1px;margin-bottom:4px;}
-  .ftr-duration{color:rgba(255,255,255,.5);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:36px;}
-  .ftr-features{text-align:left;max-width:580px;margin:0 auto 36px;display:flex;flex-direction:column;gap:14px;list-style:none;}
-  .ftr-features li{display:flex;align-items:flex-start;gap:12px;color:rgba(255,255,255,.8);font-size:.92rem;line-height:1.6;font-style:italic;}
-  .ftr-features li::before{content:'•';color:var(--red);font-size:1.4rem;flex-shrink:0;line-height:1.3;}
-  .ftr-btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;padding:13px 36px;border-radius:50px;border:none;cursor:pointer;transition:background .3s;text-decoration:none;}
-  .ftr-btn:hover{background:#c0251b;}
-
-  /* OFFLINE PLANS */
-  #offline-plans{background:#fff;padding:90px 60px;}
-  .offline-intro{text-align:center;margin-bottom:70px;}
-  .offline-intro h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--dark);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
-  .offline-intro p{color:#666;font-size:1rem;max-width:560px;margin:0 auto;}
-  .service-pricing-block{margin-bottom:72px;}
-  .service-pricing-block:last-child{margin-bottom:0;}
-  .spb-header{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:2px solid #f0f0f0;}
-  .spb-icon{width:52px;height:52px;background:rgba(232,55,44,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .spb-icon i{color:var(--red);font-size:1.3rem;}
-  .spb-header h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--dark);}
-  .spb-header p{color:#888;font-size:.85rem;margin-top:2px;}
-  .spb-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .spb-card{border-radius:14px;border:1px solid #eee;padding:32px 24px;text-align:center;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative;background:#fff;}
-  .spb-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(232,55,44,.12);border-color:var(--red);}
-  .spb-card.best{border-color:var(--red);box-shadow:0 8px 30px rgba(232,55,44,.1);}
-  .spb-best-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 16px;border-radius:20px;white-space:nowrap;}
-  .spb-sessions{color:#888;font-size:.82rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
-  .spb-price{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--dark);line-height:1;margin-bottom:4px;}
-  .spb-price sup{font-size:1.4rem;vertical-align:super;}
-  .spb-validity{color:#aaa;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
-  .spb-desc{color:#777;font-size:.83rem;line-height:1.6;margin-bottom:22px;}
-  .spb-btn{display:block;width:100%;background:var(--red);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:11px 0;border-radius:50px;border:none;cursor:pointer;transition:background .3s;text-decoration:none;}
-  .spb-btn:hover{background:#c0251b;}
-  .spb-card:not(.best) .spb-btn{background:transparent;color:var(--red);border:1.5px solid var(--red);}
-  .spb-card:not(.best) .spb-btn:hover{background:var(--red);color:#fff;}
-
-  /* FOOTER */
-  #footer{background:var(--dark);padding:60px 60px 30px;color:#aaa;}
-  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.3fr;gap:40px;margin-bottom:40px;}
-  .footer-brand p{font-size:.85rem;line-height:1.8;margin-bottom:20px;}
-  .footer-social{display:flex;gap:10px;}
-  .footer-social a{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#aaa;font-size:.75rem;transition:background .3s,color .3s;}
-  .footer-social a:hover{background:var(--red);color:var(--light);}
-  .footer-col h4{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;text-transform:uppercase;color:var(--light);margin-bottom:20px;}
-  .footer-col ul li{margin-bottom:10px;font-size:.85rem;}
-  .footer-col ul li::before{content:'▶';font-size:.5rem;color:var(--red);margin-right:8px;vertical-align:middle;}
-  .footer-col ul li a{color:#aaa;transition:color .3s;}
-  .footer-col ul li a:hover{color:var(--red);}
-  .footer-contact .contact-item{display:flex;flex-direction:column;margin-bottom:12px;}
-  .footer-contact .contact-item strong{color:var(--light);font-size:.85rem;margin-bottom:2px;}
-  .footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;text-align:center;font-size:.8rem;}
+  /* CTA */
+  .pr-cta{background:var(--red);padding:56px 40px;text-align:center;}
+  .pr-cta h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;}
+  .pr-cta p{color:rgba(255,255,255,.85);margin-bottom:22px;}
+  .pr-cta a{display:inline-block;background:#fff;color:var(--red);font-weight:800;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;padding:13px 34px;border-radius:50px;transition:transform .2s,background .2s;}
+  .pr-cta a:hover{transform:translateY(-2px);background:#111;color:#fff;}
 
   @media(max-width:1024px){
     #navbar{padding:16px 30px;}#navbar.scrolled{padding:10px 30px;}
-    #online-plans,#fit-to-run-plan,#offline-plans,#footer{padding-left:30px;padding-right:30px;}
-    .plans-grid,.spb-cards{grid-template-columns:1fr 1fr;}
-    .footer-grid{grid-template-columns:1fr 1fr;}
+    .pr-section{padding-left:30px;padding-right:30px;}
+    .pr-nav-inner{justify-content:flex-start;}
+    .pr-two{grid-template-columns:1fr;}
   }
   @media(max-width:768px){
     .nav-links{display:none;}.hamburger{display:flex;}
-    .plans-grid,.spb-cards{grid-template-columns:1fr;}
-    .footer-grid{grid-template-columns:1fr;}
+    .pr-section{padding:48px 14px 44px;}
+    .pr-body{margin-top:28px;}
+    .pt th,.pt td{padding:11px 8px;}
+    .pt td{font-size:.9rem;}
+    .pt thead th{font-size:.82rem;}
+    .pt .pt-fee{font-size:1rem;}
+    .pt.two td:first-child{width:58%;}
+    .pr-cta{padding:44px 20px;}
   }
 `;
 
-const onlinePlans = [
-  { name: "Online S&C – 12 Sessions", price: "4,500", validity: "Valid for one month", desc: "Energize your body and boost strength in our online S&C group fitness sessions for a transformation", featured: false },
-  { name: "Online S&C – 36 Sessions", price: "12,500", validity: "Valid for 3 months", desc: "Energize your body and boost strength in our online S&C group fitness sessions for a transformation", featured: true },
-  { name: "Online S&C – 72 Sessions", price: "25,000", validity: "Valid for 6 months", desc: "Energize your body and boost strength in our online S&C group fitness sessions for a transformation", featured: false },
+/* ───────── DATA (from the official rate cards) ───────── */
+
+type ServiceRow = { name: string; tag?: string; fee: string; note?: string; text?: boolean };
+
+const servicesLeft: ServiceRow[] = [
+  { name: "Physiotherapy (Basic)", fee: "₹1500 - ₹1800" },
+  { name: "Physiotherapy (with Somya)", fee: "₹2200" },
+  { name: "Myofascial Release (Full Body)", fee: "₹3000", note: "with Physio" },
+  { name: "Myofascial Release (Half Body)", fee: "₹2000", note: "with Physio" },
+  { name: "Sports / Deep Tissue Massage", tag: "Full Body", fee: "₹2500" },
+  { name: "Sports / Deep Tissue Massage", tag: "Half Body", fee: "₹1800" },
 ];
 
-const fitToRunFeatures = [
-  "This program is designed for individuals at all running proficiency levels and those looking to embark on their fitness journey as well.",
-  "Run at your convenience with our running plans on Tuesday, Thursday, and Saturday or join us at Kanterava Stadium at 6.30AM to run with our community.",
-  "Enhance Performance Holistically.",
-  "Increase Muscular Strength, Power & Endurance.",
-  "Injury prevention and enhanced recovery.",
-  "An Athletic Performance Training Platform.",
-  "Enhance Mobility, Boost Stability.",
-  "This program is structured to include warm-up routines, run preparation, injury prevention techniques, running-specific strength exercises, pain management strategies, and concludes with a community run.",
-  "Take your fitness to the next level with our online and offline strength sessions! Whether you prefer working out from home or in-person, we've got you covered. Scroll down for details on our online strength classes and start your journey today!",
+const servicesRight: ServiceRow[] = [
+  { name: "Assessment", fee: "₹1000" },
+  { name: "Strength & Conditioning (1-on-1)", fee: "₹1500 - ₹1800" },
+  { name: "Group Strength & Conditioning", fee: "₹750 - ₹1200" },
+  { name: "MFR + Cupping (with Masseur)", fee: "₹2700" },
+  { name: "Physiotherapy + Needling", fee: "₹1900" },
+  { name: "Session Cancellation (last minute)", fee: "Full session charges", text: true },
 ];
 
-const offlineServices = [
-  {
-    icon: "fas fa-running", title: "Fit to Run", subtitle: "Offline Running Programme",
-    cards: [
-      { sessions: "1 Month", price: "3,500", validity: "4 weeks", desc: "Kickstart your running journey with guided sessions and injury prevention.", best: false },
-      { sessions: "3 Months", price: "5,310", validity: "Incl. GST · 12 weeks", desc: "Full programme with S&C, physiotherapy & community runs. Best value!", best: true },
-      { sessions: "6 Months", price: "9,500", validity: "24 weeks", desc: "Long-term commitment for serious runners looking to race and compete.", best: false },
-    ],
-  },
-  {
-    icon: "fas fa-spa", title: "Massage Therapy", subtitle: "Certified Specialist Therapists",
-    cards: [
-      { sessions: "Single Session", price: "1,200", validity: "60 minutes", desc: "Targeted deep tissue or sports massage for immediate relief and recovery.", best: false },
-      { sessions: "5-Session Pack", price: "5,500", validity: "Valid for 2 months", desc: "Consistent therapy for sustained recovery, best for active athletes.", best: true },
-      { sessions: "10-Session Pack", price: "10,000", validity: "Valid for 4 months", desc: "Comprehensive care plan for chronic issues and peak performance maintenance.", best: false },
-    ],
-  },
-  {
-    icon: "fas fa-notes-medical", title: "Physiotherapy", subtitle: "Prehab & Rehab Sessions",
-    cards: [
-      { sessions: "Single Session", price: "1,500", validity: "45–60 minutes", desc: "Assessment & treatment for injuries, pain, or movement dysfunction.", best: false },
-      { sessions: "5-Session Pack", price: "6,500", validity: "Valid for 6 weeks", desc: "Structured rehab plan with progress tracking and home exercise guidance.", best: true },
-      { sessions: "10-Session Pack", price: "12,000", validity: "Valid for 3 months", desc: "Full recovery programme ideal for post-surgery or chronic condition management.", best: false },
-    ],
-  },
-  {
-    icon: "fas fa-dumbbell", title: "Strength & Conditioning", subtitle: "In-Person Training Sessions",
-    cards: [
-      { sessions: "12 Sessions", price: "6,000", validity: "Valid for 6 weeks", desc: "Personalised S&C coaching to build strength and improve athletic performance.", best: false },
-      { sessions: "24 Sessions", price: "11,000", validity: "Valid for 3 months", desc: "Progressive training blocks with regular assessments and plan updates.", best: true },
-      { sessions: "48 Sessions", price: "20,000", validity: "Valid for 6 months", desc: "Long-term athletic development with comprehensive strength and mobility work.", best: false },
-    ],
-  },
+type PackageRow = { pkg: string; sessions?: string; actual: string; discount: string; after: string; validity: string; perSession: string };
+
+const juniorPackages: PackageRow[] = [
+  { pkg: "1 Session", actual: "₹1500", discount: "0", after: "₹1500", validity: "1", perSession: "₹1500" },
+  { pkg: "1 Month", sessions: "12 Sessions", actual: "₹18000", discount: "₹1200", after: "₹16800", validity: "45", perSession: "₹1400" },
+  { pkg: "3 Months", sessions: "36 Sessions", actual: "₹54000", discount: "₹5400", after: "₹48600", validity: "120", perSession: "₹1350" },
+  { pkg: "6 Months", sessions: "72 Sessions", actual: "₹108000", discount: "₹18000", after: "₹90000", validity: "200", perSession: "₹1250" },
 ];
+
+const seniorPackages: PackageRow[] = [
+  { pkg: "1 Session", actual: "₹1800", discount: "0", after: "₹1800", validity: "1", perSession: "₹1800" },
+  { pkg: "1 Month", sessions: "12 Sessions", actual: "₹21600", discount: "₹2400", after: "₹19200", validity: "45", perSession: "₹1600" },
+  { pkg: "3 Months", sessions: "36 Sessions", actual: "₹64800", discount: "₹10800", after: "₹54000", validity: "120", perSession: "₹1500" },
+  { pkg: "6 Months", sessions: "72 Sessions", actual: "₹129600", discount: "₹28800", after: "₹100800", validity: "200", perSession: "₹1400" },
+];
+
+const nutritionPlans = [
+  { plan: "1 month : 1 Nutrition plan + 2 consultations with weekly follow-ups", price: "₹7000" },
+  { plan: "3 Months Plan : 3 Nutrition plans + 3 consultations with weekly follow-ups", price: "₹18000" },
+  { plan: "6 Months Plan : 6 Nutrition plans + 6 consultations with weekly follow-ups", price: "₹38000" },
+];
+
+const fit2RunPlans = [
+  { period: "3 months", price: "₹4200" },
+  { period: "6 months", price: "₹8400" },
+  { period: "12 months", price: "₹16800" },
+];
+
+const allInclusive = [
+  { name: "Running Plan", note: "(Tuesday, Thursday, Saturday at Kanteerava - 06:30AM)", m3: "₹4200", m6: "₹8400" },
+  { name: "Physiotherapy", note: "2 sessions / month at 20% off", m3: "₹7200", m6: "₹14400" },
+  { name: "Deep Tissue Massage", note: "2 sessions / month at 20% off", m3: "₹12000", m6: "₹24000" },
+  { name: "Nutrition Plan", note: "at 20% off", m3: "₹14400", m6: "₹30400" },
+  { name: "Strength & Conditioning", note: "2 semi-personal sessions / month at 20% off", m3: "₹7200", m6: "₹14400" },
+];
+
+const sections = [
+  { id: "services", label: "Services" },
+  { id: "junior", label: "Junior Packages" },
+  { id: "senior", label: "Senior Packages" },
+  { id: "nutrition", label: "Nutrition" },
+  { id: "fit2run", label: "Fit2Run" },
+  { id: "all-inclusive", label: "All-Inclusive" },
+];
+
+/* ───────── helpers / components ───────── */
 
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
     els.forEach((el) => observer.observe(el));
     document.querySelectorAll("#page-hero .reveal").forEach((el) => el.classList.add("visible"));
@@ -232,10 +216,80 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   );
 }
 
+function SectionHead({ first, second, sub, lead }: { first: string; second: string; sub?: string; lead?: React.ReactNode }) {
+  return (
+    <>
+      <h2 className="pr-title reveal">{first} <span>{second}</span></h2>
+      {sub && <p className="pr-sub reveal">{sub}</p>}
+      {lead && <p className="pr-lead reveal">{lead}</p>}
+    </>
+  );
+}
+
+function ServiceTable({ rows }: { rows: ServiceRow[] }) {
+  return (
+    <div className="pt-wrap reveal">
+      <table className="pt two">
+        <thead><tr><th>Services</th><th>Fee</th></tr></thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.name + (r.tag ?? "")}>
+              <td>{r.name}{r.tag && <small className="pt-tag">({r.tag})</small>}</td>
+              <td>
+                <span className={`pt-fee${r.text ? " text" : ""}`}>{r.fee}</span>
+                {r.note && <small className="pt-note">({r.note})</small>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function PackageTable({ rows }: { rows: PackageRow[] }) {
+  return (
+    <div className="pt-wrap reveal">
+      <table className="pt pkg caps">
+        <thead>
+          <tr>
+            <th>Packages</th><th>Actual</th><th>Discount</th><th>After Discount</th><th>Validity (Days)</th><th>Per Session After Disc</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.pkg}>
+              <td>{r.pkg}{r.sessions && <><br />{r.sessions}</>}</td>
+              <td><span className="pt-fee">{r.actual}</span></td>
+              <td><span className="pt-fee">{r.discount}</span></td>
+              <td><span className="pt-fee">{r.after}</span></td>
+              <td><span className="pt-fee">{r.validity}</span></td>
+              <td><span className="pt-fee">{r.perSession}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function NewPricingPage() {
-  const [tab, setTab] = useState<"online" | "offline">("online");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState("services");
   useReveal();
+
+  // highlight the chip of the section currently in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveId(e.target.id); }),
+      { rootMargin: "-35% 0px -55% 0px" }
+    );
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -257,128 +311,134 @@ export default function NewPricingPage() {
         </div>
       </section>
 
-      {/* TAB BAR */}
-      <div id="tab-section">
-        <div className="tab-bar">
-          <button className={`tab-btn${tab === "online" ? " active" : ""}`} onClick={() => setTab("online")}>
-            <i className="fas fa-wifi" style={{ marginRight: 8 }} />Online
-          </button>
-          <button className={`tab-btn${tab === "offline" ? " active" : ""}`} onClick={() => setTab("offline")}>
-            <i className="fas fa-map-marker-alt" style={{ marginRight: 8 }} />Offline
-          </button>
-        </div>
-      </div>
-
-      {/* ── ONLINE TAB ── */}
-      <div className={`pricing-section${tab === "online" ? " active" : ""}`}>
-
-        {/* S&C Online Plans */}
-        <section id="online-plans">
-          <div className="online-hero-text reveal">
-            <h2>EVERY REP, EVERY SET MATTERS</h2>
-            <p>Choose a plan that aligns with the person you want to become</p>
-          </div>
-          <div className="plans-grid">
-            {onlinePlans.map((p, i) => (
-              <div key={i} className={`plan-card reveal${p.featured ? " featured" : ""}`} style={{ transitionDelay: `${i * 0.1}s` }}>
-                {p.featured && <span className="best-badge">Best Value</span>}
-                <div className="plan-name">{p.name}</div>
-                <div className="plan-price"><sup>₹</sup>{p.price}</div>
-                <div className="plan-validity">{p.validity}</div>
-                <div className="plan-desc">{p.desc}</div>
-                <a href="/contact" className="plan-btn">Select</a>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Fit to Run Plan */}
-        <section id="fit-to-run-plan">
-          <div className="ftr-bg" />
-          <div className="ftr-wrap">
-            <div className="ftr-title reveal">Fit to Run</div>
-            <div className="ftr-subtitle reveal">Everything a RUNNER needs</div>
-            <div className="ftr-price reveal">₹5310/- incl GST</div>
-            <div className="ftr-duration reveal">FOR 3 MONTHS</div>
-            <ul className="ftr-features">
-              {fitToRunFeatures.map((f, i) => (
-                <li key={i} className="reveal" style={{ transitionDelay: `${i * 0.06}s` }}>{f}</li>
-              ))}
-            </ul>
-            <a href="/contact" className="ftr-btn reveal">
-              Join Now &nbsp;<i className="fas fa-arrow-right" />
-            </a>
-          </div>
-        </section>
-      </div>
-
-      {/* ── OFFLINE TAB ── */}
-      <div className={`pricing-section${tab === "offline" ? " active" : ""}`}>
-        <section id="offline-plans">
-          <div className="offline-intro reveal">
-            <span className="section-label">In-Person · Bangalore</span>
-            <h2>Offline Service Plans</h2>
-            <p>All sessions conducted at our centre by certified coaches and therapists.</p>
-          </div>
-
-          {offlineServices.map((svc, si) => (
-            <div key={si} className="service-pricing-block">
-              <div className="spb-header reveal">
-                <div className="spb-icon"><i className={svc.icon} /></div>
-                <div>
-                  <h3>{svc.title}</h3>
-                  <p>{svc.subtitle}</p>
-                </div>
-              </div>
-              <div className="spb-cards">
-                {svc.cards.map((c, ci) => (
-                  <div key={ci} className={`spb-card reveal${c.best ? " best" : ""}`} style={{ transitionDelay: `${ci * 0.1}s` }}>
-                    {c.best && <span className="spb-best-tag">Best Value</span>}
-                    <div className="spb-sessions">{c.sessions}</div>
-                    <div className="spb-price"><sup>₹</sup>{c.price}</div>
-                    <div className="spb-validity">{c.validity}</div>
-                    <div className="spb-desc">{c.desc}</div>
-                    <a href="/contact" className="spb-btn">Book Now</a>
-                  </div>
-                ))}
-              </div>
-            </div>
+      {/* QUICK NAV */}
+      <div id="pr-nav">
+        <div className="pr-nav-inner">
+          {sections.map((s) => (
+            <a key={s.id} href={`#${s.id}`} className={`pr-chip${activeId === s.id ? " active" : ""}`}>{s.label}</a>
           ))}
-        </section>
+        </div>
       </div>
 
-      {/* FOOTER */}
-      <footer id="footer">
-        <div className="footer-grid reveal">
-          <div className="footer-brand">
-            <img src="/logo.png" alt="Stairs" style={{ height: 60, width: "auto", marginBottom: 16 }} />
-            <p>STAIRS is a premier physiotherapy &amp; performance centre helping athletes and individuals move better, recover faster, and reach their peak potential.</p>
-            <div className="footer-social">
-              <a href="#"><i className="fab fa-facebook-f" /></a>
-              <a href="#"><i className="fab fa-instagram" /></a>
-            </div>
-          </div>
-          <div className="footer-col">
-            <h4>Opening Hours</h4>
-            <p style={{ fontSize: ".85rem", lineHeight: 1.8 }}><strong style={{ color: "#ccc" }}>Mon – Sat:</strong> 12:00 – 14:45</p>
-            <p style={{ fontSize: ".85rem", lineHeight: 1.8, marginTop: 8 }}><strong style={{ color: "#ccc" }}>Evenings:</strong> 17:30 – 00:00</p>
-          </div>
-          <div className="footer-col">
-            <h4>Quick Links</h4>
-            <ul>{["about","services","trainers","pricing","contact"].map((l) => (
-              <li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>
-            ))}</ul>
-          </div>
-          <div className="footer-col footer-contact">
-            <h4>Contact Us</h4>
-            <div className="contact-item"><strong>Instagram:</strong><span><a href="https://instagram.com/stairs.physio" target="_blank" rel="noreferrer" style={{color:"#aaa"}}>@stairs.physio</a></span></div>
-            <div className="contact-item"><strong>Phone:</strong><span><a href="tel:08310331077" style={{color:"#aaa"}}>083103 31077</a></span></div>
-            <div className="contact-item"><strong>Email:</strong><span><a href="mailto:connect.stairsphysiotherapy@gmail.com" style={{color:"#aaa"}}>connect.stairsphysiotherapy@gmail.com</a></span></div>
-            <div className="contact-item"><strong>Messenger:</strong><span>Stairs - Physiotherapy &amp; Fitness</span></div>
+      {/* SERVICE CHARGES */}
+      <section id="services" className="pr-section">
+        <SectionHead first="Service" second="Charges" sub="(As per current rates)" />
+        <div className="pr-body pr-two">
+          <ServiceTable rows={servicesLeft} />
+          <ServiceTable rows={servicesRight} />
+        </div>
+      </section>
+
+      {/* JUNIOR PACKAGES */}
+      <section id="junior" className="pr-section">
+        <SectionHead first="Package" second="Charges for Junior Physio / S&C" sub="(As per current rates)" />
+        <div className="pr-body">
+          <PackageTable rows={juniorPackages} />
+        </div>
+      </section>
+
+      {/* SENIOR PACKAGES */}
+      <section id="senior" className="pr-section">
+        <SectionHead first="Package" second="Charges for Senior Physio / S&C" sub="(As per current rates)" />
+        <div className="pr-body">
+          <PackageTable rows={seniorPackages} />
+        </div>
+      </section>
+
+      {/* NUTRITION */}
+      <section id="nutrition" className="pr-section">
+        <SectionHead
+          first="Nutrition"
+          second="Charges"
+          sub="(As per current rates)"
+          lead="Customised 7-day nutrition plan with meal timings, portions and food options tailored to your lifestyle, food preferences and eating habits, plus travel-friendly nutrition guidelines to help you stay on track wherever you are."
+        />
+        <div className="pr-body narrow">
+          <div className="pt-wrap reveal">
+            <table className="pt two">
+              <thead><tr><th>Nutrition Plan</th><th>Charges</th></tr></thead>
+              <tbody>
+                {nutritionPlans.map((n) => (
+                  <tr key={n.plan}>
+                    <td>{n.plan}</td>
+                    <td><span className="pt-fee">{n.price}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-        <div className="footer-bottom"><p>Copyright 2025 Stairs. All Rights Reserved.</p></div>
-      </footer>
+      </section>
+
+      {/* FIT2RUN */}
+      <section id="fit2run" className="pr-section">
+        <SectionHead first="Fit2Run" second="Charges" sub="(As per current rates)" />
+        <div className="pr-body narrow">
+          <div className="pt-wrap reveal">
+            <table className="pt two">
+              <thead>
+                <tr>
+                  <th>Running Plan only<br />(Tuesday, Thursday, Saturday at Kanteerava - 6.30AM)</th>
+                  <th>Charges</th>
+                </tr>
+              </thead>
+              <tbody>
+                {fit2RunPlans.map((f) => (
+                  <tr key={f.period}>
+                    <td>PRICE<br /><span style={{ fontSize: ".85em" }}>({f.period})</span></td>
+                    <td><span className="pt-fee">{f.price}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* FIT2RUN ALL-INCLUSIVE */}
+      <section id="all-inclusive" className="pr-section">
+        <SectionHead
+          first="Fit2Run"
+          second="All-Inclusive Program"
+          lead="A holistic approach to building your run, with running, strength, recovery and nutrition working together"
+        />
+        <div className="pr-body mid">
+          <div className="pt-wrap reveal">
+            <table className="pt inc">
+              <thead>
+                <tr>
+                  <th style={{ textTransform: "uppercase" }}>All inclusive for Fit2Run members</th>
+                  <th>PRICE (3 months)</th>
+                  <th>PRICE (6 months)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allInclusive.map((r) => (
+                  <tr key={r.name}>
+                    <td>{r.name}<span className="pt-small">{r.note}</span></td>
+                    <td><span className="pt-fee">{r.m3}</span></td>
+                    <td><span className="pt-fee">{r.m6}</span></td>
+                  </tr>
+                ))}
+                <tr className="total">
+                  <td>Total</td>
+                  <td><span className="pt-fee">₹45000</span></td>
+                  <td><span className="pt-fee">₹91600</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="pr-cta">
+        <h2 className="reveal">Ready to start?</h2>
+        <p className="reveal">Book a session or ask us which plan fits your goals best.</p>
+        <a href="/contact" className="reveal">Contact Us</a>
+      </section>
+
+      <BranchesFooter />
     </>
   );
 }

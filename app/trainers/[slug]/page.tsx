@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import BranchesFooter from "@/components/BranchesFooter";
 import { useParams } from "next/navigation";
 import { motion } from "motion/react";
 
@@ -495,39 +496,6 @@ function OtherTrainers({ currentSlug }: { currentSlug: string }) {
   );
 }
 
-/* ─── Footer ─── */
-function Footer() {
-  return (
-    <footer id="footer">
-      <div className="footer-grid reveal">
-        <div className="footer-brand">
-          <div className="logo"><div className="logo-icon"><i className="fas fa-dumbbell" /></div><span>Stairs</span></div>
-          <p>Fulatrumat est aun dolorem ipsum natus dolor sit amet...</p>
-          <div className="footer-social">
-            <a href="#"><i className="fab fa-facebook-f" /></a><a href="#"><i className="fab fa-twitter" /></a><a href="#"><i className="fab fa-instagram" /></a>
-          </div>
-        </div>
-        <div className="footer-col">
-          <h4>Opening Hours</h4>
-          <p style={{ fontSize: ".85rem", lineHeight: 1.8 }}><strong style={{ color: "#ccc" }}>Mon – Sat:</strong> 12:00 – 14:45</p>
-          <p style={{ fontSize: ".85rem", lineHeight: 1.8, marginTop: 8 }}><strong style={{ color: "#ccc" }}>Sun – Thu:</strong> 17:30 – 00:00</p>
-        </div>
-        <div className="footer-col">
-          <h4>Quick Links</h4>
-          <ul>{["about","services","trainers","pricing","contact"].map((l)=>(<li key={l}><a href={`/${l}`}>{l.charAt(0).toUpperCase()+l.slice(1)}</a></li>))}</ul>
-        </div>
-        <div className="footer-col footer-contact">
-          <h4>Contact Us</h4>
-          <div className="contact-item"><strong>Address:</strong><span>121 King Street Melbourne, 3000</span></div>
-          <div className="contact-item"><strong>Email:</strong><span>info@stairs.com</span></div>
-          <div className="contact-item"><strong>Phone:</strong><span>+61 3 8376 6284</span></div>
-        </div>
-      </div>
-      <div className="footer-bottom"><p>Copyright 2024 Stairs. All Rights Reserved.</p></div>
-    </footer>
-  );
-}
-
 /* ─── MemberList: compact list with click-to-expand ─── */
 function MemberList({ members }: { members: { name: string; role: string; experience: string; specialty: string }[] }) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
@@ -679,7 +647,7 @@ export default function TrainerProfilePage() {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
         <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <TeamView teamSlug={slug} />
-        <Footer />
+        <BranchesFooter />
       </>
     );
   }
@@ -705,7 +673,7 @@ export default function TrainerProfilePage() {
       <PageHero trainer={trainer} />
       <ProfileSection trainer={trainer} />
       <OtherTrainers currentSlug={slug} />
-      <Footer />
+      <BranchesFooter />
     </>
   );
 }
