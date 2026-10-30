@@ -882,19 +882,19 @@ const pricingPlans = [
 
 /* Client gallery. Photos not yet in /public/images/gallery/ fall back to an initials tile. */
 const galleryClients = [
-  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/clients/Stairs Corporate Deck.png" },
-  { name: "Yash Gowda", role: "Indian Actor", img: "/images/clients/Stairs Corporate Deck (5).png" },
-  { name: "Deepika Padukone", role: "Indian Actress", img: "/images/clients/Stairs Corporate Deck (6).png" },
-  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images/clients/bhavesh agarwal.png" },
-  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images/clients/Anand.png" },
-  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images/clients/Stairs Corporate Deck (1).png" },
-  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images/clients/Stairs Corporate Deck (2).png" },
-  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images/clients/Prakash.png" },
-  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images/clients/Stairs Corporate Deck (4).png" },
-  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images/clients/Stairs Corporate Deck (7).png" },
-  { name: "Rakul Preet", role: "Indian Actress", img: "/images/clients/Stairs Corporate Deck (8).png" },
-  { name: "Neha Shetty", role: "Indian Actress", img: "/images/Neha.png" },
-  { name: "Allu Sirish", role: "Indian Actor", img: "/images/Allu.png" },
+  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/Stairs%20Welcome%20Guide%20100.png" },
+  { name: "Yash Gowda", role: "Indian Actor", img: "/images/Stairs%20Welcome%20Guide.png" },
+  { name: "Deepika Padukone", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(1).png" },
+  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images/Stairs%20Welcome%20Guide%20(2).png" },
+  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images/Stairs%20Welcome%20Guide%20(3).png" },
+  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images/Stairs%20Welcome%20Guide%20(4).png" },
+  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(5).png" },
+  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images/Stairs%20Welcome%20Guide%20(6).png" },
+  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images/Stairs%20Welcome%20Guide%20(7).png" },
+  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images/Stairs%20Welcome%20Guide%20(8).png" },
+  { name: "Rakul Preet", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(9).png" },
+  { name: "Neha Shetty", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(10).png" },
+  { name: "Allu Sirish", role: "Indian Actor", img: "/images/Stairs%20Welcome%20Guide%20(11).png" },
 ];
 
 const pricingFeatures = ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"];

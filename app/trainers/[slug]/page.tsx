@@ -94,9 +94,9 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     location: "Ulsoor, Bangalore",
     description: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness.",
     members: [
-      { name: "Marvin Joiner", role: "CrossFit Coach", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
-      { name: "Derek Hale", role: "Strength & Power", experience: "9 Yrs", specialty: "Powerlifting" },
-      { name: "Sofia Reyes", role: "Yoga & Mobility", experience: "6 Yrs", specialty: "Flexibility & Recovery" },
+      { name: "Rohan Charles", role: "CrossFit Coach", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
+      { name: "Akshata Koli", role: "Strength & Power", experience: "9 Yrs", specialty: "Powerlifting" },
+      { name: "Ritti Shetty", role: "Yoga & Mobility", experience: "6 Yrs", specialty: "Flexibility & Recovery" },
     ],
   },
   "koramangala-team": {
@@ -145,7 +145,7 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     description: "The Founders envisioned a centre built on trust, care, and excellence in physiotherapy. Through their dedication, leadership, and passion for improving lives, they have created a place focused on healing, recovery, and patient well-being.",
     members: [
       { name: "Somya Rout", role: "Co-Founder & Head Physio", experience: "12+ Yrs", specialty: "Musculoskeletal Rehab" },
-      { name: "Arjun Menon", role: "Co-Founder & S&C Lead", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
+      { name: "Harinag S P", role: "Co-Founder & S&C Lead", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
     ],
   },
 };
@@ -517,7 +517,21 @@ function MemberList({ members }: { members: { name: string; role: string; experi
     "Kiran Shetty":    "Front desk coordinator providing attentive patient support and a warm first point of contact.",
     "Deepa Iyer":      "Finance and admin specialist handling billing and coordination with precision and care.",
     "Somya Rout":      "Co-Founder & Head Physio with 12+ years transforming patient recovery through expert musculoskeletal rehabilitation.",
-    "Arjun Menon":     "Co-Founder & S&C Lead driving the strength and conditioning vision that makes Stairs a centre of excellence.",
+    "Harinag S P":     "Co-Founder & S&C Lead driving the strength and conditioning vision that makes Stairs a centre of excellence.",
+  };
+
+  // Member photos (files in /public/images). objectPosition keeps faces framed inside the circles.
+  const photos: Record<string, { src: string; pos: string }> = {
+    "Somya Rout":  { src: "/images/0H9A0792.jpg", pos: "center 20%" },
+    "Harinag S P": { src: "/images/0H9A0795.JPG", pos: "center 20%" },
+    "Rohan Charles": { src: "/images/0H9A0624.jpg", pos: "center 20%" },
+    "Akshata Koli":  { src: "/images/0H9A0535.jpg", pos: "center 20%" },
+    "Ritti Shetty":  { src: "/images/0H9A0561.jpg", pos: "center 20%" },
+  };
+  const avatarImg = (name: string) => {
+    const p = photos[name];
+    if (!p) return <i className="fas fa-user" />;
+    return <img src={p.src} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: p.pos, display: "block" }} />;
   };
 
   const toggle = (i: number) => setOpenIdx(openIdx === i ? null : i);
@@ -531,7 +545,7 @@ function MemberList({ members }: { members: { name: string; role: string; experi
             className={`tm-row${openIdx === i ? " active" : ""}`}
             onClick={() => toggle(i)}
           >
-            <div className="tm-thumb"><i className="fas fa-user" /></div>
+            <div className="tm-thumb" style={photos[m.name] ? { overflow: "hidden", padding: 0 } : undefined}>{avatarImg(m.name)}</div>
             <div className="tm-info">
               <div className="tm-name">{m.name}</div>
               <div className="tm-role">{m.role}</div>
@@ -546,7 +560,7 @@ function MemberList({ members }: { members: { name: string; role: string; experi
           <div className={`tm-expand-wrap${openIdx === i ? " open" : ""}`}>
             <div className="tm-expand">
               <div className="tm-expand-top">
-                <div className="tm-expand-top-avatar"><i className="fas fa-user" /></div>
+                <div className="tm-expand-top-avatar" style={photos[m.name] ? { overflow: "hidden", padding: 0, width: 130, height: 130 } : undefined}>{avatarImg(m.name)}</div>
                 <div className="tm-expand-top-text">
                   <h3>{m.name}</h3>
                   <span className="te-role">{m.role}</span>

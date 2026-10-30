@@ -508,8 +508,14 @@ function TrainersFull() {
           </div>
           <div className="admin-hero-right">
             <div className="admin-avatar-wrap">
-              <div className="admin-avatar-ring">
-                <div className="admin-avatar-inner"><i className="fas fa-user" /></div>
+              <div className="admin-avatar-ring" style={{ width: 320, height: 320 }}>
+                <div className="admin-avatar-inner" style={{ width: 280, height: 280, overflow: "hidden", padding: 0 }}>
+                  <img
+                    src="/images/0H9A0783.jpg"
+                    alt="Stairs Founders"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 35%", display: "block" }}
+                  />
+                </div>
               </div>
               <span className="admin-floating-tag">Founders</span>
             </div>

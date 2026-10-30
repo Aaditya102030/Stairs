@@ -337,8 +337,8 @@ function AboutDetail() {
     <section id="about-detail">
       <div className="about-detail-grid">
         <div className="about-img-wrap reveal-left">
-          <img src="/images/youth-athletes.png" alt="Stairs Team" style={{ width: "100%", height: "460px", objectFit: "cover", borderRadius: "22px", display: "block" }} />
-          <div className="exp-badge">15+<small>Years<br />Exp.</small></div>
+          <img src="/images/0H9A0767.JPG" alt="Stairs Team" style={{ width: "100%", height: "460px", objectFit: "cover", objectPosition: "center 30%", borderRadius: "22px", display: "block" }} />
+          <div className="exp-badge">8+<small>Years<br />Exp.</small></div>
         </div>
         <div className="about-text reveal-right">
           <span className="section-label">About Us</span>
@@ -416,10 +416,10 @@ function StatsBanner() {
     <section id="stats-banner">
       <div className="stats-banner-grid">
         {[
-          { num: "600K+", label: "Working Hours" },
-          { num: "790+", label: "Success Programs" },
-          { num: "2560+", label: "Happy Clients" },
-          { num: "830+", label: "Perfect Bodies" },
+          { num: "10,000+", label: "Clients Supported" },
+          { num: "500+", label: "Amateur Athletes Across Sports" },
+          { num: "5", label: "Centres Across Bengaluru" },
+          { num: "2018", label: "Our Journey Began" },
         ].map((s, i) => (
           <div className="stat-box reveal" key={i}>
             <h3>{s.num}</h3>
