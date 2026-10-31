@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, createElement } from "react";
 import Image from "next/image";
 
 import { motion } from "motion/react";
@@ -125,11 +125,19 @@ const globalStyles = `
   .org-title-line3 { color: var(--dark); font-size: clamp(1.5rem, 3.2vw, 2.6rem); line-height: 1.1; }
   .org-title-anim { position: relative; display: inline-block; }
   .org-title-anim::before { content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 100px; height: 2px; background: var(--red); border-radius: 2px; box-shadow: 0 0 14px 3px rgba(232,55,44,0.5); }
-  .org-track-wrapper { overflow: hidden; position: relative; }
-  .org-track { display: flex; gap: 30px; animation: scroll-logos 18s linear infinite; width: max-content; }
+  .org-carousel { position: relative; z-index: 1; }
+  .org-track-wrapper { overflow: hidden; position: relative; padding: 10px 0 44px; }
+  .org-arrow { position: absolute; top: 40%; transform: translateY(-50%); z-index: 2; width: 36px; height: 36px; border-radius: 50%; border: none; background: rgba(0,0,0,0.55); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
+  .org-arrow:hover { background: var(--red); }
+  .org-arrow.left { left: 8px; }
+  .org-arrow.right { right: 8px; }
+  .org-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: -8px; }
+  .org-dot { width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; background: #d0d0d0; cursor: pointer; transition: background 0.3s, transform 0.3s; }
+  .org-dot.active { background: #111; transform: scale(1.25); }
+  .org-track { display: flex; gap: 40px; width: max-content; padding: 0 24px; }
   @keyframes scroll-logos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-  .org-card { width: 140px; height: 140px; border-radius: 50%; background: #f0f0f0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: box-shadow 0.3s; }
-  .org-card:hover { box-shadow: 0 8px 30px rgba(232,55,44,0.2); }
+  .org-card { width: 190px; height: 130px; padding: 10px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s, filter 0.3s; }
+  .org-card:hover { transform: scale(1.1); filter: drop-shadow(0 0 14px rgba(232,55,44,0.45)); }
   .org-card .org-img-box { width: 90px; height: 90px; background: rgba(0,0,0,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 0.65rem; letter-spacing: 0.5px; text-align: center; padding: 8px; }
 
   /* WHY */
@@ -168,6 +176,20 @@ const globalStyles = `
   .about-img-placeholder { display: none; }
   .about-scene { position: absolute; left: 0; top: 0; bottom: 0; width: 48%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; overflow: hidden; }
   .testi-img-placeholder { display: none; }
+  .insta-scene { pointer-events: auto !important; overflow: visible !important; }
+  .insta-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; max-width: 100%; padding: 0 24px; }
+  .insta-label { color: var(--light); font-size: 0.8rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; }
+  .insta-label i { color: var(--red); margin-right: 8px; }
+  .insta-row { display: flex; gap: 20px; max-width: 100%; overflow-x: auto; padding: 4px 4px 10px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+  .insta-frame { flex: 0 0 auto; width: 250px; height: 450px; border-radius: 18px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 18px 40px rgba(0,0,0,0.5); scroll-snap-align: start; }
+  .insta-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .insta-frame.profile { width: 340px; background: #fff; }
+  .insta-slider { position: relative; max-width: 100%; }
+  .insta-widget { width: min(560px, 100%); max-height: 500px; overflow: auto; border-radius: 18px; }
+  .insta-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(0,0,0,0.65); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
+  .insta-arrow:hover { background: var(--red); }
+  .insta-arrow.left { left: -14px; }
+  .insta-arrow.right { right: -14px; }
   .testi-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 50%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; overflow: hidden; }
   .contact-img-placeholder { display: none; }
   .contact-scene { position: absolute; left: 0; top: 0; bottom: 0; width: 48%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; overflow: hidden; }
@@ -605,7 +627,7 @@ const globalStyles = `
     .org-title-line1, .org-title-line2 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
     .org-title-line3 { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
     .org-track { gap: 14px; }
-    .org-card { width: 100px; height: 100px; }
+    .org-card { width: 140px; height: 90px; padding: 8px; }
     .org-card .org-img-box { width: 70px; height: 70px; font-size: 0.55rem; padding: 4px; }
     .org-card .org-img-box i { font-size: 1.3rem !important; }
 
@@ -722,14 +744,48 @@ const testimonials = [
   { img: "/images/JANANI ANANTHAKUMAR.jpg", quote: "Stairs isn't just a fitness space; it's a home. Grateful for dedicated trainers, physios, and supportive members ensuring peak performance. Thank you, Team Stairs, for fostering excellence and positivity.", name: "Janani Ananthakumar", role: "Athlete, Badminton (India)" },
 ];
 
-const orgs = [
-  { icon: "fas fa-shield-alt", name: "Bengaluru United" },
-  { icon: "fas fa-circle", name: "Cricket For All" },
-  { icon: "fas fa-crosshairs", name: "Gun For Glory" },
-  { icon: "fas fa-futbol", name: "India Football" },
-  { icon: "fas fa-fire", name: "Jamshedpur FC" },
-  { icon: "fas fa-star", name: "Kerala Blasters" },
+/* Paste Instagram reel / post links here (e.g. "https://www.instagram.com/reel/XXXXXXXXXXX/"). They appear on the right of the testimonials section. */
+const instagramReels: string[] = [
+  "https://www.instagram.com/stairs.physio/reel/DfFDTZ_y492/",
+  "https://www.instagram.com/anubhavxsaikia/reel/DfEL2YcPSK7/",
+  "https://www.instagram.com/prags_fit/p/De6OY5JGfrk/",
+  "https://www.instagram.com/stairs.physio/reel/De9RusTBdE1/",
+  "https://www.instagram.com/stairs.physio/reel/DewW1E6yFgQ/",
+  "https://www.instagram.com/stairs.physio/p/DeT16g2yuMf/",
 ];
+const instagramHandle = "stairs.physio";
+
+/* Live Instagram feed (always shows the newest videos). Connect @stairs.physio in Behold (behold.so) or Elfsight,
+   then set e.g. { provider: "behold", id: "YOUR_FEED_ID" } or { provider: "elfsight", id: "YOUR_APP_ID" }.
+   While this is null, the manual links in `instagramReels` are used. */
+const instagramWidget = null as { provider: "behold" | "elfsight"; id: string } | null;
+
+const instaEmbedUrl = (link: string): string | null => {
+  const m = link.match(/instagram\.com\/(?:[^/?#]+\/)?(reels?|p|tv)\/([^/?#]+)/);
+  if (!m) return null;
+  return `https://www.instagram.com/${m[1] === "reels" ? "reel" : m[1]}/${m[2]}/embed`;
+};
+
+/* Partner logos live in /public/images/partners */
+const partnerLogos = [
+  "hcl.png",
+  "goa super cup.png",
+  "yenepoya.png",
+  "GIVING-BACK-LOGO.png",
+  "Stairs Corporate Deck (1).png",
+  "Stairs Corporate Deck (2).png",
+  "gosports_foundation_logo.png",
+  "Stairs Corporate Deck (4).png",
+  "bangaluru united.png",
+  "CABILOGO.png",
+  "Stairs Corporate Deck (5).png",
+  "football school of india.png",
+  "Stairs Corporate Deck (7).png",
+  "Stairs Corporate Deck (8).png",
+  "WeWork.png",
+  "iBUS.png",
+  "beyond.png",
+].map((file) => `/images/partners/${encodeURIComponent(file)}`);
 
 const features = [
   { icon: "fas fa-medal", title: "Ironman & World Major Marathon Runners", text: "Enhance endurance, prevent injuries, and optimize performance" },
@@ -741,34 +797,67 @@ const features = [
 ];
 
 const services = [
-  { href: "/services/advanced-physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Advanced Physiotherapy", icon: "fas fa-notes-medical", title: "Advanced Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
+  { href: "/services/advanced-physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Physiotherapy & Rehabilitation", icon: "fas fa-notes-medical", title: "Physiotherapy & Rehabilitation", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
   { href: "/services/sports-rehab-injury-prevention", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
   { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
-  { href: "/services/postural-ergonomic-correction", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Postural & Ergonomic Correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
-  { href: "/services/manual-therapy-dry-needling", bg: "url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80')", vertical: "Manual Therapy & Dry Needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
+  
+  { href: "/services/manual-therapy-dry-needling", bg: "url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
   { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80')", vertical: "Prehab & Wellness Programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
-  { href: "/services/manual-physiotherapy", bg: "url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80')", vertical: "Manual Physiotherapy", icon: "fas fa-hand-holding-medical", title: "Manual Physiotherapy", desc: "Expert hands-on treatment for pain relief and mobility restoration" },
+  { href: "/services/prehab-wellness-programs", bg: "url('https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
+  
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
   { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
-const massageSlides = [
-  { name: "Manjushree", role: "Masseur", bg: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80" },
-  { name: "Ashok HR",    role: "Masseur", bg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" },
-  { name: "John Peter", role: "Masseur", bg: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80" },
+type ProgramSlide = { title: string; sub: string; detail: string; bg: string };
+type ProgramCardData = { title: string; subtitle?: string; icon: string; features: string[]; slides: ProgramSlide[] };
+
+/* Programme cards on the home page. A card with a single slide renders with no slider. */
+const programCards: ProgramCardData[] = [
+  {
+    title: "Online Strength Training",
+    subtitle: "What's Included",
+    icon: "fas fa-dumbbell",
+    features: ["Personalized training plan", "One-to-one online coaching sessions", "Exercise technique and movement guidance", "Progressive strength and conditioning", "Training adjustments based on your progress"],
+    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" }],
+  },
+  {
+    title: "Online Group Sessions",
+    subtitle: "What's Included",
+    icon: "fas fa-users",
+    features: ["Live coach-led group sessions", "Structured strength and conditioning workouts", "Exercise demonstrations and coaching cues", "A supportive group training environment", "Consistent training with a shared goal"],
+    slides: [{ title: "ONLINE", sub: "GROUP SESSIONS", detail: "Live coach-led sessions", bg: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" }],
+  },
+  {
+    title: "Massage Therapy",
+    subtitle: "Feel Better, Move Better",
+    icon: "fas fa-spa",
+    features: ["Personalised Massage Therapy", "Sports and deep tissue massage", "Full-body relaxation massage", "Muscle tension relief", "Post-exercise recovery massage"],
+    slides: [{ title: "MASSAGE", sub: "THERAPY", detail: "Feel Better, Move Better", bg: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80" }],
+  },
+  {
+    title: "Fit2Run",
+    subtitle: "Step Into A New You",
+    icon: "fas fa-running",
+    features: ["Structured running Training", "Strength & conditioning for runners", "Running movement assessment", "Injury prevention & load management", "Nutrition and Recovery"],
+    slides: [
+      { title: "EXPERIENCE", sub: "TRAIL & ROAD RUNNING", detail: "Build endurance, conquer every terrain", bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80" },
+      { title: "RUNNING", sub: "COACHED SESSIONS", detail: "Structured running training", bg: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=800&q=80" },
+      { title: "LEVELS", sub: "ALL ABILITIES WELCOME", detail: "Beginner to advanced programs", bg: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80" },
+      { title: "BEST TEAM", sub: "EXPERT COACHES", detail: "Physiotherapists & conditioning coaches", bg: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" },
+    ],
+  },
+  {
+    title: "Hybrid Training",
+    icon: "fas fa-dumbbell",
+    features: ["Hyrox specific training", "Running & functional fitness", "Strength & conditioning", "Endurance & work capacity", "Race simulations & performance preparation"],
+    slides: [
+      { title: "HYROX", sub: "SPECIFIC TRAINING", detail: "Race simulations & performance preparation", bg: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" },
+      { title: "RUNNING", sub: "& FUNCTIONAL FITNESS", detail: "Endurance & work capacity", bg: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80" },
+      { title: "STRENGTH", sub: "& CONDITIONING", detail: "Build strength for race day", bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
+    ],
+  },
 ];
-
-const massageFeatures = ["Personalized massage therapy", "Deep tissue & sports massage", "Myofascial release", "Pre & post event massage", "Relaxation & recovery sessions"];
-
-const fitToRunSlides = [
-  { label: "EXPERIENCE", sub: "TRAIL & ROAD RUNNING", detail: "Build endurance, conquer every terrain", bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80" },
-  { label: "RUNNING", sub: "COACHED SESSIONS", detail: "Mon, Wed, Fri · 6:00 AM", bg: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=800&q=80" },
-  { label: "LEVELS", sub: "ALL ABILITIES WELCOME", detail: "Beginner to advanced programs", bg: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80" },
-  { label: "BEST TEAM", sub: "EXPERT COACHES", detail: "Physiotherapists & conditioning coaches", bg: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" },
-];
-
-const fitToRunFeatures = ["Strength & conditioning training", "Injury prevention & physiotherapy", "Nutrition guidance for runners", "Recovery & sleep optimization", "Step into Good Shoes guidance"];
 
 const pricingPlans = [
   {
@@ -781,19 +870,9 @@ const pricingPlans = [
   },
 ];
 
-const programmeSlides = [
-  { bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80", title: "ONLINE", sub: "STRENGTH TRAINING", detail: "Mon, Wed, Fri · 6:00 AM" },
-  { bg: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80", title: "ONLINE", sub: "FITNESS CLASSES", detail: "Tue, Thu · 7:00 AM" },
-  { bg: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80", title: "ONLINE", sub: "PHYSIOTHERAPY", detail: "Mon – Sat · Flexible slots" },
-  { bg: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80", title: "ONLINE", sub: "RECOVERY SESSION", detail: "Weekends · 8:00 AM" },
-];
-const programmeFeatures = ["1-on-1 video coaching sessions", "Personalised training plan", "Physiotherapy consultations", "Diet & recovery guidance", "Flexible scheduling"];
 
 /* Client gallery. Photos not yet in /public/images/gallery/ fall back to an initials tile. */
 const galleryClients = [
-  { name: "Sanjay Rajpal", role: "Businessman & Squash Champ", img: "/images/SANJAY RAJPAL.avif" },
-  { name: "Rukmini Vijaykumar", role: "Actress & Dancer", img: "/images/RUKMINI VIJAYAKUMAR.avif" },
-  { name: "Shreyas Karnad", role: "Marathoner & Running Coach", img: "/images/SHREYAS KARNAD.avif" },
   { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/gallery/yasmeen-shaikh.jpg" },
   { name: "Yash Gowda", role: "Indian Actor", img: "/images/gallery/yash-gowda.jpg" },
   { name: "Deepika Padukone", role: "Indian Actress", img: "/images/gallery/deepika-padukone.jpg" },
@@ -831,7 +910,7 @@ function useCountUp() {
     const statEls = document.querySelectorAll(".stat-item h3");
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        const targetEl = entry.target as HTMLElement; if (entry.isIntersecting && !targetEl.dataset.counted) {
+        const targetEl = entry.target as HTMLElement; if (entry.isIntersecting && !targetEl.dataset.counted && !targetEl.dataset.static) {
           targetEl.dataset.counted = "true";
           const target = parseInt(entry.target.textContent.replace(/\D/g, ""));
           const suffix = entry.target.textContent.replace(/[\d]/g, "");
@@ -1090,9 +1169,57 @@ function Hero() {
 
 
 
+/* ─── Partner logo (sits directly on the black section background) ─── */
+function PartnerLogo({ src }: { src: string }) {
+  return (
+    <div className="org-card">
+      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+        <Image src={src} alt="Partner logo" fill sizes="190px" style={{ objectFit: "contain" }} />
+      </div>
+    </div>
+  );
+}
+
 /* ─── Organisations ─── */
 function Organisations() {
-  const doubled = [...orgs, ...orgs];
+  // `steps` = how many slider positions are actually reachable (the row can't scroll past its end)
+  const [steps, setSteps] = useState(partnerLogos.length);
+  const [idx, setIdx] = useState(0);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  const goTo = (i: number) => {
+    const n = (i + steps) % steps;
+    setIdx(n);
+    const el = wrapRef.current;
+    const card = el?.firstElementChild?.children[n] as HTMLElement | undefined;
+    if (el && card) el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const t = setTimeout(() => goTo(idx + 1), 3000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx, steps]);
+
+  useEffect(() => {
+    const calc = () => {
+      const el = wrapRef.current;
+      const cards = el?.firstElementChild?.children;
+      if (!el || !cards) return;
+      const max = el.scrollWidth - el.clientWidth;
+      let n = 0;
+      for (let i = 0; i < cards.length; i++) {
+        n = i + 1;
+        if ((cards[i] as HTMLElement).offsetLeft >= max) break;
+      }
+      const next = Math.max(1, n);
+      setSteps(next);
+      setIdx((i) => (i >= next ? 0 : i));
+    };
+    calc();
+    window.addEventListener("resize", calc);
+    return () => window.removeEventListener("resize", calc);
+  }, []);
   return (
     <section id="organisations">
       <div className="org-glow-bg" />
@@ -1113,17 +1240,21 @@ function Organisations() {
           </motion.div>
         </div>
       </div>
-      <div className="org-track-wrapper reveal">
+      <div className="org-carousel reveal">
+      <button type="button" className="org-arrow left" aria-label="Previous" onClick={() => goTo(idx - 1)}><i className="fas fa-chevron-left" /></button>
+      <button type="button" className="org-arrow right" aria-label="Next" onClick={() => goTo(idx + 1)}><i className="fas fa-chevron-right" /></button>
+      <div className="org-track-wrapper" ref={wrapRef}>
         <div className="org-track">
-          {doubled.map((org, i) => (
-            <div className="org-card" key={i}>
-              <div className="org-img-box">
-                <i className={org.icon} style={{ fontSize: "1.8rem", color: "#bbb" }} />
-                <br />{org.name}
-              </div>
-            </div>
+          {partnerLogos.map((src, i) => (
+            <PartnerLogo key={i} src={src} />
           ))}
         </div>
+      </div>
+      <div className="org-dots">
+        {Array.from({ length: steps }, (_, i) => (
+          <button key={i} type="button" aria-label={`Show logo ${i + 1}`} className={`org-dot${i === idx ? " active" : ""}`} onClick={() => goTo(i)} />
+        ))}
+      </div>
       </div>
     </section>
   );
@@ -1250,14 +1381,14 @@ function About() {
         <span className="section-label">About Us</span>
         <h2 className="section-title">Welcome To The<br />Stairs</h2>
         <p>
-              At Stairs Physiotherapy & Fitness, we’ve helped 10,000+ clients over the last 6+ years live pain-free, move better, and enhance their performance. From athletes to working professionals, we have transformed lives by focusing on injury recovery, movement correction, strength building, and long-term wellness.
+              At Stairs Physiotherapy & Fitness, we’ve helped 10,000+ clients over the last 8+ years live pain-free, move better, and enhance their performance. From athletes to working professionals, we have transformed lives by focusing on injury recovery, movement correction, strength building, and long-term wellness.
               With 5 branches across Bengaluru – Ulsoor, Koramangala, Indiranagar, Whitefield and New BEL Road – we are committed to making quality physiotherapy and fitness accessible to everyone. Whether you want to recover from pain, prevent injuries, or improve performance, we are here to support your journey toward a stronger, healthier lifestyle.
         </p>
         <div className="stats-grid stagger">
-          <div className="stat-item reveal"><h3>100K+</h3><p>Working Hours</p></div>
-          <div className="stat-item reveal"><h3>100+</h3><p>Success Program</p></div>
-          <div className="stat-item reveal"><h3>1000+</h3><p>Happy Clients</p></div>
-          <div className="stat-item reveal"><h3>400+</h3><p>Perfect Bodies</p></div>
+          <div className="stat-item reveal"><h3>10000+</h3><p>Clients Supported</p></div>
+          <div className="stat-item reveal"><h3>500+</h3><p>Amateur Athletes Across Sports</p></div>
+          <div className="stat-item reveal"><h3>5</h3><p>Centres Across Bengaluru</p></div>
+          <div className="stat-item reveal"><h3 data-static="true">2018</h3><p>Our Journey Began</p></div>
         </div>
       </div>
     </section>
@@ -1343,7 +1474,7 @@ function Services() {
     <section id="services">
       <div className="services-header reveal">
         <span className="section-label">Our Services</span>
-        <h2 className="section-title">Solutions For Moving Better<br />&amp; Feeling A Healthier</h2>
+        <h2 className="section-title">Move Better. Feel Stronger. Perform Better.</h2>
       </div>
       <div className="services-book stagger" id="serviceDetails" ref={bookRef} onTouchStart={pauseForTouch} onTouchEnd={resumeAfterTouch} onTouchCancel={resumeAfterTouch}>
         {services.map((s, i) => (
@@ -1372,6 +1503,61 @@ function Services() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─── Instagram reels shown beside the testimonials ─── */
+function InstagramReels() {
+  const rowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!instagramWidget) return;
+    const src = instagramWidget.provider === "behold" ? "https://w.behold.so/widget.js" : "https://elfsightcdn.com/platform.js";
+    if (document.querySelector(`script[src="${src}"]`)) return;
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    if (instagramWidget.provider === "behold") s.type = "module";
+    document.body.appendChild(s);
+  }, []);
+
+  if (instagramWidget) {
+    return (
+      <div className="insta-wrap">
+        <span className="insta-label"><i className="fab fa-instagram" /> Follow us on Instagram</span>
+        <div className="insta-widget">
+          {instagramWidget.provider === "behold"
+            ? createElement("behold-widget", { "feed-id": instagramWidget.id })
+            : <div className={`elfsight-app-${instagramWidget.id}`} data-elfsight-app-lazy />}
+        </div>
+      </div>
+    );
+  }
+
+  const embeds = instagramReels.map(instaEmbedUrl).filter((u): u is string => !!u);
+  const scrollRow = (dir: number) => rowRef.current?.scrollBy({ left: dir * 270, behavior: "smooth" });
+  return (
+    <div className="insta-wrap">
+      <span className="insta-label"><i className="fab fa-instagram" /> Follow us on Instagram</span>
+      <div className="insta-slider">
+        <button type="button" className="insta-arrow left" aria-label="Scroll left" onClick={() => scrollRow(-1)}><i className="fas fa-chevron-left" /></button>
+        <div className="insta-row" ref={rowRef}>
+          {embeds.length > 0 ? (
+            embeds.map((src) => (
+              <div className="insta-frame" key={src}>
+                <iframe src={src} title="Instagram reel" loading="lazy" allow="encrypted-media; autoplay; clipboard-write" allowFullScreen scrolling="no" />
+              </div>
+            ))
+          ) : (
+            /* No reel links added yet: show the live Instagram profile feed instead */
+            <div className="insta-frame profile">
+              <iframe src={`https://www.instagram.com/${instagramHandle}/embed`} title="Stairs on Instagram" loading="lazy" scrolling="yes" />
+            </div>
+          )}
+        </div>
+        <button type="button" className="insta-arrow right" aria-label="Scroll right" onClick={() => scrollRow(1)}><i className="fas fa-chevron-right" /></button>
+      </div>
+    </div>
   );
 }
 
@@ -1404,61 +1590,13 @@ function Testimonials() {
     };
   }, [idx]);
 
-  const parallaxRef = useParallax(0.06);
   const t = testimonials[idx];
   return (
     <section id="testimonials">
       <div className="testimonials-bg" />
-      <div className="circle-deco testi-circle" />
-      {/* ── TESTIMONIALS SVG: speech bubbles + stars + quote marks ── */}
-      <div className="testi-scene">
-        <div ref={parallaxRef}>
-          <svg width="420" height="400" viewBox="0 0 420 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="tGlow" cx="50%" cy="50%">
-                <stop offset="0%" stopColor="#e8372c" stopOpacity="0.14"/>
-                <stop offset="100%" stopColor="#e8372c" stopOpacity="0"/>
-              </radialGradient>
-            </defs>
-            <ellipse cx="210" cy="200" rx="180" ry="170" fill="url(#tGlow)"/>
-            <circle cx="210" cy="200" r="170" stroke="#e8372c" strokeWidth="1" strokeDasharray="5 12" opacity="0.15" style={{animation:"spin-ring 25s linear infinite",transformOrigin:"210px 200px"}}/>
-            {/* main speech bubble */}
-            <g style={{animation:"bob 5s ease-in-out infinite",transformOrigin:"210px 160px"}}>
-              <rect x="60" y="60" width="300" height="160" rx="20" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-              <polygon points="120,220 100,260 150,220" fill="#1e1e1e" stroke="#e8372c" strokeWidth="2"/>
-              {/* giant quote marks */}
-              <text x="85" y="130" fill="#e8372c" fontSize="60" fontFamily="Georgia,serif" opacity="0.9">“</text>
-              {/* star row */}
-              {[0,1,2,3,4].map(s=>(
-                <text key={s} x={108+s*28} y="110" fill="#ff6a00" fontSize="18">★</text>
-              ))}
-              {/* text lines */}
-              <rect x="90" y="130" width="240" height="8" rx="4" fill="#333"/>
-              <rect x="90" y="148" width="200" height="8" rx="4" fill="#2a2a2a"/>
-              <rect x="90" y="166" width="220" height="8" rx="4" fill="#2a2a2a"/>
-              {/* author line */}
-              <rect x="90" y="186" width="80" height="6" rx="3" fill="#e8372c" opacity="0.7"/>
-            </g>
-            {/* small bubble top-right */}
-            <g style={{animation:"bob 4s ease-in-out infinite 1.2s",transformOrigin:"330px 80px"}}>
-              <rect x="270" y="40" width="120" height="70" rx="14" fill="#1a1a1a" stroke="#e8372c" strokeWidth="1.5" opacity="0.8"/>
-              <polygon points="295,110 280,135 315,110" fill="#1a1a1a" stroke="#e8372c" strokeWidth="1.5"/>
-              <text x="290" y="72" fill="#e8372c" fontSize="28" fontFamily="Georgia,serif" opacity="0.8">“</text>
-              {[0,1,2].map(s=>(<text key={s} x={290+s*20} y="98" fill="#ff6a00" fontSize="14">★</text>))}
-            </g>
-            {/* small bubble bottom-right */}
-            <g style={{animation:"bob 6s ease-in-out infinite 0.6s",transformOrigin:"330px 310px"}}>
-              <rect x="250" y="290" width="140" height="75" rx="14" fill="#1a1a1a" stroke="#ff6a00" strokeWidth="1.5" opacity="0.8"/>
-              <polygon points="265,290 248,265 290,290" fill="#1a1a1a" stroke="#ff6a00" strokeWidth="1.5"/>
-              <text x="268" y="326" fill="#ff6a00" fontSize="28" fontFamily="Georgia,serif" opacity="0.8">“</text>
-              {[0,1,2,3].map(s=>(<text key={s} x={266+s*20} y="350" fill="#e8372c" fontSize="13">★</text>))}
-            </g>
-            {/* sparkles */}
-            {[{x:60,y:290,d:"0s"},{x:380,y:200,d:"1s"},{x:200,y:360,d:"1.5s"},{x:50,y:150,d:"2s"}].map((p,i)=>(
-              <circle key={i} cx={p.x} cy={p.y} r="3" fill="#ff6a00" style={{animation:`pulse-ring 3s ease-in-out infinite ${p.d}`,transformOrigin:`${p.x}px ${p.y}px`}}/>
-            ))}
-          </svg>
-        </div>
+      {/* ── Instagram reels (right side). Add links to `instagramReels` at the top of the file ── */}
+      <div className="testi-scene insta-scene">
+        <InstagramReels />
       </div>
       <div className="testimonial-content reveal-left">
         <div className="testi-profile-wrap">
@@ -1490,132 +1628,49 @@ function Testimonials() {
 }
 
 /* ─── Programme Card (home) ─── */
-function ProgrammeCard() {
+function ProgramCard({ data }: { data: ProgramCardData }) {
+  const { slides } = data;
+  const multi = slides.length > 1;
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % programmeSlides.length), 3200);
+    if (!multi) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % slides.length), 3200);
     return () => clearInterval(t);
-  }, []);
+  }, [multi, slides.length]);
 
-  const prev = () => setIdx((i) => (i - 1 + programmeSlides.length) % programmeSlides.length);
-  const next = () => setIdx((i) => (i + 1) % programmeSlides.length);
+  const prev = () => setIdx((i) => (i - 1 + slides.length) % slides.length);
+  const next = () => setIdx((i) => (i + 1) % slides.length);
 
   return (
     <div className="prog-card reveal">
       <div className="prog-slider">
-        {programmeSlides.map((s, i) => (
+        {slides.map((s, i) => (
           <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
             <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
             <div className="prog-slide-content">
               <h4>{s.title}<span>{s.sub}</span></h4>
-              <p><i className="fas fa-clock" style={{ marginRight: 5, color: "#e8372c" }} />{s.detail}</p>
+              <p><i className={data.icon} style={{ marginRight: 5, color: "#e8372c" }} />{s.detail}</p>
             </div>
           </div>
         ))}
-        <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
-        <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
-        <div className="prog-nav">
-          {programmeSlides.map((_, i) => (
-            <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
-          ))}
-        </div>
-      </div>
-      <a href="/pricing" className="prog-body">
-        <h3>Online Programme</h3>
-        <span className="prog-sub">Stairs Rehab &amp; Fitness</span>
-        <ul>
-          {programmeFeatures.map((f, i) => (
-            <li key={i}><i className="fas fa-check" />{f}</li>
-          ))}
-        </ul>
-      </a>
-    </div>
-  );
-}
-
-/* ─── Massage Card (home pricing) ─── */
-function MassageCard() {
-  const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % massageSlides.length), 3200);
-    return () => clearInterval(t);
-  }, []);
-
-  const prev = () => setIdx((i) => (i - 1 + massageSlides.length) % massageSlides.length);
-  const next = () => setIdx((i) => (i + 1) % massageSlides.length);
-
-  return (
-    <div className="prog-card reveal">
-      <div className="prog-slider">
-        {massageSlides.map((s, i) => (
-          <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
-            <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
-            <div className="prog-slide-content">
-              <h4>{s.name}<span style={{ fontSize: "1rem", letterSpacing: "2px" }}>{s.role}</span></h4>
-              <p><i className="fas fa-spa" style={{ marginRight: 5, color: "#e8372c" }} />Read More &rarr;</p>
+        {multi && (
+          <>
+            <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
+            <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
+            <div className="prog-nav">
+              {slides.map((_, i) => (
+                <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
+              ))}
             </div>
-          </div>
-        ))}
-        <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
-        <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
-        <div className="prog-nav">
-          {massageSlides.map((_, i) => (
-            <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
-          ))}
-        </div>
+          </>
+        )}
       </div>
       <a href="/pricing" className="prog-body">
-        <h3>Massage Therapy</h3>
-        <span className="prog-sub">Feel Better, Move Better</span>
+        <h3>{data.title}</h3>
+        {data.subtitle && <span className="prog-sub">{data.subtitle}</span>}
         <ul>
-          {massageFeatures.map((f, i) => (
-            <li key={i}><i className="fas fa-check" />{f}</li>
-          ))}
-        </ul>
-      </a>
-    </div>
-  );
-}
-
-/* ─── Fit To Run Card (home pricing) ─── */
-function FitToRunCard() {
-  const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % fitToRunSlides.length), 3200);
-    return () => clearInterval(t);
-  }, []);
-
-  const prev = () => setIdx((i) => (i - 1 + fitToRunSlides.length) % fitToRunSlides.length);
-  const next = () => setIdx((i) => (i + 1) % fitToRunSlides.length);
-
-  return (
-    <div className="prog-card reveal">
-      <div className="prog-slider">
-        {fitToRunSlides.map((s, i) => (
-          <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
-            <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
-            <div className="prog-slide-content">
-              <h4>{s.label}<span>{s.sub}</span></h4>
-              <p><i className="fas fa-running" style={{ marginRight: 5, color: "#e8372c" }} />{s.detail}</p>
-            </div>
-          </div>
-        ))}
-        <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
-        <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
-        <div className="prog-nav">
-          {fitToRunSlides.map((_, i) => (
-            <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
-          ))}
-        </div>
-      </div>
-      <a href="/pricing" className="prog-body">
-        <h3>Fit To Run</h3>
-        <span className="prog-sub">Step Into A New You</span>
-        <ul>
-          {fitToRunFeatures.map((f, i) => (
+          {data.features.map((f, i) => (
             <li key={i}><i className="fas fa-check" />{f}</li>
           ))}
         </ul>
@@ -1633,12 +1688,9 @@ function Pricing() {
         <h2 className="section-title reveal">our programs</h2>
       </div>
       <div className="pricing-grid stagger">
-        {/* Programme card */}
-        <ProgrammeCard />
-        {/* Massage Therapy card */}
-        <MassageCard />
-        {/* Fit To Run card */}
-        <FitToRunCard />
+        {programCards.map((c) => (
+          <ProgramCard key={c.title} data={c} />
+        ))}
         {/* hidden – kept for data ref */}
         {pricingPlans.slice(2).map((plan, i) => (
           <div className="pricing-card reveal" key={i}>
