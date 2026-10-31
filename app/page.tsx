@@ -737,9 +737,18 @@ const globalStyles = `
 
 /* ─── Data ─── */
 const testimonials = [
-  { img: "/images/SANJAY RAJPAL.avif", quote: "STAIRS is God-sent for me. Absolutely awesome team and time at Stairs. Just can't wait for my next session every single time. You guys make it so interesting and work towards the need and goal of the client, that ensures I skip my work but not my workout. Keep rocking TEAM STAIRS!", name: "Sanjay Rajpal", role: "Businessman" },
-  { img: "/images/RUKMINI VIJAYAKUMAR.avif", quote: "I have personally grown to understand my body better because of Somya. There is a warm environment that the trainers and therapists foster that is conducive to progress. Every person working in Stairs is kind and helpful and I love the place! I highly recommend coming to Stairs.", name: "Rukmini Vilayakumar", role: "Actor, Dancer" },
-  { img: "/images/SHREYAS KARNAD.avif", quote: "I'm proud to have a coach like Somya Rout, the team he is building and someone to speak to and someone who listens to me especially when you are in a profession it's the other way around all the time. To coach and to be coached is a perfect balance of learning & teaching.", name: "Shreyas Karnad", role: "Running Coach" },
+  { img: "/images/SANJAY RAJPAL.avif", quote: "STAIRS is God-sent for me. Absolutely awesome team and time at Stairs. Just can't wait for my next session every single time. You guys make it so interesting and work towards the need and goal of the client, that ensures I skip my work but not my workout. Keep rocking TEAM STAIRS!", name: "Sanjay Rajpal", role: "Businessman & Squash Champ" },
+  { img: "/images/RUKMINI VIJAYAKUMAR.avif", quote: "I have personally grown to understand my body better because of Somya. There is a warm environment that the trainers and therapists foster that is conducive to progress. Every person working in Stairs is kind and helpful and I love the place! I highly recommend coming to Stairs.", name: "Rukmini Vijaykumar", role: "Actress & Dancer" },
+  { img: "/images/SHREYAS KARNAD.avif", quote: "I'm proud to have a coach like Somya Rout, the team he is building and someone to speak to and someone who listens to me especially when you are in a profession it's the other way around all the time. To coach and to be coached is a perfect balance of learning & teaching.", name: "Shreyas Karnad", role: "Marathoner & Running Coach" },
+  { img: "/images/Stairs Corporate Deck.png", quote: "Stairs Physiotherapy & Fitness has been a game-changer in my recovery and performance. Their expert care helped me stay injury-free, improve mobility, and build strength for peak performance. Thanks to their support, I feel stronger, more agile, and ready for every match!", name: "Yasmeen Shaikh", role: "Indian badminton player" },
+  { img: "/images/Stairs Corporate Deck (1).png", quote: "Completing Ironman Goa was a huge challenge, and Stairs Physiotherapy & Fitness played a crucial role in my journey. Their expert rehab, strength training, and recovery sessions helped me stay injury-free and perform at my best. Their support made all the difference in crossing that finish line strong!", name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete" },
+  { img: "/images/Stairs Corporate Deck (2).png", quote: "Stairs Physiotherapy & Fitness has been a game-changer for me! Their expert team lead by Somya Rout and Harinag helped me recover from fatigue, improve mobility, and stay injury-free through personalized care. Thanks to them, I feel stronger, pain-free, and always ready to perform!", name: "Jacqueline Fernandez", role: "Indian Actress" },
+  { img: "/images/Stairs Corporate Deck (3).png", quote: "Stairs Physiotherapy & Fitness has been instrumental in keeping me pain-free and improving mobility. Their expert rehab and recovery programs help athletes stay strong, prevent injuries, and perform at their best. Highly recommended!", name: "Prakash Padukone", role: "Former Indian badminton player" },
+  { img: "/images/Stairs Corporate Deck (4).png", quote: "Competing in Ironman, Bergman, and multiple triathlons demands intense training and quick recovery. Stairs Physiotherapy & Fitness has been a key part of my journey, helping me stay injury-free, recover faster, and perform at my best. Their expert care has truly elevated my endurance and performance!", name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete" },
+  { img: "/images/Stairs Corporate Deck (5).png", quote: "Stairs Physiotherapy and Fitness has truly transformed my recovery journey. Their expert team, personalized care, and attention to detail helped me bounce back stronger and pain-free. Grateful for their dedication and support!", name: "Yash Gowda", role: "Indian Actor" },
+  { img: "/images/Stairs Corporate Deck (6).png", quote: "My dad, Prakash Padukone, continues to stay strong with the help of Stairs Physiotherapy and Fitness. Somya has been a huge part of his journey — and mine too. Every time I'm in Bangalore, Somya has been there to support my recovery journey.", name: "Deepika Padukone", role: "Indian Actress" },
+  { img: "/images/Stairs Corporate Deck (7).png", quote: "As a professional billiards and snooker champion, precision and physical well-being are everything. For the past 6 years, Stairs Physiotherapy and Fitness — especially Somya has been key to my recovery and performance. Their consistent care keeps me tournament-ready, always.", name: "Pankaj Advani", role: "Indian Billiards Champion" },
+  { img: "/images/Stairs Corporate Deck (8).png", quote: "Being in the film and fitness space, my body goes through a lot — and Stairs Physiotherapy and Fitness has been a game-changer. Somya's guidance has helped me recover faster and perform better, both on-screen and off. Grateful for the care and commitment they bring every single time.", name: "Rakul Preet", role: "Indian Actress" },
   { img: "/images/PRAGATHI GUPTA.png", quote: "Stairs is like my second home. Entire team at Stairs is so diligent & proficient. They not only strengthen us but understand the needs of our sport and train us efficaciously such that we are able to pursue our goals.", name: "Pragathi Gupta", role: "Runner" },
   { img: "/images/JANANI ANANTHAKUMAR.jpg", quote: "Stairs isn't just a fitness space; it's a home. Grateful for dedicated trainers, physios, and supportive members ensuring peak performance. Thank you, Team Stairs, for fostering excellence and positivity.", name: "Janani Ananthakumar", role: "Athlete, Badminton (India)" },
 ];
@@ -873,19 +882,19 @@ const pricingPlans = [
 
 /* Client gallery. Photos not yet in /public/images/gallery/ fall back to an initials tile. */
 const galleryClients = [
-  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/gallery/yasmeen-shaikh.jpg" },
-  { name: "Yash Gowda", role: "Indian Actor", img: "/images/gallery/yash-gowda.jpg" },
-  { name: "Deepika Padukone", role: "Indian Actress", img: "/images/gallery/deepika-padukone.jpg" },
-  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images/gallery/bhavish-aggarwal.jpg" },
-  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images/gallery/anand-dayal-dadu.jpg" },
-  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images/gallery/tejasvi-surya.jpg" },
-  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images/gallery/jacqueline-fernandez.jpg" },
-  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images/gallery/prakash-padukone.jpg" },
-  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images/gallery/anish-sood.jpg" },
-  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images/gallery/pankaj-advani.jpg" },
-  { name: "Rakul Preet", role: "Indian Actress", img: "/images/gallery/rakul-preet.jpg" },
-  { name: "Neha Shetty", role: "Indian Actress", img: "/images/gallery/neha-shetty.jpg" },
-  { name: "Allu Sirish", role: "Indian Actor", img: "/images/gallery/allu-sirish.jpg" },
+  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/clients/Stairs Corporate Deck.png" },
+  { name: "Yash Gowda", role: "Indian Actor", img: "/images/clients/Stairs Corporate Deck (5).png" },
+  { name: "Deepika Padukone", role: "Indian Actress", img: "/images/clients/Stairs Corporate Deck (6).png" },
+  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images/clients/bhavesh agarwal.png" },
+  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images/clients/Anand.png" },
+  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images/clients/Stairs Corporate Deck (1).png" },
+  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images/clients/Stairs Corporate Deck (2).png" },
+  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images/clients/Prakash.png" },
+  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images/clients/Stairs Corporate Deck (4).png" },
+  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images/clients/Stairs Corporate Deck (7).png" },
+  { name: "Rakul Preet", role: "Indian Actress", img: "/images/clients/Stairs Corporate Deck (8).png" },
+  { name: "Neha Shetty", role: "Indian Actress", img: "/images/Neha.png" },
+  { name: "Allu Sirish", role: "Indian Actor", img: "/images/Allu.png" },
 ];
 
 const pricingFeatures = ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"];
