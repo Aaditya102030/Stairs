@@ -58,6 +58,10 @@ const css = `
   .bf-col a { color: #ffffff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,0.4); transition: color 0.25s, text-decoration-color 0.25s; overflow-wrap: anywhere; }
   .bf-col a:hover { color: var(--red, #e8372c); text-decoration-color: var(--red, #e8372c); }
   .bf-hours { color: #a8a8a8; }
+  .bf-bottom { max-width: 1400px; margin: 50px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap; font-size: 0.82rem; color: #8a8a8a; }
+  .bf-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .bf-bottom a { color: #ffffff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,0.4); transition: color 0.25s, text-decoration-color 0.25s; }
+  .bf-bottom a:hover { color: var(--red, #e8372c); text-decoration-color: var(--red, #e8372c); }
 
   @media (max-width: 1100px) {
     .branches-footer { padding: 60px 30px 50px; }
@@ -95,6 +99,14 @@ export default function BranchesFooter() {
           </div>
         ))}
       </AutoScrollRow>
+      <div className="bf-bottom">
+        <span>&copy; {new Date().getFullYear()} STAIRS Physiotherapy &amp; Fitness. All rights reserved.</span>
+        <span className="bf-links">
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/cancellation-policy">Cancellation &amp; Late Arrival Policy</a>
+          <a href="/terms-and-conditions">Terms and Conditions</a>
+        </span>
+      </div>
     </footer>
   );
 }
