@@ -9,6 +9,7 @@ import { NoiseBackground } from "@/components/ui/noise-background";
 import blogPosts from "@/lib/blogPosts";
 import type { BlogPost } from "@/lib/blogPosts";
 import BranchesFooter from "@/components/BranchesFooter";
+import AutoScrollRow from "@/components/AutoScrollRow";
 
 /* ─── Inline CSS ─── */
 const globalStyles = `
@@ -614,17 +615,18 @@ const globalStyles = `
     .nav-links a { font-size: 0.85rem; }
 
     /* hero: shrink decorations so they sit behind the text, not on it */
-    #hero { min-height: 100svh; }
+    #hero { min-height: 100svh; align-items: flex-start; padding: 0 0 40px; }
     .hero-bg-img { opacity: 0.5; }
     .hero-bg-img::after { background: linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.85) 100%); }
     .hero-circle { width: 250px; height: 250px; right: -90px; border-width: 16px; opacity: 0.35; }
     .hero-3d-scene { width: 100%; opacity: 0.18; }
     .hero-3d-scene svg { width: 300px; height: 300px; }
-    .hero-content { padding: 96px 20px 48px; max-width: 100%; }
+    .hero-content { padding: 96px 20px 48px; max-width: 100%; align-self: stretch; }
     .hero-content .sub { font-size: 0.72rem; letter-spacing: 3px; padding-left: 10px; border-left-width: 3px; margin-bottom: 12px; }
     .hero-content h1 { font-size: clamp(2rem, 10vw, 3rem); line-height: 1.05; margin-bottom: 12px; letter-spacing: 1px; }
     .hero-content p { font-size: 0.92rem; line-height: 1.5; margin-bottom: 22px; max-width: 360px; min-height: 6em; }
     .glow-btn-wrap { margin-top: 1.25rem; }
+    #hero .glow-btn-wrap { position: absolute; left: 20px; bottom: 72px; margin-top: 0; }
     .glow-btn-inner { font-size: 0.78rem; padding: 10px 26px; gap: 10px; letter-spacing: 1.2px; }
 
     /* partners */
@@ -633,6 +635,10 @@ const globalStyles = `
     .org-title-line1, .org-title-line2 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
     .org-title-line3 { font-size: clamp(1.2rem, 5.5vw, 1.6rem); }
     .org-track { gap: 14px; }
+    .org-arrow { display: none; }
+    #about .about-bg { opacity: 0.85; }
+    #about .about-bg::after { background: linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.7) 100%); }
+    #about .about-content { padding: 56px 20px; }
     .org-card { width: 140px; height: 90px; padding: 8px; }
     .org-card .org-img-box { width: 70px; height: 70px; font-size: 0.55rem; padding: 4px; }
     .org-card .org-img-box i { font-size: 1.3rem !important; }
@@ -640,7 +646,9 @@ const globalStyles = `
     /* why choose us */
     #why .why-header { margin-bottom: 32px; }
     #why .why-sub { font-size: 0.92rem; margin-top: 10px; }
-    .features-grid { gap: 16px; }
+    .features-grid { display: flex; flex-direction: row; align-items: stretch; gap: 14px; margin: 0 -18px; padding: 6px 18px 18px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding: 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .features-grid::-webkit-scrollbar { display: none; }
+    .features-grid > .feature-card { flex: 0 0 80%; max-width: 320px; scroll-snap-align: start; opacity: 1 !important; transform: none !important; }
     .feature-card { padding: 22px 18px; }
     .feature-card .icon-wrap { width: 52px; height: 52px; margin-bottom: 14px; }
     .feature-card .icon-wrap i { font-size: 1.3rem; }
@@ -1306,7 +1314,7 @@ function WhyChooseUs() {
         <h2 className="section-title reveal">Transforming Lives <span className="accent">Across Industries</span></h2>
         <p className="why-sub reveal">With 10,000+ success stories over 8+ years, we’ve helped:</p>
       </div>
-      <div className="features-grid stagger">
+      <AutoScrollRow className="features-grid stagger">
         {features.map((f, i) => (
           <div className="feature-card reveal" key={i}>
             <div className="icon-wrap"><i className={f.icon} /></div>
@@ -1315,7 +1323,7 @@ function WhyChooseUs() {
 
           </div>
         ))}
-      </div>
+      </AutoScrollRow>
     </section>
   );
 }
@@ -1418,8 +1426,8 @@ function About() {
         <span className="section-label">About Us</span>
         <h2 className="section-title">Welcome To The<br />Stairs</h2>
         <p>
-              At Stairs Physiotherapy & Fitness, we’ve helped 10,000+ clients over the last 8+ years live pain-free, move better, and enhance their performance. From athletes to working professionals, we have transformed lives by focusing on injury recovery, movement correction, strength building, and long-term wellness.
-              With 5 branches across Bengaluru – Ulsoor, Koramangala, Indiranagar, Whitefield and New BEL Road – we are committed to making quality physiotherapy and fitness accessible to everyone. Whether you want to recover from pain, prevent injuries, or improve performance, we are here to support your journey toward a stronger, healthier lifestyle.
+              At Stairs Physiotherapy & Fitness, we’ve helped 10,000+ clients over 8+ years live pain-free, move better, and perform at their best. From athletes to working professionals, we focus on injury recovery, movement correction, and strength building.
+              With 5 branches across Bengaluru, we’re making quality physiotherapy and fitness accessible to everyone.
         </p>
         <div className="stats-grid stagger">
           <div className="stat-item reveal"><h3>10000+</h3><p>Clients Supported</p></div>

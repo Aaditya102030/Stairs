@@ -313,7 +313,13 @@ const globalStyles = `
     .page-hero-content{padding:0 20px;}
     #trainers-full{padding:70px 20px;}
     .admin-hero{grid-template-columns:1fr;}
+    .admin-hero{grid-template-columns:minmax(0,1fr);}
     .admin-hero-left{padding:36px 28px;}
+    .admin-hero-left p{max-width:100%;}
+    .admin-hero-right{padding:0 20px 36px;}
+    .admin-avatar-ring{width:min(300px,calc(100vw - 100px))!important;height:min(300px,calc(100vw - 100px))!important;}
+    .admin-avatar-inner{width:calc(100% - 40px)!important;height:calc(100% - 40px)!important;}
+    .admin-floating-tag{right:0;}
     .admin-stats{flex-wrap:wrap;gap:16px;}
     .founders-row{grid-template-columns:1fr;}
     .bottom-row{grid-template-columns:1fr;}

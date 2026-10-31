@@ -73,6 +73,8 @@ const css = `
     .bf-grid { display: flex; flex-direction: row; align-items: stretch; gap: 14px; margin: 0 -18px; padding: 6px 18px 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
     .bf-grid::-webkit-scrollbar { display: none; }
     .bf-col { flex: 0 0 82%; max-width: 320px; scroll-snap-align: start; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 20px 18px; }
+    .bf-bottom { flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; margin-top: 36px; }
+    .bf-links { flex-direction: column; align-items: center; gap: 12px; }
   }
 `;
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
+import AutoScrollRow from "@/components/AutoScrollRow";
 import { motion } from "motion/react";
 
 const globalStyles = `
@@ -107,7 +108,9 @@ const globalStyles = `
     .prog-highlights{padding:60px 30px;}
   }
   @media(max-width:768px){
-    .highlights-grid{grid-template-columns:1fr;}
+    .highlights-grid{display:flex;flex-direction:row;align-items:stretch;gap:14px;max-width:none;margin:0 -30px;padding:6px 18px 18px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding:0 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .highlights-grid::-webkit-scrollbar{display:none;}
+    .highlights-grid>.hl-card{flex:0 0 78%;max-width:300px;scroll-snap-align:start;opacity:1!important;transform:none!important;}
     .prog-block-content{padding:32px 20px;}
   }
 
@@ -397,7 +400,7 @@ function ProgramsSection() {
         <span className="section-label reveal">Why Choose Stairs</span>
         <h2 className="section-title reveal">Built For Results</h2>
         <br />
-        <div className="highlights-grid">
+        <AutoScrollRow className="highlights-grid">
           {highlights.map((h, i) => (
             <div className="hl-card reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
               <div className="hl-icon"><i className={h.icon} /></div>
@@ -405,7 +408,7 @@ function ProgramsSection() {
               <p>{h.text}</p>
             </div>
           ))}
-        </div>
+        </AutoScrollRow>
       </div>
     </section>
   );
@@ -484,15 +487,15 @@ function FitToRunDetail() {
       </div>
 
       {/* ── WHY JOIN US ── */}
-      <div style={{ padding: "80px 60px", background: "rgba(0,0,0,0.4)", backgroundImage: "url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1400&q=80')", backgroundSize: "cover", backgroundPosition: "center", backgroundBlendMode: "overlay", position: "relative" }}>
+      <div style={{ padding: "80px 60px", background: "rgba(0,0,0,0.4)", backgroundImage: "url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1400&q=80')", backgroundSize: "cover", backgroundPosition: "center", backgroundBlendMode: "overlay", position: "relative" }} className="why-join-section">
         <div style={{ position: "absolute", inset: 0, background: "rgba(10,10,10,0.75)" }} />
-        <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: 50 }}>
+        <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: 50 }} className="why-join-head">
           <h2 className="section-title reveal" style={{ color: "#fff", display: "inline" }}>WHY </h2>
           <h2 className="section-title reveal" style={{ color: "var(--red)", display: "inline", fontStyle: "italic" }}>JOIN </h2>
           <h2 className="section-title reveal" style={{ color: "#fff", display: "inline" }}>US</h2>
           <p className="reveal" style={{ color: "rgba(255,255,255,.65)", marginTop: 10, fontSize: ".95rem" }}>One Stop Solution to Improve your Performance</p>
         </div>
-        <div style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 28, maxWidth: 1100, margin: "0 auto" }} className="why-join-grid">
+        <AutoScrollRow className="why-join-grid">
           {whyCards.map((c, i) => (
             <div key={i} className="reveal" style={{ textAlign: "center", padding: "32px 20px", borderRadius: 14, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(232,55,44,0.15)", transition: "border-color .3s,transform .3s" }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = "var(--red)"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-6px)"; }}
@@ -505,8 +508,8 @@ function FitToRunDetail() {
               <p style={{ color: "rgba(255,255,255,.6)", fontSize: ".85rem", lineHeight: 1.7 }}>{c.text}</p>
             </div>
           ))}
-        </div>
-        <style>{`@media(max-width:1024px){.why-join-grid{grid-template-columns:repeat(2,1fr)!important;}}@media(max-width:600px){.why-join-grid{grid-template-columns:1fr!important;}}`}</style>
+        </AutoScrollRow>
+        <style>{`.why-join-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;max-width:1100px;margin:0 auto;}@media(max-width:1024px){.why-join-grid{grid-template-columns:repeat(2,1fr);}}@media(max-width:768px){.why-join-section{padding:60px 0!important;}.why-join-head{padding:0 20px;margin-bottom:32px!important;}.why-join-grid{display:flex;gap:14px;max-width:none;margin:0;padding:6px 18px 10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}.why-join-grid::-webkit-scrollbar{display:none;}.why-join-grid>*{flex:0 0 82%;max-width:320px;scroll-snap-align:start;opacity:1!important;transform:none!important;}}`}</style>
       </div>
     </div>
   );
