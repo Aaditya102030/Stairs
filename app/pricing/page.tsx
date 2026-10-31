@@ -34,7 +34,7 @@ const globalStyles = `
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
   #page-hero{position:relative;min-height:60vh;background:var(--darker);display:flex;align-items:center;overflow:hidden;padding-top:80px;}
-  .page-hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1800&q=80') center/cover no-repeat;opacity:.55;}
+  .page-hero-bg{position:absolute;inset:0;background:url('/images/2R5A9466.jpg') center/cover no-repeat;opacity:.55;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.85) 40%,rgba(10,10,10,.2) 100%);}
   .page-hero-circle-wrap{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:420px;height:420px;pointer-events:none;z-index:2;}
   @keyframes spin-slow-ph{to{transform:rotate(360deg);}}
@@ -61,10 +61,10 @@ const globalStyles = `
   .prog-block{display:grid;grid-template-columns:1fr 1fr;min-height:520px;position:relative;overflow:hidden;}
   .prog-block.reverse{direction:rtl;}
   .prog-block.reverse > *{direction:ltr;}
-  .prog-block-visual{position:relative;overflow:hidden;min-height:440px;}
-  .prog-block-visual img,.prog-block-visual .visual-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background-size:cover;background-position:center;}
-  .prog-block-visual .visual-overlay{position:absolute;inset:0;background:linear-gradient(120deg,rgba(10,10,10,.7) 0%,rgba(10,10,10,.15) 100%);}
-  .prog-block.reverse .prog-block-visual .visual-overlay{background:linear-gradient(240deg,rgba(10,10,10,.7) 0%,rgba(10,10,10,.15) 100%);}
+  .prog-block-visual{position:relative;overflow:hidden;min-height:440px;background:#f2f2f2;}
+  .prog-block-visual img,.prog-block-visual .visual-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background-size:contain;background-repeat:no-repeat;background-position:center;}
+  .prog-block-visual .visual-overlay{position:absolute;inset:0;background:none;}
+  .prog-block.reverse .prog-block-visual .visual-overlay{background:none;}
   .prog-block-visual .prog-num{position:absolute;bottom:24px;left:28px;font-family:var(--font-display);font-size:7rem;line-height:1;color:rgba(232,55,44,.18);letter-spacing:-4px;pointer-events:none;user-select:none;}
   .prog-block.reverse .prog-block-visual .prog-num{left:auto;right:28px;}
   .prog-block-content{background:#ffffff;padding:60px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
@@ -244,7 +244,7 @@ const programs = [
     ],
     cta: "Enroll Now",
     href: "/new-pricing-plan",
-    bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80",
+    bg: "/images/strength%20and%20conditioning.avif",
   },
   {
     id: "02",
@@ -262,7 +262,7 @@ const programs = [
     ],
     cta: "Book a Session",
     href: "/new-pricing-plan",
-    bg: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&q=80",
+    bg: "/images/myofascial%20release.avif",
   },
   {
     id: "03",
@@ -280,7 +280,7 @@ const programs = [
     ],
     cta: "Explore Programme",
     href: "/contact",
-    bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1200&q=80",
+    bg: "/images/fit-to-run-white_edited_edited.avif",
   },
 ];
 

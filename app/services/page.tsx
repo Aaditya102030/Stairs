@@ -56,7 +56,7 @@ const globalStyles = `
 
   /* PAGE HERO */
   #page-hero { position: relative; min-height: 60vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
-  .page-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1800&q=80') center/cover no-repeat; opacity: 0.55; }
+  .page-hero-bg { position: absolute; inset: 0; background: url('/images/DSC02217.JPG') center/cover no-repeat; opacity: 0.55; }
   .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.88) 38%, rgba(10,10,10,0.3) 100%); }
 
   /* Full-hero equipment SVG layer */
@@ -75,8 +75,12 @@ const globalStyles = `
 
   /* SERVICES ACCORDION GRID */
   #services-full { padding: 90px 60px; background: var(--bg-light); }
-  #services-full .services-header { text-align: center; margin-bottom: 60px; }
-  .services-book { display: flex; gap: 12px; max-width: 1300px; height: 500px; margin: 0 auto; align-items: stretch; justify-content: center; }
+  #services-full .services-header { text-align: center; background: var(--red); color: var(--light); margin: -90px -60px 60px -60px; padding: 60px 60px 50px; position: relative; overflow: hidden; }
+  #services-full .services-header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; border: 50px solid rgba(255,255,255,0.07); pointer-events: none; }
+  #services-full .services-header::after { content: ''; position: absolute; bottom: -80px; left: -40px; width: 200px; height: 200px; border-radius: 50%; border: 35px solid rgba(255,255,255,0.05); pointer-events: none; }
+  #services-full .services-header .section-label { color: rgba(255,255,255,0.7); }
+  #services-full .services-header .section-title { color: var(--light); }
+  .services-book { display: flex; gap: 12px; max-width: 1300px; height: 440px; margin: 0 auto; align-items: stretch; justify-content: center; }
   .service-panel { position: relative; display: block; width: 100%; flex: 0.52; min-width: 52px; overflow: hidden; border: 0; border-radius: 8px; padding: 0; font: inherit; text-align: left; color: var(--light); cursor: pointer; background: #1d1d1d; box-shadow: 0 18px 45px rgba(0,0,0,0.24); transition: flex 0.55s ease, transform 0.55s ease, box-shadow 0.55s ease; }
   .service-panel.is-active { flex: 2.7; transform: translateY(-8px); box-shadow: 0 26px 60px rgba(0,0,0,0.34); }
   .service-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.75)), var(--service-bg); background-size: cover; background-position: center; filter: grayscale(0.6); transition: filter 0.55s ease; }
@@ -134,14 +138,12 @@ const globalStyles = `
 `;
 
 const services = [
-  { href: "/services/advanced-physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Advanced Physiotherapy", icon: "fas fa-notes-medical", title: "Advanced Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
-  { href: "/services/sports-rehab-injury-prevention", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
-  { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
-  { href: "/services/postural-ergonomic-correction", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Postural & Ergonomic Correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
-  { href: "/services/manual-therapy-dry-needling", bg: "url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80')", vertical: "Manual Therapy & Dry Needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
-  { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80')", vertical: "Prehab & Wellness Programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
-  { href: "/services/manual-physiotherapy", bg: "url('https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80')", vertical: "Manual Physiotherapy", icon: "fas fa-hand-holding-medical", title: "Manual Physiotherapy", desc: "Expert hands-on treatment for pain relief and mobility restoration" },
+  { href: "/services/advanced-physiotherapy", bg: "url('/images/physiotherapy.avif')", vertical: "Physiotherapy & Rehabilitation", icon: "fas fa-notes-medical", title: "Physiotherapy & Rehabilitation", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images/sports%20secific%20training.avif')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('/images/strength%20and%20conditioning.avif')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('/images/bio%20mechanical%20assessment.avif')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/myofascial-release", bg: "url('/images/myofascial%20release.avif')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
+  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02221.JPG')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
   { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
@@ -324,7 +326,7 @@ function ServicesFull() {
     <section id="services-full">
       <div className="services-header">
         <span className="section-label reveal">Our Services</span>
-        <h2 className="section-title reveal">Solutions For Moving Better<br />&amp; Feeling Healthier</h2>
+        <h2 className="section-title reveal">Solutions for moving better &amp; One step at a time</h2>
       </div>
       <div className="services-book">
         {services.map((s, i) => (
@@ -336,7 +338,6 @@ function ServicesFull() {
             <span className="service-detail">
               <span className="s-icon"><i className={s.icon} /></span>
               <h3>{s.title}</h3><p>{s.desc}</p>
-              <span className="read-more">View details <i className="fas fa-arrow-right" /></span>
             </span>
           </a>
         ))}

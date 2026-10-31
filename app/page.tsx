@@ -107,6 +107,11 @@ const globalStyles = `
   .hero-content p { color: #cccccc; font-size: 1.05rem; margin-bottom: 36px; font-weight: 400; max-width: 520px; line-height: 1.6; min-height: 4.9em; }
   .hero-img-placeholder { display: none; }
   .hero-3d-scene { position: absolute; right: 0; top: 0; bottom: 0; width: 55%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; }
+  .hero-gallery { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .hero-gallery::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.88) 35%, rgba(10,10,10,0.35) 100%); }
+  .hero-gallery-track { display: flex; width: 100%; height: 100%; transition: transform 1s ease-in-out; }
+  .hero-photo { position: relative; flex: 0 0 100%; width: 100%; height: 100%; }
+  @keyframes hero-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes float1 { 0%,100% { transform: translateY(0px) rotate(-8deg); } 50% { transform: translateY(-22px) rotate(-8deg); } }
   @keyframes float2 { 0%,100% { transform: translateY(0px) rotate(12deg); } 50% { transform: translateY(-16px) rotate(12deg); } }
   @keyframes float3 { 0%,100% { transform: translateY(0px) rotate(-4deg); } 50% { transform: translateY(-28px) rotate(-4deg); } }
@@ -169,12 +174,13 @@ const globalStyles = `
 
   /* ABOUT */
   #about { position: relative; min-height: 500px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .about-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=80') center/cover no-repeat; opacity: 0.4; }
+  .about-bg { position: absolute; inset: 0; background: url('/images/DSC02233.JPG') center/cover no-repeat; opacity: 0.4; }
   .about-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.92) 55%); }
   .about-circle { width: 460px; height: 460px; left: 2%; top: 50%; transform: translateY(-50%); border-width: 25px; pointer-events: none; opacity: 0.7; }
   /* SECTION ILLUSTRATIONS */
   .about-img-placeholder { display: none; }
-  .about-scene { position: absolute; left: 0; top: 0; bottom: 0; width: 48%; display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none; overflow: hidden; }
+  .about-scene, .about-circle { display: none; }
+  .about-scene { position: absolute; left: 0; top: 0; bottom: 0; width: 48%; display: none; align-items: center; justify-content: center; z-index: 1; pointer-events: none; overflow: hidden; }
   .testi-img-placeholder { display: none; }
   .insta-scene { pointer-events: auto !important; overflow: visible !important; }
   .insta-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; max-width: 100%; padding: 0 24px; }
@@ -806,13 +812,13 @@ const features = [
 ];
 
 const services = [
-  { href: "/services/advanced-physiotherapy", bg: "url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')", vertical: "Physiotherapy & Rehabilitation", icon: "fas fa-notes-medical", title: "Physiotherapy & Rehabilitation", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
-  { href: "/services/sports-rehab-injury-prevention", bg: "url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
-  { href: "/services/strength-conditioning", bg: "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/advanced-physiotherapy", bg: "url('/images/physiotherapy.avif')", vertical: "Physiotherapy & Rehabilitation", icon: "fas fa-notes-medical", title: "Physiotherapy & Rehabilitation", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images/sports%20secific%20training.avif')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('/images/strength%20and%20conditioning.avif')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
   
-  { href: "/services/manual-therapy-dry-needling", bg: "url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
-  { href: "/services/myofascial-release", bg: "url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('/images/bio%20mechanical%20assessment.avif')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/myofascial-release", bg: "url('/images/myofascial%20release.avif')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
+  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02221.JPG')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
   
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
   { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
@@ -828,21 +834,21 @@ const programCards: ProgramCardData[] = [
     subtitle: "What's Included",
     icon: "fas fa-dumbbell",
     features: ["Personalized training plan", "One-to-one online coaching sessions", "Exercise technique and movement guidance", "Progressive strength and conditioning", "Training adjustments based on your progress"],
-    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" }],
+    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "/images/strength%20and%20conditioning.avif" }],
   },
   {
     title: "Online Group Sessions",
     subtitle: "What's Included",
     icon: "fas fa-users",
     features: ["Live coach-led group sessions", "Structured strength and conditioning workouts", "Exercise demonstrations and coaching cues", "A supportive group training environment", "Consistent training with a shared goal"],
-    slides: [{ title: "ONLINE", sub: "GROUP SESSIONS", detail: "Live coach-led sessions", bg: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" }],
+    slides: [{ title: "ONLINE", sub: "GROUP SESSIONS", detail: "Live coach-led sessions", bg: "/images/group%20session.avif" }],
   },
   {
     title: "Massage Therapy",
     subtitle: "Feel Better, Move Better",
     icon: "fas fa-spa",
     features: ["Personalised Massage Therapy", "Sports and deep tissue massage", "Full-body relaxation massage", "Muscle tension relief", "Post-exercise recovery massage"],
-    slides: [{ title: "MASSAGE", sub: "THERAPY", detail: "Feel Better, Move Better", bg: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80" }],
+    slides: [{ title: "MASSAGE", sub: "THERAPY", detail: "Feel Better, Move Better", bg: "/images/myofascial%20release.avif" }],
   },
   {
     title: "Fit2Run",
@@ -851,9 +857,6 @@ const programCards: ProgramCardData[] = [
     features: ["Structured running Training", "Strength & conditioning for runners", "Running movement assessment", "Injury prevention & load management", "Nutrition and Recovery"],
     slides: [
       { title: "EXPERIENCE", sub: "TRAIL & ROAD RUNNING", detail: "Build endurance, conquer every terrain", bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80" },
-      { title: "RUNNING", sub: "COACHED SESSIONS", detail: "Structured running training", bg: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=800&q=80" },
-      { title: "LEVELS", sub: "ALL ABILITIES WELCOME", detail: "Beginner to advanced programs", bg: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80" },
-      { title: "BEST TEAM", sub: "EXPERT COACHES", detail: "Physiotherapists & conditioning coaches", bg: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" },
     ],
   },
   {
@@ -861,9 +864,7 @@ const programCards: ProgramCardData[] = [
     icon: "fas fa-dumbbell",
     features: ["Hyrox specific training", "Running & functional fitness", "Strength & conditioning", "Endurance & work capacity", "Race simulations & performance preparation"],
     slides: [
-      { title: "HYROX", sub: "SPECIFIC TRAINING", detail: "Race simulations & performance preparation", bg: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" },
-      { title: "RUNNING", sub: "& FUNCTIONAL FITNESS", detail: "Endurance & work capacity", bg: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80" },
-      { title: "STRENGTH", sub: "& CONDITIONING", detail: "Build strength for race day", bg: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" },
+      { title: "HYROX", sub: "SPECIFIC TRAINING", detail: "Race simulations & performance preparation", bg: "/images/sports%20secific%20training.avif" },
     ],
   },
 ];
@@ -986,6 +987,33 @@ function Navbar({
 }
 
 /* ─── Hero ─── */
+/* Hero background: our own photos from /public/images, scrolling sideways on a loop */
+const heroPhotos = [
+  "DSC02201.JPG",
+  "DSC02206.JPG",
+  "DSC02212.JPG",
+  "DSC02217.JPG",
+].map((f) => `/images/${f}`);
+
+function HeroGallery() {
+  const [cur, setCur] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setCur((c) => (c + 1) % heroPhotos.length), 5000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="hero-gallery">
+      <div className="hero-gallery-track" style={{ transform: `translateX(-${cur * 100}%)` }}>
+        {heroPhotos.map((src, i) => (
+          <div className="hero-photo" key={src}>
+            <Image src={src} alt="Stairs Physiotherapy & Fitness" fill sizes="100vw" style={{ objectFit: "cover" }} priority={i === 0} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Hero() {
   const slides = [
     { label: "Physiotherapy and Fitness", title: "MOVE BETTER,\nRECOVER\nSTRONGER", desc: "Physiotherapy, rehabilitation and strength training to help you recover from injuries, move with confidence, and get back to what you love." },
@@ -1015,7 +1043,7 @@ function Hero() {
 
   return (
     <section id="hero">
-      <div className="hero-bg-img" />
+      <HeroGallery />
       <div className="circle-deco hero-circle" />
       <div className="hero-3d-scene">
         <svg width="520" height="520" viewBox="-40 -40 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1483,7 +1511,7 @@ function Services() {
     <section id="services">
       <div className="services-header reveal">
         <span className="section-label">Our Services</span>
-        <h2 className="section-title">Move Better. Feel Stronger. Perform Better.</h2>
+        <h2 className="section-title">Solutions for moving better &amp; One step at a time</h2>
       </div>
       <div className="services-book stagger" id="serviceDetails" ref={bookRef} onTouchStart={pauseForTouch} onTouchEnd={resumeAfterTouch} onTouchCancel={resumeAfterTouch}>
         {services.map((s, i) => (

@@ -69,7 +69,7 @@ const globalStyles = `
 
   /* PAGE HERO (inner pages) */
   #page-hero { position: relative; min-height: 60vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
-  .page-hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1800&q=80') center/cover no-repeat; opacity: 0.55; }
+  .page-hero-bg { position: absolute; inset: 0; background: url('/images/DSC02233.JPG') center/cover no-repeat; opacity: 0.55; }
   .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.2) 100%); }
   .page-hero-circle-wrap { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 420px; height: 420px; pointer-events: none; z-index: 2; }
   .page-hero-circle-ring { position: absolute; inset: 0; border-radius: 50%; border: 22px solid var(--red); opacity: 0.85; }

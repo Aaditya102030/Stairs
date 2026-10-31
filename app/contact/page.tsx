@@ -34,7 +34,7 @@ const globalStyles = `
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
   #page-hero{position:relative;min-height:60vh;background:var(--darker);display:flex;align-items:center;overflow:hidden;padding-top:80px;}
-  .page-hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1800&q=80') center/cover no-repeat;opacity:.55;}
+  .page-hero-bg{position:absolute;inset:0;background:url('/images/DSC02231.JPG') center/cover no-repeat;opacity:.55;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.85) 40%,rgba(10,10,10,.2) 100%);}
   .page-hero-circle-wrap{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:420px;height:420px;pointer-events:none;z-index:2;}
   @keyframes ph-spin-cw{to{transform:rotate(360deg);}}
