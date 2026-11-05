@@ -184,12 +184,14 @@ interface ServiceData {
   heroImage: string;
   sections: ServiceSection[];
   keyPoints: { icon: string; title: string; desc: string }[];
+  keyPointsHeading?: string;
 }
 
 const serviceDetails: Record<string, ServiceData> = {
   "advanced-physiotherapy": {
-    title: "Advanced Physiotherapy",
+    title: "Physiotherapy",
     subtitle: "Pain Relief / Rehab / Recovery",
+    keyPointsHeading: "More Services",
     description: "At Stairs, we are committed to bringing access to quality physio care through manual therapies and high-skilled practitioners. Our world-class therapists keep a strong focus on patient needs and deliver the highest level of care.",
     icon: "fas fa-notes-medical",
     heroImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80",
@@ -227,12 +229,9 @@ const serviceDetails: Record<string, ServiceData> = {
       },
     ],
     keyPoints: [
-      { icon: "fas fa-user-friends", title: "Geriatric Physiotherapy", desc: "For arthritis, osteoporosis, balance disorders, and hip or knee replacements" },
-      { icon: "fas fa-running", title: "Rehabilitation", desc: "Injuries, trauma, spinal cord injuries, burns, fractures, and chronic pain" },
-      { icon: "fas fa-dumbbell", title: "Prehabilitation", desc: "Reduce recovery time and complications before and after surgery" },
-      { icon: "fas fa-child", title: "Kids' Programs", desc: "Balance, gross motor skills, functional mobility for children" },
-      { icon: "fas fa-football-ball", title: "Sports Injury", desc: "Fractures, dislocations, sprains, strains, and overuse injuries" },
-      { icon: "fas fa-hands", title: "Manual Therapy", desc: "Hands-on treatment to decrease pain and improve joint mobility" },
+      { icon: "fas fa-user-friends", title: "Geriatric Physiotherapy", desc: "Specialised care for older adults, covering arthritis, osteoporosis, balance disorders and fall prevention, and recovery after hip or knee replacements. Our programs build strength, steadiness and confidence so you can stay independent and active." },
+      { icon: "fas fa-football-ball", title: "Sports Injury", desc: "Treatment for fractures, dislocations, sprains, strains and overuse injuries, with a clear plan from early recovery to full return to play. We also work on the causes, like training load, technique and warm-up habits, to help prevent the injury coming back." },
+      { icon: "fas fa-hands", title: "Manual Therapy", desc: "Skilled hands-on treatment to decrease pain and improve joint mobility. Techniques such as joint mobilisation and soft tissue release ease stiffness and muscle tightness, restore movement, and prepare the body for exercise-based recovery." },
     ],
   },
   "strength-conditioning": {
@@ -610,7 +609,7 @@ const serviceDetails: Record<string, ServiceData> = {
 };
 
 const allServices = [
-  { slug: "advanced-physiotherapy", icon: "fas fa-notes-medical", title: "Advanced Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
+  { slug: "advanced-physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
   { slug: "sports-rehab-injury-prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
   { slug: "strength-conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
   { slug: "postural-ergonomic-correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
@@ -729,7 +728,7 @@ export default function ServiceDetail({ params }: { params: Promise<{ slug: stri
       <section className="bullets-section">
         <div className="bullets-section-inner">
           <span className="tag">What You Get</span>
-          <h2>Key Benefits of {service.title}</h2>
+          <h2>{service.keyPointsHeading ?? `Key Benefits of ${service.title}`}</h2>
           <div className="bullets-grid">
             {service.keyPoints.map((kp, i) => (
               <div key={i} className="bullet-card">

@@ -92,8 +92,9 @@ const globalStyles = `
 
   /* HERO */
   #hero { position: relative; min-height: 100vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; padding: 120px 0 70px; }
-  .hero-bg-img { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80') center/cover no-repeat; opacity: 0.55; }
-  .hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.85) 40%, rgba(10,10,10,0.2) 100%); }
+  .hero-bg-img { position: absolute; inset: 0; background-position: center 30%; background-size: cover; background-repeat: no-repeat; opacity: 0; transition: opacity 1s ease-in-out; }
+  .hero-bg-img.active { opacity: 0.8; }
+  .hero-bg-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.6) 45%, rgba(10,10,10,0.25) 100%), linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 35%); }
   .hero-circle { width: 580px; height: 580px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 30px; pointer-events: none; animation: spin-slow 20s linear infinite; }
   .hero-circle-wrap { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 580px; height: 580px; pointer-events: none; z-index: 2; }
   .hero-circle-ring { position: absolute; inset: 0; border-radius: 50%; border: 30px solid var(--red); opacity: 0.85; }
@@ -242,7 +243,8 @@ const globalStyles = `
 
   /* TESTIMONIALS */
   #testimonials { position: relative; min-height: 420px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .testimonials-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=1600&q=80') center/cover no-repeat; opacity: 0.3; }
+  .testimonials-bg { position: absolute; inset: 0; background: url('/images/DSC02201.JPG') center 40%/cover no-repeat; opacity: 0.65; }
+  .testimonials-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,0.45) 100%), linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 30%); }
   .testi-circle { width: 400px; height: 400px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 20px; pointer-events: none; opacity: 0.65; }
   .testi-img-placeholder .img-box i { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.3; }
   /* kept for mobile fallback */
@@ -267,6 +269,23 @@ const globalStyles = `
   #pricing .pricing-header { margin-bottom: 60px; }
   #pricing .pricing-header .section-label { color: var(--red); }
   .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto; }
+  /* 5 programmes: one row on wide screens, centred 3 + 2 on mid screens, centred 2 + 2 + 1 on tablets */
+  @media (min-width: 1440px) {
+    .pricing-grid { grid-template-columns: repeat(5, 1fr); gap: 18px; max-width: 1500px; }
+    .pricing-grid .prog-slide-content h4 { font-size: 1.3rem; letter-spacing: 2px; }
+    .pricing-grid .prog-body { padding: 42px 18px 26px; }
+    .pricing-grid .prog-body h3 { font-size: 1.25rem; letter-spacing: 1.5px; }
+    .pricing-grid .prog-body ul li { font-size: 0.84rem; }
+  }
+  @media (min-width: 1025px) and (max-width: 1439px) {
+    .pricing-grid { grid-template-columns: repeat(6, 1fr); }
+    .pricing-grid > * { grid-column: span 2; }
+    .pricing-grid > :nth-child(4) { grid-column: 2 / span 2; }
+    .pricing-grid > :nth-child(5) { grid-column: 4 / span 2; }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .pricing-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 15px); }
+  }
   .pricing-card { position: relative; border-radius: 16px; overflow: visible; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.07); z-index: 0; }
   .pricing-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c, #8b0000); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; animation: gradientSpin 3s ease infinite; }
   .pricing-card::after { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: #ffffff; z-index: -1; }
@@ -280,8 +299,8 @@ const globalStyles = `
   .pricing-body { padding: 46px 30px 30px; text-align: center; }
   .pricing-body h3 { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
   .pricing-body ul { margin-bottom: 28px; }
-  .pricing-body ul li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; color: #555; }
-  .pricing-body ul li i { color: var(--red); font-size: 0.8rem; }
+  .pricing-body ul li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; line-height: 1.4; text-align: left; color: #555; }
+  .pricing-body ul li i { color: var(--red); font-size: 0.8rem; flex-shrink: 0; margin-top: 4px; }
 
   /* PROGRAMME CARD (home) */
   .prog-card{position:relative;border-radius:16px;overflow:visible;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 16px rgba(0,0,0,.07);z-index:0;background:#fff;}
@@ -307,8 +326,8 @@ const globalStyles = `
   .prog-body h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:2px;text-transform:uppercase;color:#111;margin-bottom:6px;}
   .prog-body .prog-sub{color:var(--red);font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:18px;}
   .prog-body ul{margin-bottom:24px;}
-  .prog-body ul li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:.88rem;color:#555;}
-  .prog-body ul li i{color:var(--red);font-size:.78rem;flex-shrink:0;}
+  .prog-body ul li{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:.88rem;line-height:1.4;text-align:left;color:#555;}
+  .prog-body ul li i{color:var(--red);font-size:.78rem;flex-shrink:0;margin-top:4px;}
   .prog-enroll{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 28px;border-radius:50px;cursor:pointer;transition:background .2s;text-decoration:none;border:none;width:100%;}
   .prog-enroll:hover{background:#c0251b;}
   a.prog-body{display:block;color:inherit;cursor:pointer;padding-bottom:30px;}
@@ -1032,6 +1051,15 @@ function Hero() {
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(true);
 
+  /* Background photos that auto-slide (crossfade) every 2 seconds */
+  const heroImages = ["/images/DSC02217.JPG", "/images/DSC02201.JPG"];
+  const [bgIdx, setBgIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setBgIdx((i) => (i + 1) % heroImages.length), 2000);
+    return () => clearInterval(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     let innerTimer: ReturnType<typeof setTimeout>;
     const pause = setTimeout(() => {
@@ -1554,6 +1582,21 @@ function Services() {
 /* ─── Instagram reels shown beside the testimonials ─── */
 function InstagramReels() {
   const rowRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(false);
+
+  // Auto-scroll the reels one card at a time; loops back to the start; pauses while hovering/touching
+  useEffect(() => {
+    if (instagramWidget) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const timer = setInterval(() => {
+      const el = rowRef.current;
+      if (!el || pausedRef.current || reduceMotion.matches) return;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
+      if (atEnd) el.scrollTo({ left: 0, behavior: "smooth" });
+      else el.scrollBy({ left: 270, behavior: "smooth" });
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (!instagramWidget) return;
@@ -1586,7 +1629,14 @@ function InstagramReels() {
       <span className="insta-label"><i className="fab fa-instagram" /> Follow us on Instagram</span>
       <div className="insta-slider">
         <button type="button" className="insta-arrow left" aria-label="Scroll left" onClick={() => scrollRow(-1)}><i className="fas fa-chevron-left" /></button>
-        <div className="insta-row" ref={rowRef}>
+        <div
+          className="insta-row"
+          ref={rowRef}
+          onMouseEnter={() => { pausedRef.current = true; }}
+          onMouseLeave={() => { pausedRef.current = false; }}
+          onTouchStart={() => { pausedRef.current = true; }}
+          onTouchEnd={() => { setTimeout(() => { pausedRef.current = false; }, 3500); }}
+        >
           {embeds.length > 0 ? (
             embeds.map((src) => (
               <div className="insta-frame" key={src}>
@@ -2120,7 +2170,6 @@ export default function App() {
       <Services />
       <Testimonials />
       <Pricing />
-      <ClientGallery />
       <Contact />
       <Blog />
       <BranchesFooter />

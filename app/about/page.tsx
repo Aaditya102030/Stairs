@@ -133,43 +133,36 @@ const globalStyles = `
   .trainer-social a:hover { background: var(--red); }
 
   /* OUR APPROACH */
-  #approach { position: relative; background: #000; padding: 80px 60px 76px; text-align: center; overflow: hidden; }
-  #approach::before { content: ''; position: absolute; top: -140px; right: -140px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(232,55,44,0.6), transparent 65%); filter: blur(12px); pointer-events: none; }
-  #approach::after { content: ''; position: absolute; bottom: -180px; left: -150px; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(210,10,20,0.75), transparent 65%); filter: blur(12px); pointer-events: none; }
+  @keyframes gradientSpin { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  #approach { position: relative; background: var(--bg-light); padding: 90px 60px; text-align: center; overflow: hidden; }
+  #approach::before { content: ''; position: absolute; top: -140px; right: -140px; width: 400px; height: 400px; border-radius: 50%; border: 40px solid rgba(232,55,44,0.06); pointer-events: none; }
   #approach > * { position: relative; z-index: 1; }
-  .approach-title { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.6rem); line-height: 1; letter-spacing: 2px; text-transform: uppercase; color: var(--light); }
-  .approach-title span { color: var(--red); }
-  .approach-sub { color: var(--light); font-size: clamp(1.1rem, 2.2vw, 1.7rem); margin-top: 14px; font-weight: 400; }
-  .approach-lines { display: flex; flex-direction: column; align-items: center; gap: 9px; margin: 28px auto 0; }
-  .approach-lines span { display: block; height: 2px; background: var(--light); border-radius: 2px; transform: scaleX(0); transition: transform 0.9s ease; position: relative; }
-  .approach-lines span:nth-child(1) { width: 280px; left: -40px; }
-  .approach-lines span:nth-child(2) { width: 530px; max-width: 80vw; transition-delay: 0.15s; }
-  .approach-lines span:nth-child(3) { width: 280px; left: 60px; transition-delay: 0.3s; }
-  .approach-lines.visible span { transform: scaleX(1); }
-  .approach-row { display: flex; align-items: center; justify-content: center; max-width: 1180px; margin: 54px auto 0; }
-  .approach-item { display: flex; align-items: center; }
-  .approach-link { position: relative; display: block; width: 56px; height: 2px; background: var(--light); flex-shrink: 0; }
-  .approach-link::before, .approach-link::after { content: ''; position: absolute; top: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--light); }
-  .approach-link::before { left: -4px; }
-  .approach-link::after { right: -4px; }
-  .approach-step { width: 245px; height: 245px; border-radius: 50%; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 34px 30px; color: var(--light); border: 8px solid transparent; transition: transform 0.35s ease, box-shadow 0.35s ease; }
-  .approach-step.solid { background: #000; border-color: var(--red); box-shadow: 0 0 34px rgba(232,55,44,0.3); }
-  .approach-step.fade { background: linear-gradient(#000, #000) padding-box, linear-gradient(160deg, #e8372c 0%, #5a2a26 55%, #0a0a0a 100%) border-box; }
-  .approach-step:hover { transform: scale(1.06); box-shadow: 0 0 46px rgba(232,55,44,0.5); }
-  .approach-step h4 { font-family: var(--font-body); font-weight: 800; font-size: 1.05rem; line-height: 1.2; margin-bottom: 10px; }
-  .approach-step p { font-size: 0.85rem; line-height: 1.45; color: rgba(255,255,255,0.9); }
-  .approach-foot { margin-top: 50px; color: var(--light); font-size: clamp(1rem, 1.8vw, 1.3rem); }
-  .approach-foot strong { font-weight: 800; }
-  @media (max-width: 1150px) {
-    .approach-row { flex-wrap: wrap; gap: 28px; }
-    .approach-link { display: none; }
+  #approach .section-title span { color: var(--red); }
+  .approach-sub { color: var(--gray); font-size: 1.05rem; line-height: 1.7; max-width: 620px; margin: 16px auto 0; }
+  .approach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1200px; margin: 56px auto 0; }
+  .approach-card { position: relative; z-index: 0; height: 100%; background: #fff; border-radius: 16px; padding: 44px 26px 34px; box-shadow: 0 4px 18px rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; }
+  .approach-card::before { content: ''; position: absolute; inset: -2px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s; animation: gradientSpin 3s ease infinite; }
+  .approach-card::after { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: #fff; z-index: -1; }
+  .approach-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(232,55,44,0.22); }
+  .approach-card:hover::before { opacity: 1; }
+  .approach-num { position: absolute; top: 14px; right: 20px; font-family: var(--font-display); font-size: 3rem; line-height: 1; letter-spacing: 1px; color: rgba(232,55,44,0.12); }
+  .approach-icon { width: 66px; height: 66px; border-radius: 50%; background: #fef0ef; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; transition: background 0.3s; }
+  .approach-icon i { color: var(--red); font-size: 1.4rem; transition: color 0.3s; }
+  .approach-card:hover .approach-icon { background: var(--red); }
+  .approach-card:hover .approach-icon i { color: var(--light); }
+  .approach-card h4 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dark); line-height: 1.25; margin-bottom: 12px; }
+  .approach-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.75; }
+  .approach-foot { display: inline-block; margin-top: 56px; background: var(--red); color: var(--light); font-size: clamp(0.95rem, 1.6vw, 1.1rem); padding: 16px 34px; border-radius: 50px; box-shadow: 0 10px 26px rgba(232,55,44,0.3); }
+  .approach-foot strong { font-weight: 700; }
+  @media (max-width: 1024px) {
+    #approach { padding-left: 30px; padding-right: 30px; }
+    .approach-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 768px) {
-    #approach { padding: 56px 18px 56px; }
-    .approach-lines span:nth-child(1), .approach-lines span:nth-child(3) { width: 150px; left: 0; }
-    .approach-row { margin-top: 36px; gap: 22px; }
-    .approach-step { width: min(260px, 78vw); height: min(260px, 78vw); }
-    .approach-foot { margin-top: 34px; }
+    #approach { padding: 56px 18px; }
+    .approach-grid { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; }
+    .approach-card { padding: 38px 22px 28px; }
+    .approach-foot { margin-top: 36px; padding: 14px 22px; border-radius: 22px; }
   }
 
   /* FOOTER */
@@ -234,7 +227,7 @@ const globalStyles = `
     /* about detail */
     #about-detail { padding: 48px 18px; }
     .about-detail-grid { padding: 0; gap: 28px; }
-    .about-img-wrap img { height: 220px !important; }
+    .about-img-wrap img { height: auto !important; }
     .about-text h2 { margin-bottom: 14px; }
     .about-text p { font-size: 0.9rem; line-height: 1.7; margin-bottom: 0; }
     .about-text .btn-primary { margin-top: 22px; padding: 8px 8px 8px 24px; font-size: 0.8rem; }
@@ -337,7 +330,7 @@ function AboutDetail() {
     <section id="about-detail">
       <div className="about-detail-grid">
         <div className="about-img-wrap reveal-left">
-          <img src="/images/0H9A0767.JPG" alt="Stairs Team" style={{ width: "100%", height: "460px", objectFit: "cover", objectPosition: "center 30%", borderRadius: "22px", display: "block" }} />
+          <img src="/images/GRoup%20photo.jpg.jpeg" alt="Stairs Team" style={{ width: "100%", height: "auto", borderRadius: "22px", display: "block" }} />
           <div className="exp-badge">8+<small>Years<br />Exp.</small></div>
         </div>
         <div className="about-text reveal-right">
@@ -433,21 +426,22 @@ function StatsBanner() {
 
 function Approach() {
   const steps = [
-    { title: "Detailed Assessments", text: "Understanding your movement patterns and pain points" },
-    { title: "Data-Driven Methods", text: "Evidence-based treatment strategies for faster recovery" },
-    { title: "Holistic Movement Therapy", text: "Strengthening the body for long-term benefits" },
-    { title: "Strengthening the body for long-term benefits", text: "Empowering individuals to take charge of their health" },
+    { icon: "fas fa-clipboard-check", title: "Detailed Assessments", text: "Understanding your movement patterns and pain points" },
+    { icon: "fas fa-chart-line", title: "Data-Driven Methods", text: "Evidence-based treatment strategies for faster recovery" },
+    { icon: "fas fa-hand-holding-heart", title: "Holistic Movement Therapy", text: "Strengthening the body for long-term benefits" },
+    { icon: "fas fa-dumbbell", title: "Strengthening the body for long-term benefits", text: "Empowering individuals to take charge of their health" },
   ];
   return (
     <section id="approach">
-      <h2 className="approach-title reveal">Our <span>Approach</span></h2>
+      <span className="section-label reveal">How We Work</span>
+      <h2 className="section-title reveal">Our <span>Approach</span></h2>
       <p className="approach-sub reveal">Healing Through Science, Movement &amp; Personalized Care</p>
-      <div className="approach-lines reveal"><span /><span /><span /></div>
-      <div className="approach-row">
+      <div className="approach-grid">
         {steps.map((s, i) => (
-          <div className="approach-item reveal" key={i} style={{ transitionDelay: `${i * 0.12}s` }}>
-            {i > 0 && <span className="approach-link" />}
-            <div className={`approach-step ${i % 2 === 0 ? "solid" : "fade"}`}>
+          <div className="reveal" key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
+            <div className="approach-card">
+              <span className="approach-num">{String(i + 1).padStart(2, "0")}</span>
+              <div className="approach-icon"><i className={s.icon} /></div>
               <h4>{s.title}</h4>
               <p>{s.text}</p>
             </div>
