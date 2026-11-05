@@ -176,7 +176,7 @@ const globalStyles = `
 
   /* ABOUT */
   #about { position: relative; min-height: 500px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .about-bg { position: absolute; inset: 0; background: url('/images/DSC02233.JPG') center/cover no-repeat; opacity: 0.4; }
+  .about-bg { position: absolute; inset: 0; background: url('/images-optimized/DSC02233.webp') center/cover no-repeat; opacity: 0.4; }
   .about-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.92) 55%); }
   .about-circle { width: 460px; height: 460px; left: 2%; top: 50%; transform: translateY(-50%); border-width: 25px; pointer-events: none; opacity: 0.7; }
   /* SECTION ILLUSTRATIONS */
@@ -845,7 +845,7 @@ const services = [
   
   { href: "/services/manual-therapy-dry-needling", bg: "url('/images/bio%20mechanical%20assessment.avif')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
   { href: "/services/myofascial-release", bg: "url('/images/myofascial%20release.avif')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02221.JPG')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
+  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02221.webp')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
   
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
   { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
