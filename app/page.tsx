@@ -839,31 +839,33 @@ const features = [
 ];
 
 const services = [
-  { href: "/services/advanced-physiotherapy", bg: "url('/images/physiotherapy.avif')", vertical: "Physiotherapy & Rehabilitation", icon: "fas fa-notes-medical", title: "Physiotherapy & Rehabilitation", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
-  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images/sports%20secific%20training.avif')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
-  { href: "/services/strength-conditioning", bg: "url('/images/strength%20and%20conditioning.avif')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/advanced-physiotherapy", bg: "url('/images/physiotherapy.avif')", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images/DSC01806.JPG')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('/images/DSC01801.JPG')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
   
-  { href: "/services/manual-therapy-dry-needling", bg: "url('/images/bio%20mechanical%20assessment.avif')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('/images/DSC01938.JPG')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
   { href: "/services/myofascial-release", bg: "url('/images/myofascial%20release.avif')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02221.webp')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
+  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02036.JPG')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
   
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
-  { href: "/services/running-rehab-performance-training", bg: "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
+  { href: "/services/running-rehab-performance-training", bg: "url('/images/DSC01950.JPG')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
 type ProgramSlide = { title: string; sub: string; detail: string; bg: string };
-type ProgramCardData = { title: string; subtitle?: string; icon: string; features: string[]; slides: ProgramSlide[] };
+type ProgramCardData = { id: string; title: string; subtitle?: string; icon: string; features: string[]; slides: ProgramSlide[] };
 
 /* Programme cards on the home page. A card with a single slide renders with no slider. */
 const programCards: ProgramCardData[] = [
   {
+    id: "online-strength-training",
     title: "Online Strength Training",
     subtitle: "What's Included",
     icon: "fas fa-dumbbell",
     features: ["Personalized training plan", "One-to-one online coaching sessions", "Exercise technique and movement guidance", "Progressive strength and conditioning", "Training adjustments based on your progress"],
-    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "/images/strength%20and%20conditioning.avif" }],
+    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "/images/DSC02060.JPG" }],
   },
   {
+    id: "online-group-sessions",
     title: "Online Group Sessions",
     subtitle: "What's Included",
     icon: "fas fa-users",
@@ -871,6 +873,7 @@ const programCards: ProgramCardData[] = [
     slides: [{ title: "ONLINE", sub: "GROUP SESSIONS", detail: "Live coach-led sessions", bg: "/images/group%20session.avif" }],
   },
   {
+    id: "massage-therapy",
     title: "Massage Therapy",
     subtitle: "Feel Better, Move Better",
     icon: "fas fa-spa",
@@ -878,20 +881,21 @@ const programCards: ProgramCardData[] = [
     slides: [{ title: "MASSAGE", sub: "THERAPY", detail: "Feel Better, Move Better", bg: "/images/myofascial%20release.avif" }],
   },
   {
-    title: "Fit2Run",
-    subtitle: "Step Into A New You",
+    id: "fit2run",
+    title: "What's Included",
     icon: "fas fa-running",
     features: ["Structured running Training", "Strength & conditioning for runners", "Running movement assessment", "Injury prevention & load management", "Nutrition and Recovery"],
     slides: [
-      { title: "EXPERIENCE", sub: "TRAIL & ROAD RUNNING", detail: "Build endurance, conquer every terrain", bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80" },
+      { title: "FIT 2 RUN", sub: "", detail: "Step into a new you", bg: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80" },
     ],
   },
   {
-    title: "Hybrid Training",
+    id: "hybrid-training",
+    title: "What's Included",
     icon: "fas fa-dumbbell",
     features: ["Hyrox specific training", "Running & functional fitness", "Strength & conditioning", "Endurance & work capacity", "Race simulations & performance preparation"],
     slides: [
-      { title: "HYROX", sub: "SPECIFIC TRAINING", detail: "Race simulations & performance preparation", bg: "/images/sports%20secific%20training.avif" },
+      { title: "HYBRID", sub: "TRAINING", detail: "Race simulations & performance preparation", bg: "/images/sports%20secific%20training.avif" },
     ],
   },
 ];
@@ -1784,7 +1788,7 @@ function Pricing() {
       </div>
       <div className="pricing-grid stagger">
         {programCards.map((c) => (
-          <ProgramCard key={c.title} data={c} />
+          <ProgramCard key={c.id} data={c} />
         ))}
         {/* hidden – kept for data ref */}
         {pricingPlans.slice(2).map((plan, i) => (
