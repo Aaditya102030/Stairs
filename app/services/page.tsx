@@ -175,7 +175,11 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
+<<<<<<< Updated upstream
     { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Initiatives" },
+=======
+    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Program" }, { href: "/fit2run", label: "Fit2Run" }, { href: "/coming-soon", label: "Initiatives" },
+>>>>>>> Stashed changes
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
