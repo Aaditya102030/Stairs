@@ -175,9 +175,9 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-{ href: "/pricing", label: "Program" },
+{ href: "/pricing", label: "Initiatives" },
 { href: "/fit2run", label: "Fit2Run" },
-{ href: "/coming-soon", label: "Initiatives" },  ];
+  ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
       <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} /></div>
