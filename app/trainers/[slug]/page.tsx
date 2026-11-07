@@ -88,15 +88,23 @@ const trainers = [
 ];
 
 /* ─── Location Team Data ─── */
-const locationTeams: Record<string, { name: string; location: string; description: string; members: { name: string; role: string; experience: string; specialty: string }[] }> = {
+const locationTeams: Record<string, { name: string; location: string; description: string; members: { name: string; role: string; experience?: string; specialty?: string }[] }> = {
   "ulsoor-team": {
     name: "Ulsoor Team",
     location: "Ulsoor, Bangalore",
     description: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness.",
     members: [
-      { name: "Rohan Charles", role: "CrossFit Coach", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
-      { name: "Akshata Koli", role: "Strength & Power", experience: "9 Yrs", specialty: "Powerlifting" },
-      { name: "Ritti Shetty", role: "Yoga & Mobility", experience: "6 Yrs", specialty: "Flexibility & Recovery" },
+      { name: "Akshata Koli", role: "Sports Physiotherapist" },
+      { name: "Rohan Charles", role: "Strength & Conditioning Coach" },
+      { name: "Riti Shetty", role: "Sports Physiotherapist" },
+      { name: "Aadhav Panchu Thomas", role: "Physiotherapist" },
+      { name: "Chaitra", role: "Sports Scientist" },
+      { name: "Gautam Satish", role: "Physiotherapist" },
+      { name: "Soumya SK", role: "Physiotherapist" },
+      { name: "Srijanya Rajesh", role: "Physiotherapist" },
+      { name: "Swathi M V", role: "Physiotherapist" },
+      { name: "Vedith", role: "Sports Scientist" },
+      { name: "Bhumika", role: "Physiotherapist" },
     ],
   },
   "koramangala-team": {
@@ -104,9 +112,22 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     location: "Koramangala, Bangalore",
     description: "Our Koramangala Team combines experience, dedication, and patient-focused care to deliver outstanding physiotherapy treatment. With a passion for helping people recover stronger and healthier, the team creates a positive and motivating healing environment.",
     members: [
-      { name: "Patricia Woodrum", role: "Cardio & Conditioning", experience: "8 Yrs", specialty: "Endurance Training" },
-      { name: "Hannaz Stone", role: "Fitness Coach", experience: "6 Yrs", specialty: "Body Recomposition" },
-      { name: "Luke Brennan", role: "Physiotherapist", experience: "7 Yrs", specialty: "Sports Rehab" },
+      { name: "Gagan Gowda", role: "Strength and Conditioning Coach" },
+      { name: "Martin Thomas", role: "Strength and Conditioning Coach" },
+      { name: "Niha", role: "Sports Physiotherapist" },
+      { name: "Sindhura Udupa", role: "Sports Physiotherapist" },
+      { name: "Sairam M", role: "Sports Physiotherapist" },
+      { name: "Aashutosh Karna", role: "Orthopaedic Physiotherapist" },
+      { name: "Achintya P R", role: "Physiotherapist" },
+      { name: "Bijoy Joseph Bastian", role: "Strength and Conditioning Coach" },
+      { name: "Kiran Prakash Dsouza", role: "Sports Physiotherapist" },
+      { name: "Malan Karthikeyan", role: "Strength and Conditioning Coach" },
+      { name: "Naveenraj A", role: "Sports Physiotherapist" },
+      { name: "Niharika J Somayaji", role: "Sports Physiotherapist" },
+      { name: "Ramya Shetty", role: "Physiotherapist" },
+      { name: "Vasudha Siddappa", role: "Physiotherapist" },
+      { name: "Shreya Sharma", role: "Physiotherapist" },
+      { name: "Inchara", role: "Strength and Conditioning Coach" },
     ],
   },
   "indiranagar-team": {
@@ -114,9 +135,14 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     location: "Indiranagar, Bangalore",
     description: "The Indiranagar Team is known for its friendly approach, expert guidance, and commitment to every patient's recovery journey. Their teamwork and dedication ensure that every patient receives the highest quality care and support.",
     members: [
-      { name: "Aisha Patel", role: "Yoga & Mobility", experience: "7 Yrs", specialty: "Flexibility & Recovery" },
-      { name: "Rohan Mehta", role: "Physiotherapist", experience: "5 Yrs", specialty: "Sports Injury" },
-      { name: "Priya Nair", role: "Strength Coach", experience: "4 Yrs", specialty: "Functional Training" },
+      { name: "Niketh Madhu", role: "Sports Physiotherapist" },
+      { name: "Manoj Prasath", role: "Sports Physiotherapist" },
+      { name: "Bhavika Advani", role: "Sports Physiotherapist" },
+      { name: "Varsha Gowda", role: "Strength & Conditioning Coach" },
+      { name: "Nithya Shree N", role: "Physiotherapist" },
+      { name: "Jayani", role: "Physiotherapist" },
+      { name: "Gokulnath G", role: "Physiotherapist" },
+      { name: "Devika R S", role: "Physiotherapist" },
     ],
   },
   "whitefield-team": {
@@ -124,9 +150,10 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     location: "Whitefield, Bangalore",
     description: "The Whitefield Team is committed to delivering high-quality physiotherapy care through expertise, dedication, and compassion. Their patient-first approach and focus on long-term recovery help individuals regain strength, mobility, and confidence.",
     members: [
-      { name: "Tom Reeves", role: "Youth Performance", experience: "11 Yrs", specialty: "Youth Athletics" },
-      { name: "Ananya Kumar", role: "Rehab Specialist", experience: "6 Yrs", specialty: "Post-Surgery Rehab" },
-      { name: "Vikram Das", role: "S&C Coach", experience: "8 Yrs", specialty: "Athletic Performance" },
+      { name: "Shivani Vyas", role: "Sports Physiotherapist" },
+      { name: "Karthik A", role: "Sports Physiotherapist" },
+      { name: "Tanushka Acharya", role: "Physiotherapist" },
+      { name: "Imthiyaz Ibrahim", role: "Sports Physiotherapist" },
     ],
   },
   "admin-team": {
@@ -134,9 +161,14 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     location: "All Centres",
     description: "The Admin Team is dedicated to providing a smooth and stress-free experience for every visitor. Their friendly approach, quick assistance, and strong coordination ensure that patients feel supported from the moment they walk in.",
     members: [
-      { name: "Sneha Rao", role: "Centre Manager", experience: "5 Yrs", specialty: "Operations" },
-      { name: "Kiran Shetty", role: "Front Desk", experience: "3 Yrs", specialty: "Patient Support" },
-      { name: "Deepa Iyer", role: "Billing & Admin", experience: "4 Yrs", specialty: "Finance & Coordination" },
+      { name: "Sumalatha SP", role: "Head Admin" },
+      { name: "Shuaib", role: "Admin Ulsoor" },
+      { name: "Pavithra", role: "Admin Koramangala" },
+      { name: "Reeta", role: "Admin Team" },
+      { name: "Elavarasi", role: "Admin Team" },
+      { name: "Nafiya", role: "Admin Team" },
+      { name: "Bindu", role: "Admin Executive" },
+      { name: "Deepthi", role: "Front Office Executive" },
     ],
   },
   "founders": {
@@ -274,7 +306,7 @@ const globalStyles = `
 
   /* ── EXPANDED PANEL ── */
   .tm-expand-wrap{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .35s ease;opacity:0;}
-  .tm-expand-wrap.open{max-height:600px;opacity:1;}
+  .tm-expand-wrap.open{max-height:1000px;opacity:1;}
   .tm-expand{background:#fff;border-radius:20px;margin:4px 0 12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.10);}
   .tm-expand-top{position:relative;height:200px;background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 100%);display:flex;align-items:flex-end;padding:24px;}
   .tm-expand-top-avatar{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#333,#222);border:3px solid var(--red);display:flex;align-items:center;justify-content:center;color:rgba(232,55,44,.5);font-size:2.2rem;flex-shrink:0;}
@@ -497,10 +529,49 @@ function OtherTrainers({ currentSlug }: { currentSlug: string }) {
 }
 
 /* ─── MemberList: compact list with click-to-expand ─── */
-function MemberList({ members }: { members: { name: string; role: string; experience: string; specialty: string }[] }) {
+function MemberList({ members }: { members: { name: string; role: string; experience?: string; specialty?: string }[] }) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   const bios: Record<string, string> = {
+    "Akshata Koli":    "Akshata holds a Bachelor's degree in Physiotherapy and is a certified International Dry Needling practitioner. Her professional pursuits align with her passion for helping others. Beyond her dedicated work, she finds solace in sketching and cherishes quality time spent socializing with loved ones. Akshata's leisure activities also encompass watching insightful videos. Her adventurous spirit shines through as she explores new destinations, embarks on lengthy bike rides, tends to her garden, and nurtures her love for pets. Within the realm of her career at Stairs, she thrives within a collaborative team that values innovation. Akshata deeply appreciates the team's supportive and forward-thinking environment, which enables her to flourish and contribute meaningfully.",
+    "Rohan Charles":   "Meet Coach Rohan, a certified Functional Training Coach, Special Population Trainer, and holder of ASCA Level 1 certification, dedicated to optimizing your fitness and performance journey. With a personalized and hands-on approach, he designs individualized fitness strategies that align with your unique goals and lifestyle. Rohan's expertise spans sports performance and athlete testing, serving individuals of all fitness levels. Based in Bengaluru's Ulsoor branch at Stairs Physiotherapy & Fitness, he's committed to helping you uncover your physical capabilities and achieve excellence through scientifically tailored training methods. Join Rohan on the path to a healthier, stronger, and more vibrant you today.",
+    "Riti Shetty":     "Riti, a dedicated Bachelor's of Physiotherapy graduate, brings her expertise to the realm of sports rehabilitation. With a focus on precise diagnosis, tailored treatment, and sports-specific management, she strives to aid injured athletes in reclaiming their place on the field. Specializing in return-to-sport programs and performance enhancement, Riti is committed to crafting individualized strategies. Her infectious energy and rhythmic prowess, drawn from her passion for dance, further complement her work. You can find her alternating between Ulsoor and Koramangala, where her dynamic approach is geared towards guiding athletes on their journey to recovery and excellence.",
+    "Aadhav Panchu Thomas": "Meet Aadhav Panchu Thomas, a Physiotherapist with 1.5 years of experience and a Master's degree in Physiotherapy (MPT). With expertise in Mulligan Manual Therapy, he is dedicated to helping individuals recover from injuries, reduce pain, and improve mobility. Aadhav focuses on delivering personalized, evidence-based care to support optimal recovery and long-term physical well-being.",
+    "Chaitra":         "Meet Chaitra, a Sports Science professional with 2 years of experience and a Master’s degree in Sports Sciences. She is passionate about helping individuals improve performance, enhance fitness, and achieve their health goals through a scientific and evidence-based approach. Chaitra focuses on optimizing movement, supporting recovery, and promoting long-term physical well-being and athletic development.",
+    "Gautam Satish":   "Meet Gautam Satish, a Musculoskeletal Physiotherapist with 1.5 years of experience and a Bachelor's degree in Physiotherapy (BPT). He is passionate about helping individuals overcome pain, restore movement, and improve their overall quality of life. Gautam focuses on evidence-based rehabilitation and personalized care to support recovery, enhance mobility, and promote long-term physical well-being.",
+    "Soumya SK":       "Meet Soumya SK, a Musculoskeletal Physiotherapist with a Master's degree in Physiotherapy (MPT) and a Certified Orthopedic Manual Therapist qualification. She is passionate about helping individuals recover from injuries, restore movement, and improve their quality of life. Soumya focuses on delivering evidence-based, personalized care to support effective rehabilitation and long-term physical well-being.",
+    "Srijanya Rajesh": "Meet Srijanya Rajesh, a Sports and Musculoskeletal Physiotherapist with 1.8 years of experience and a Master's degree in Physiotherapy (MPT). Her expertise includes Dry Needling and Clinical Neurodynamics. Srijanya is passionate about helping individuals recover from injuries, improve movement, and enhance performance through personalized, evidence-based rehabilitation and patient-centered care.",
+    "Swathi M V":      "Meet Swathi M V, a Sports and Musculoskeletal Physiotherapist with 4.5 years of experience and a Master's degree in Physiotherapy (MPT). Her expertise includes Dry Needling, Cupping Therapy, Taping, IASTM, Clinical Neurodynamics, Hand Rehabilitation, and On-Field Sports Evaluation. Swathi is passionate about helping individuals recover from injuries, restore function, and enhance performance through evidence-based rehabilitation and personalized care.",
+    "Vedith":          "Meet Vedith, a Sports Science professional with 2 years of experience and a Master’s degree in Sports Science. He is passionate about improving athletic performance, enhancing fitness, and supporting recovery through evidence-based training methods. Vedith focuses on helping individuals build strength, optimize movement, and achieve their fitness and performance goals safely and effectively.",
+    "Martin Thomas":   "Meet Martin Thomas C T, a Strength and Conditioning Coach with 5 years of experience, an MBA, and ASCA Level 2 certification. He is passionate about helping individuals improve strength, fitness, and athletic performance through structured and evidence-based training programs. Martin focuses on enhancing movement quality, injury prevention, and long-term physical development to help clients achieve their goals.",
+    "Niha":            "Meet Niha, a dedicated physiotherapy professional with a Master's degree in Sports Physiotherapy. As a fresher in the field, Niha brings a fresh perspective and eagerness to learn and grow. Specializing in assessment and treatment planning, Niha is adept at developing comprehensive strategies tailored to each patient's needs. With a focus on therapeutic exercise prescription and manual therapy techniques, Niha strives to optimize recovery and enhance performance. Passionate about patient education, Niha empowers individuals to take an active role in their rehabilitation journey. With a commitment to excellence and a compassionate approach, Niha is poised to make a positive impact in the realm of sports physiotherapy.",
+    "Sindhura Udupa":  "Meet Sindhura Udupa, a Musculoskeletal Physiotherapist with 4 years of experience and qualifications in BPT and MSc Physiotherapy. She has a special interest in Women's Health and is dedicated to helping individuals improve mobility, manage pain, and achieve optimal physical well-being. Sindhura combines evidence-based rehabilitation with personalized care to support long-term health and recovery.",
+    "Sairam M":        "Meet Sairam! A valuable addition to our team, Sairam holds a Masters in Physiotherapy, specializing in Musculoskeletal Sciences and Sports. His enthusiasm for continuous learning shines through, and at Stairs, he relishes the platform for physiotherapists and coaches to collaborate, sharing innovative ideas and holistic rehabilitation approaches. Sairam's professional passion aligns seamlessly with his personal interests, including cricket and swimming. His leisure moments are spent wisely with long drives, exploring new locales, and connecting with friends. His dedication to his craft mirrors his zest for life's pleasures – particularly his love for diverse culinary experiences.",
+    "Aashutosh Karna": "Meet Aashutosh Karna, an Orthopaedic Physiotherapist with a Master's degree in Physiotherapy (MPT) and 2 years of experience. With expertise in Myofascial Release (MFR), he focuses on helping individuals recover from injuries, manage pain, and improve mobility. Aashutosh is committed to providing personalized, evidence-based care to support long-term recovery and functional well-being.",
+    "Achintya P R":    "Meet Achintya P R, a Sports Physiotherapist with a Master's degree in Sports Physiotherapy. His expertise includes dry needling, cupping, and sports injury rehabilitation. Certified as a London Shoulder Clinic Certified Practitioner (LSCCP), IASMT practitioner, and FIFA Diploma holder, Achintya is passionate about helping individuals recover efficiently, prevent injuries, and enhance their athletic performance.",
+    "Bijoy Joseph Bastian": "Meet Bijoy Joseph Bastian, a Sports Science professional with 5 years of experience and a Master’s degree in Sports Science. He is passionate about optimizing athletic performance, enhancing recovery, and improving overall fitness through a scientific and evidence-based approach. Bijoy works closely with individuals to help them achieve their performance, rehabilitation, and wellness goals.",
+    "Kiran Prakash Dsouza": "Meet Kiran Prakash Dsouza, a Sports Science professional with a Master's degree in Physiotherapy (MPT) and 1 year of experience. His expertise includes dry needling, kinesiotaping, cupping therapy, mat Pilates, and IAFT. Kiran is passionate about helping individuals recover efficiently, improve movement quality, and enhance physical performance through evidence-based rehabilitation and training approaches.",
+    "Malan Karthikeyan": "Meet Malan Karthikeyan, a Strength and Conditioning Coach with a Master's degree (MSc) and 8 months of experience. He is passionate about helping individuals build strength, improve fitness, and enhance athletic performance through structured and goal-oriented training programs. Malan focuses on movement quality, injury prevention, and long-term physical development to help clients perform at their best.",
+    "Naveenraj A":     "Meet Naveenraj A, a Musculoskeletal and Sports Physiotherapist with a Master's degree in Physiotherapy (MPT) and 3 years of experience. He is dedicated to helping individuals recover from injuries, improve movement, and achieve their physical goals. With a strong focus on rehabilitation and performance enhancement, Naveenraj combines evidence-based practice with personalized care to support optimal recovery and long-term well-being.",
+    "Niharika J Somayaji": "Meet Niharika J Somayaji, a Sports and Musculoskeletal Physiotherapist with 1.9 years of experience and a Master's degree in Physiotherapy (MPT). As a Certified Orthopedic Manual Therapist, she specializes in assessing and treating musculoskeletal conditions, helping individuals recover from injuries, improve movement, and return to their activities with confidence through personalized, evidence-based care.",
+    "Ramya Shetty":    "Meet Ramya Shetty, a Physiotherapist with a Bachelor's degree in Physiotherapy (BPT) and 10 months of experience. She is passionate about helping individuals recover from injuries, improve mobility, and achieve their health and wellness goals. Through a patient-centered and evidence-based approach, Ramya focuses on rehabilitation, pain management, and promoting long-term physical well-being.",
+    "Vasudha Siddappa": "Meet Vasudha Siddappa, a Musculoskeletal Physiotherapist with clinical and academic experience. Her expertise includes Dry Needling, Cupping Therapy, IASTM, and Therapeutic Taping. Passionate about evidence-based rehabilitation, Vasudha focuses on helping individuals recover from injuries, manage pain, and improve functional movement while promoting long-term health and well-being through personalized care.",
+    "Niketh Madhu":   "Meet Niketh Madhu, a passionate and dedicated physiotherapist specializing in Physical Medicine and Rehabilitation, Musculoskeletal Assessment, Pain Management, Athletic Exercise Testing & Rehabilitation, and Sports-Specific Rehabilitation & Conditioning. With a master's degree in Physiotherapy focused on Musculoskeletal Sciences and Sports, Niketh brings a wealth of knowledge and expertise to his practice. With a keen eye for detail and a compassionate approach, Niketh has honed his skills over one year of practical experience, serving individuals with diverse needs and goals. He is also a certified K Tape practitioner, adept at utilizing innovative techniques to optimize recovery and performance. Whether you're recovering from an injury, managing chronic pain, or striving for peak athletic performance, Niketh is committed to providing personalized care tailored to your unique needs, helping you achieve your health and wellness objectives.",
+    "Manoj Prasath":   "Meet Manoj Prasath Arumugam, a skilled physiotherapist with 4 years of experience in the field of sports physiotherapy. With a Master's in Sports Physiotherapy, Manoj brings a wealth of knowledge and expertise in assessment and treatment planning tailored to athletes and active individuals. He specializes in pain management and manual therapy, utilizing hands-on techniques to alleviate discomfort and promote healing. His proficiency extends to sports injury management, where he focuses on prehabilitation and rehabilitation to optimize recovery. Additionally, Manoj is dedicated to return-to-sports training, ensuring athletes regain peak performance while minimizing the risk of re-injury.",
+    "Bhavika Advani":  "Meet Bhavika Advani, a Sports Physiotherapist with 5 years of experience and a Master's degree in Sports Physiotherapy. She specializes in sports injury rehabilitation, performance enhancement, and recovery techniques, including dry needling, myofascial release (MFR), muscle energy techniques (MET), taping, and cupping. With FIFA Diploma and ASCA Level 1 certifications, Bhavika is dedicated to helping individuals move better, recover faster, and perform at their best.",
+    "Nithya Shree N":  "Meet Nithya Shree N, a Musculoskeletal Physiotherapist with a Master's degree in Physiotherapy (MPT) and 1 year of experience. She specializes in myofascial release and chronic pain management, helping individuals overcome pain, restore movement, and improve their quality of life. Nithya is committed to delivering personalized, evidence-based care that supports long-term recovery and overall well-being.",
+    "Jayani":          "Meet Jayani, a Physiotherapist with a Master's degree in Physiotherapy (MPT) and a strong interest in musculoskeletal rehabilitation. She is committed to helping individuals recover from injuries, improve mobility, and achieve their health goals through personalized care, evidence-based treatment, and a patient-centered approach to rehabilitation and wellness.",
+    "Gokulnath G":     "Meet Gokulnath G, a Sports and Musculoskeletal Physiotherapist with a Master's degree in Sports Physiotherapy and 1 year of experience. His expertise includes dry needling, Mulligan Manual Therapy, and myofascial release. Passionate about sports-specific rehabilitation, Gokulnath focuses on helping individuals recover from injuries, enhance performance, and return to their activities with confidence.",
+    "Devika R S":      "Meet Devika R S, a Physiotherapist with a Master's degree in Physiotherapy (MPT) who is passionate about helping individuals recover, move efficiently, and improve their overall well-being. She is committed to delivering personalized care through evidence-based practices, focusing on rehabilitation, injury prevention, and supporting clients in achieving their health and fitness goals.",
+    "Shivani Vyas":   "Meet Shivani Vyas, a Sports and Orthopaedic Physiotherapist with 2 years of experience and a Master's degree in Sports Physiotherapy (MPT Sports). Her expertise includes Applied Dry Needling and Quadrant System Global Assessment. Shivani is passionate about sports-specific rehabilitation and performance enhancement, helping individuals recover from injuries, improve movement, and return to their activities stronger and more confident.",
+    "Karthik A":       "Meet Kartik Arumugam, a Sports and Musculoskeletal Physiotherapist with 5 years of experience and a Master's degree in Sports Physiotherapy (MPT Sports). With expertise in Dry Needling, he is passionate about helping individuals recover from injuries, optimize movement, and enhance performance. Kartik combines evidence-based rehabilitation with personalized care to support long-term health and athletic success.",
+    "Tanushka Acharya": "Meet Tanushka Acharya, a Physiotherapist with 7 months of experience and a Bachelor's degree in Physiotherapy (BPT). Her expertise includes Dry Needling, Cupping Therapy, IASTM, Kinesiotaping, Mat Pilates, Manipulation, and PNF techniques. Tanushka is dedicated to helping individuals recover from injuries, improve mobility, and achieve their health goals through personalized, evidence-based rehabilitation and care.",
+    "Imthiyaz Ibrahim": "Meet Imthiyaz Ibrahim, a Sports and Musculoskeletal Physiotherapist with 2 years of experience and a Master's degree in Physiotherapy (MPT). His expertise includes Dry Needling, Cupping Therapy, IASTM, Therapeutic Taping, and Deep Friction Massage (DFM). Imthiyaz is committed to helping individuals recover from injuries, improve movement, and enhance performance through personalized, evidence-based rehabilitation and care.",
+    "Sumalatha SP":   "Suma stands out as the ultimate support for both team members and clients alike. With a solid educational background and expertise in communication, including roles as a medical transcriptionist and in HR with a focus on recruitment and vendor management, Suma's capabilities are second to none. Her passion for social interaction allows her to effortlessly connect with others, while her black belt in karate exemplifies her dedication and discipline. Beyond her professional accomplishments, Suma finds joy in harnessing the power of Microsoft Excel and maintaining an active lifestyle through workouts. Additionally, she channels her creativity into interior design, showcasing her talent for space planning and decoration. Suma's holistic approach to her work is a testament to her multifaceted skills and unwavering commitment.",
+    "Shuaib":          "Meet Our Admin Executive, Mr. Shuaib. our dedicated Admin Executive. With a Bachelor’s degree in Commerce (BCOM), Shuaib brings a blend of professionalism and a friendly, compassionate approach to his work. His commitment to providing excellent support ensures smooth operations behind the scenes, making him an invaluable part of our team. Always approachable and eager to assist, Shuaib’s positive attitude helps create a welcoming environment for both clients and colleagues alike.",
+    "Pavithra":        "Meet Mrs. Pavithra, our Admin Executive, who brings a blend of professionalism, friendliness, and compassion to our team. A B.Com graduate, Pavithra is dedicated to ensuring smooth and efficient operations, always going above and beyond to support both staff and clients. Her approachable nature and commitment to excellence make her an invaluable part of our community, and we’re thrilled to have her with us.",
+    "Bindu":           "Meet Bindu Radhika VijayaRao, our Admin Executive with a Bachelor's degree in Engineering (B.E.) and over a year of experience at Stairs. She plays a key role in supporting daily operations and ensuring a smooth experience for clients and team members. With strong organizational and communication skills, Bindu contributes to the efficient functioning of Stairs and its services.",
+    "Deepthi":         "Meet Ms. Deepthi who has been a valued member of the Stairs team for over a year. As a Front Office Executive, she plays a key role in creating a welcoming and seamless experience for clients. With a background in Biotechnology, she brings strong organizational skills, attention to detail, and a friendly approach to her work.",
     "Marvin Joiner":   "Expert CrossFit & strength coach with 10+ years developing elite athletes through progressive overload and movement quality.",
     "Derek Hale":      "Competitive powerlifter and certified coach programming for all levels — from first-time lifters to state champions.",
     "Sofia Reyes":     "Yoga and mobility specialist helping clients move freely, recover faster, and maintain long-term athletic health.",
@@ -524,9 +595,53 @@ function MemberList({ members }: { members: { name: string; role: string; experi
   const photos: Record<string, { src: string; pos: string }> = {
     "Somya Rout":  { src: "/images/0H9A0792.jpg", pos: "center 20%" },
     "Harinag S P": { src: "/images/0H9A0795.JPG", pos: "center 20%" },
-    "Rohan Charles": { src: "/images/0H9A0624.jpg", pos: "center 20%" },
-    "Akshata Koli":  { src: "/images/0H9A0535.jpg", pos: "center 20%" },
-    "Ritti Shetty":  { src: "/images/0H9A0561.jpg", pos: "center 20%" },
+    "Akshata Koli":  { src: "/images/team/ulsoor%20team/Akshata%20koli.avif", pos: "center 20%" },
+    "Rohan Charles": { src: "/images/team/ulsoor%20team/Rohan%20Charles.avif", pos: "center 20%" },
+    "Riti Shetty":   { src: "/images/team/ulsoor%20team/Riti%20Shetty.avif", pos: "center 20%" },
+    "Aadhav Panchu Thomas": { src: "/images/team/ulsoor%20team/Aadhav%20Panchu%20Thomas.avif", pos: "center 20%" },
+    "Chaitra":       { src: "/images/team/ulsoor%20team/Chaitra.avif", pos: "center 20%" },
+    "Gautam Satish": { src: "/images/team/ulsoor%20team/Gautam%20Satish.avif", pos: "center 20%" },
+    "Soumya SK":     { src: "/images/team/ulsoor%20team/Soumya%20SK.avif", pos: "center 20%" },
+    "Srijanya Rajesh": { src: "/images/team/ulsoor%20team/Srijanya%20Rajesh.avif", pos: "center 20%" },
+    "Swathi M V":    { src: "/images/team/ulsoor%20team/Swathi%20M%20V.avif", pos: "center 20%" },
+    "Vedith":        { src: "/images/team/ulsoor%20team/Vedith.avif", pos: "center 20%" },
+    "Bhumika":       { src: "/images/team/ulsoor%20team/Bhumika.avif", pos: "center 20%" },
+    "Gagan Gowda":   { src: "/images/team/koramangla%20team/Gagan%20Gowda.avif", pos: "center 20%" },
+    "Martin Thomas": { src: "/images/team/koramangla%20team/Martin%20Thomas.avif", pos: "center 20%" },
+    "Niha":          { src: "/images/team/koramangla%20team/Niha.avif", pos: "center 20%" },
+    "Sindhura Udupa": { src: "/images/team/koramangla%20team/Sindhura%20Udupa.avif", pos: "center 20%" },
+    "Sairam M":      { src: "/images/team/koramangla%20team/Sairam%20M.avif", pos: "center 20%" },
+    "Aashutosh Karna": { src: "/images/team/koramangla%20team/Aashutosh%20Karna.avif", pos: "center 20%" },
+    "Achintya P R":  { src: "/images/team/koramangla%20team/Achintya%20P%20R.avif", pos: "center 20%" },
+    "Bijoy Joseph Bastian": { src: "/images/team/koramangla%20team/Bijoy%20Joseph%20Bastian.avif", pos: "center 20%" },
+    "Kiran Prakash Dsouza": { src: "/images/team/koramangla%20team/Kiran%20Prakash%20Dsouza.avif", pos: "center 20%" },
+    "Malan Karthikeyan": { src: "/images/team/koramangla%20team/Malan%20Karthikeyan.avif", pos: "center 20%" },
+    "Naveenraj A":   { src: "/images/team/koramangla%20team/Naveenraj%20A.avif", pos: "center 20%" },
+    "Niharika J Somayaji": { src: "/images/team/koramangla%20team/Niharika%20J%20Somayaji.avif", pos: "center 20%" },
+    "Ramya Shetty":  { src: "/images/team/koramangla%20team/Ramya%20Shetty.avif", pos: "center 20%" },
+    "Vasudha Siddappa": { src: "/images/team/koramangla%20team/Vasudha%20Siddappa.avif", pos: "center 20%" },
+    "Shreya Sharma": { src: "/images/team/koramangla%20team/Shreya%20Sharma.avif", pos: "center 20%" },
+    "Inchara":       { src: "/images/team/koramangla%20team/Inchara.avif", pos: "center 20%" },
+    "Niketh Madhu":  { src: "/images/team/Indiranagar%20Team/Niketh%20Madhu.avif", pos: "center 20%" },
+    "Manoj Prasath": { src: "/images/team/Indiranagar%20Team/Manoj%20Prasath.avif", pos: "center 20%" },
+    "Bhavika Advani": { src: "/images/team/Indiranagar%20Team/Bhavika%20Advani.avif", pos: "center 20%" },
+    "Varsha Gowda":  { src: "/images/team/Indiranagar%20Team/Varsha%20Gowda.avif", pos: "center 20%" },
+    "Nithya Shree N": { src: "/images/team/Indiranagar%20Team/Nithya%20Shree%20N.avif", pos: "center 20%" },
+    "Jayani":        { src: "/images/team/Indiranagar%20Team/Jayani.avif", pos: "center 20%" },
+    "Gokulnath G":   { src: "/images/team/Indiranagar%20Team/Gokulnath%20G.avif", pos: "center 20%" },
+    "Devika R S":    { src: "/images/team/Indiranagar%20Team/Devika%20R%20S.avif", pos: "center 20%" },
+    "Shivani Vyas":  { src: "/images/team/Whitefield/Shivani%20Vyas.avif", pos: "center 20%" },
+    "Karthik A":     { src: "/images/team/Whitefield/Karthik%20A.avif", pos: "center 20%" },
+    "Tanushka Acharya": { src: "/images/team/Whitefield/Tanushka%20Acharya.avif", pos: "center 20%" },
+    "Imthiyaz Ibrahim": { src: "/images/team/Whitefield/Imthiyaz%20Ibrahim.avif", pos: "center 20%" },
+    "Sumalatha SP":  { src: "/images/team/admin/Sumalatha%20SP.avif", pos: "center 20%" },
+    "Shuaib":        { src: "/images/team/admin/Shuaib.avif", pos: "center 20%" },
+    "Pavithra":      { src: "/images/team/admin/Pavithra.avif", pos: "center 20%" },
+    "Reeta":         { src: "/images/team/admin/Reeta.avif", pos: "center 20%" },
+    "Elavarasi":     { src: "/images/team/admin/Elavarasi.avif", pos: "center 20%" },
+    "Nafiya":        { src: "/images/team/admin/Nafiya.avif", pos: "center 20%" },
+    "Bindu":         { src: "/images/team/admin/Bindu.avif", pos: "center 20%" },
+    "Deepthi":       { src: "/images/team/admin/Deepthi.avif", pos: "center 20%" },
   };
   const avatarImg = (name: string) => {
     const p = photos[name];
@@ -550,7 +665,7 @@ function MemberList({ members }: { members: { name: string; role: string; experi
               <div className="tm-name">{m.name}</div>
               <div className="tm-role">{m.role}</div>
             </div>
-            <span style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#e8372c", background: "#fef0ef", padding: "3px 10px", borderRadius: 20, flexShrink: 0 }}>{m.specialty}</span>
+            {m.specialty && <span style={{ fontSize: ".72rem", fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#e8372c", background: "#fef0ef", padding: "3px 10px", borderRadius: 20, flexShrink: 0 }}>{m.specialty}</span>}
             <div className="tm-play">
               <i className={`fas fa-${openIdx === i ? "chevron-up" : "play"}`} style={{ marginLeft: openIdx === i ? 0 : 2 }} />
             </div>
@@ -565,14 +680,9 @@ function MemberList({ members }: { members: { name: string; role: string; experi
                   <h3>{m.name}</h3>
                   <span className="te-role">{m.role}</span>
                 </div>
-                <span className="tm-expand-top-badge">{m.specialty}</span>
               </div>
               <div className="tm-expand-body">
                 <p className="te-bio">{bios[m.name] || `${m.name} is a dedicated member of the Stairs team, committed to delivering exceptional care and results for every patient.`}</p>
-                <div className="tm-expand-stats">
-                  <div className="te-stat"><span className="te-num">{m.experience}</span><span className="te-lbl">Experience</span></div>
-                  <div className="te-stat"><span className="te-num">100+</span><span className="te-lbl">Clients</span></div>
-                </div>
                 <a href="/contact" className="te-book-btn">Book a Session <i className="fas fa-arrow-right" /></a>
               </div>
             </div>
