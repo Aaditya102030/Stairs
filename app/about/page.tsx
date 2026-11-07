@@ -289,13 +289,9 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/trainers", label: "Team" },
-<<<<<<< Updated upstream
-    { href: "/pricing", label: "Initiatives" },
-=======
-    { href: "/pricing", label: "Program" }, { href: "/fit2run", label: "Fit2Run" },
-    { href: "/coming-soon", label: "Initiatives" },
->>>>>>> Stashed changes
-  ];
+{ href: "/pricing", label: "Program" },
+{ href: "/fit2run", label: "Fit2Run" },
+{ href: "/coming-soon", label: "Initiatives" },  ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
       <div className="nav-logo">
