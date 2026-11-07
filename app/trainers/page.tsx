@@ -517,7 +517,7 @@ function TrainersFull() {
               <div className="admin-avatar-ring" style={{ width: 320, height: 320 }}>
                 <div className="admin-avatar-inner" style={{ width: 280, height: 280, overflow: "hidden", padding: 0 }}>
                   <img
-                    src="/images/0H9A0783.jpg"
+                    src="/images/0H9A0648.JPG"
                     alt="Stairs Founders"
                     style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 35%", display: "block" }}
                   />
