@@ -281,7 +281,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Relieving Tightness / Improving Mobility",
     description: "Myofascial release is a soft tissue massage treatment to help increase myofascial mobility and reduce pain within the musculoskeletal system. Massage therapists working at STAIRS use MFR to treat many conditions.",
     icon: "fas fa-hand-holding-heart",
-    heroImage: "/images/DSC01920.JPG",
+    heroImage: "/images/DSC01936.JPG",
     sections: [
       {
         tag: "What Is MFR",
@@ -290,7 +290,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Myofascial is connective tissue that is situated under the skin and surrounds muscle, bone, ligaments and tendons. Soft tissues in the body can become restricted due to injury, overuse, inactivity and result in pain, tension and reduced blood flow.",
           "Myofascial release is a slow, effective technique to relieve symptoms of fascia restrictions. MFR is used to treat symptoms with muscles, tendons, ligaments, fascia and nerves.",
         ],
-        image: "/images/DSC01945.JPG",
+        image: "/images/DSC01934.JPG",
         imageAlt: "Myofascial release treatment",
         fullImage: true,
       },
@@ -312,7 +312,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Myofascial release is commonly used as a relaxation technique. It is performed in a slow and precise way. The slow movements of myofascial release across the skin can stimulate the parasympathetic nervous system.",
           "The nervous system controls emotions and produces feelings of calmness, making MFR beneficial not just physically but also for mental well-being and recovery.",
         ],
-        image: "/images/DSC01949.JPG",
+        image: "/images/DSC01937.JPG",
         imageAlt: "Relaxation and wellness",
       },
     ],
@@ -378,7 +378,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Reduce Workplace Injuries & Discomfort",
     description: "Long hours at a desk, on a screen or on your feet can quietly strain the body. Our postural and ergonomic correction programs help reduce workplace injuries and everyday discomfort.",
     icon: "fas fa-chair",
-    heroImage: "/images/DSC01870.JPG",
+    heroImage: "/images/DSC01971.JPG",
     sections: [
       {
         tag: "Posture",
@@ -387,7 +387,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Posture is how your body holds itself while sitting, standing and moving. Habits built over years, such as slouching at a desk or looking down at a phone, can lead to muscle imbalances, stiffness and pain.",
           "We assess how you hold and move your body, then identify the habits and imbalances that may be contributing to your discomfort.",
         ],
-        image: "/images/DSC01892.JPG",
+        image: "/images/DSC02002.JPG",
         imageAlt: "Posture assessment",
         fullImage: true,
       },
@@ -417,7 +417,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Hands-On Techniques for Faster Healing",
     description: "Manual therapy and dry needling are hands-on techniques used by our physiotherapists to ease pain, release tight muscles and support faster healing as part of a complete treatment plan.",
     icon: "fas fa-hands",
-    heroImage: "/images/DSC01753.JPG",
+    heroImage: "/images/DSC01933.JPG",
     sections: [
       {
         tag: "Manual Therapy",
@@ -426,7 +426,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Manual therapy uses skilled hands-on techniques to mobilise joints and soft tissues. It is used to reduce pain, ease stiffness and improve movement.",
           "It works best alongside exercise and education, so every treatment is tailored to your condition and your goals.",
         ],
-        image: "/images/DSC01928.JPG",
+        image: "/images/DSC02040.JPG",
         imageAlt: "Manual therapy treatment",
       },
       {
@@ -627,7 +627,7 @@ function Navbar() {
   }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Program" }, { href: "/coming-soon", label: "Initiatives" },
+    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Initiatives" },
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>

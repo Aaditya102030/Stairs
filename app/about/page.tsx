@@ -289,8 +289,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/trainers", label: "Team" },
-    { href: "/pricing", label: "Program" },
-    { href: "/coming-soon", label: "Initiatives" },
+    { href: "/pricing", label: "Initiatives" },
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>

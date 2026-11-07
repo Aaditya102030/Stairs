@@ -202,7 +202,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" },
     { href: "/services", label: "Services" }, { href: "/trainers", label: "Team" },
-    { href: "/pricing", label: "Program" }, { href: "/coming-soon", label: "Initiatives" },
+    { href: "/pricing", label: "Initiatives" },
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
@@ -305,7 +305,7 @@ export default function NewPricingPage() {
           <h1 className="reveal" style={{ transitionDelay: "0.1s" }}>PRICING PLANS</h1>
           <div className="breadcrumb reveal" style={{ transitionDelay: "0.2s" }}>
             <a href="/">Home</a><span>/</span>
-            <a href="/pricing">Program</a><span>/</span>
+            <a href="/pricing">Initiatives</a><span>/</span>
             <span style={{ color: "#fff" }}>Pricing Plans</span>
           </div>
         </div>

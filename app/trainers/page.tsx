@@ -394,7 +394,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Program" }, { href: "/coming-soon", label: "Initiatives" },
+    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Initiatives" },
   ];
   return (
     <nav id="navbar" className={scrolled ? "scrolled" : ""}>
@@ -504,8 +504,7 @@ function TrainersFull() {
             <h3>{founder.name}</h3>
             <p>{founder.bio}</p>
             <div className="admin-stats">
-              <div className="admin-stat"><div className="num">1+</div><div className="lbl">Vision</div></div>
-              <div className="admin-stat"><div className="num">10+</div><div className="lbl">Years</div></div>
+              <div className="admin-stat"><div className="num">8+</div><div className="lbl">Years</div></div>
               <div className="admin-stat"><div className="num">100%</div><div className="lbl">Passion</div></div>
             </div>
             <a href={`/trainers/${founder.slug}`} className="explore-btn">

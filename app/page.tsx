@@ -995,8 +995,7 @@ function Navbar({
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/trainers", label: "Team" },
-    { href: "/pricing", label: "Program" },
-    { href: "/coming-soon", label: "Initiatives" },
+    { href: "/pricing", label: "Initiatives" },
   ];
 
   return (
@@ -1020,10 +1019,10 @@ function Navbar({
 /* ─── Hero ─── */
 /* Hero background: our own photos from /public/images, scrolling sideways on a loop */
 const heroPhotos = [
-  "DSC02201.JPG",
-  "DSC02206.JPG",
-  "DSC02212.JPG",
-  "DSC02217.JPG",
+  "DSC01960.JPG",
+  "DSC01972.JPG",
+  "DSC02035.JPG",
+  "DSC01898.JPG",
 ].map((f) => `/images/${f}`);
 
 function HeroGallery() {
@@ -1273,7 +1272,7 @@ function Organisations() {
   };
 
   useEffect(() => {
-    const t = setTimeout(() => goTo(idx + 1), 3000);
+    const t = setTimeout(() => goTo(idx + 1), 2000);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, steps]);
