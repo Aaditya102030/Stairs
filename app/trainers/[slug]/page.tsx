@@ -379,6 +379,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
+    { href: "/trainers", label: "Team" },
     { href: "/pricing", label: "Initiatives" },
     { href: "/fit2run", label: "Fit2Run" },
       ];

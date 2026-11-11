@@ -175,6 +175,7 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
   }, []);
   const links = [
     { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
+{ href: "/trainers", label: "Team" },
 { href: "/pricing", label: "Initiatives" },
 { href: "/fit2run", label: "Fit2Run" },
   ];

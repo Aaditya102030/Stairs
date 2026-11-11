@@ -160,3 +160,41 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Unified navbar
+   Every page defines its own #navbar / .nav-links CSS with slightly
+   different gaps, font sizes and letter-spacing, and none of them
+   switched to the hamburger menu before 768px. At laptop/tablet
+   widths the 7 links overflowed differently on each page, so links
+   like "Team" were clipped on some pages and visible on others.
+   `nav#navbar` out-specifies the per-page rules, so this one block
+   keeps the navbar identical everywhere.
+   ───────────────────────────────────────────────────────────── */
+nav#navbar { gap: 24px; }
+nav#navbar .nav-logo { flex-shrink: 0; }
+nav#navbar .nav-links { flex-wrap: nowrap; gap: clamp(18px, 2.4vw, 38px); }
+nav#navbar .nav-links a {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+nav#navbar .nav-links .contact-btn { padding: 9px 22px; }
+
+/* Wide screens: full link row, no hamburger */
+@media (min-width: 1101px) {
+  nav#navbar .hamburger { display: none; }
+}
+
+/* Tablet / small laptop: switch to the hamburger menu before links can overflow.
+   (The open mobile menu sets display:flex inline, which still wins over this.) */
+@media (max-width: 1100px) {
+  nav#navbar .nav-links { display: none; }
+  nav#navbar .hamburger { display: flex; }
+}
+@media (min-width: 769px) and (max-width: 1100px) {
+  nav#navbar,
+  nav#navbar.scrolled { padding-left: 30px; padding-right: 30px; }
+}
