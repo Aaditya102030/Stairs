@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
+import Navbar from "@/components/SiteNav";
 import { motion } from "motion/react";
 
 const globalStyles = `
@@ -100,29 +101,6 @@ function useCountdown(target: Date) {
   return time;
 }
 
-function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
-  const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/trainers", label: "Team" },
-  { href: "/pricing", label: "Initiatives" },
-  { href: "/fit2run", label: "Fit2Run" },
-  
-];
-  return (
-    <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 45, width: "auto" }} /></div>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
-        {links.map((l) => <a key={l.href} href={l.href} className={l.href === "/coming-soon" ? "active" : ""}>{l.label}</a>)}
-        <a href="/contact" className="contact-btn">Contact</a>
-      </div>
-      <div className="hamburger" onClick={() => setMenuOpen((o) => !o)}><span /><span /><span /></div>
-    </nav>
-  );
-}
 
 function ComingSoonContent() {
   // Target: 90 days from now (approximate launch date)

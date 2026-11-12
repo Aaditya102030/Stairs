@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BranchesFooter, { branches } from "@/components/BranchesFooter";
+import Navbar from "@/components/SiteNav";
 import { motion } from "motion/react";
 
 const globalStyles = `
@@ -389,6 +390,7 @@ function useReveal() {
   }, []);
 }
 
+<<<<<<< HEAD
 function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
@@ -409,6 +411,8 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
     </nav>
   );
 }
+=======
+>>>>>>> a56e7d8 (Update website pages and images)
 
 function PageHero() {
   return (
@@ -539,7 +543,7 @@ function TrainersFull() {
             <div className="f-avatar"><i className="fas fa-user-tie" /></div>
             <h3>{admin.name}</h3>
             <p>{admin.bio}</p>
-            <a href={`/trainers/${admin.slug}`} className="explore-btn explore-btn-inv">
+            <a href={`/trainers/${admin.slug}`} className="explore-btn">
               Explore <span className="play-icon"><i className="fas fa-arrow-right" /></span>
             </a>
           </div>
