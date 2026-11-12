@@ -192,6 +192,23 @@ const globalStyles = `
   .insta-row { display: flex; gap: 20px; max-width: 100%; overflow-x: auto; padding: 4px 4px 10px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
   .insta-frame { flex: 0 0 auto; width: 250px; height: 450px; border-radius: 18px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 18px 40px rgba(0,0,0,0.5); scroll-snap-align: start; }
   .insta-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .insta-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  background: #000;
+}
+
+.insta-video-fallback {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  background: #151515;
+}
   .insta-frame.profile { width: 340px; background: #fff; }
   .insta-slider { position: relative; max-width: 100%; }
   .insta-widget { width: min(560px, 100%); max-height: 500px; overflow: auto; border-radius: 18px; }
@@ -1535,82 +1552,178 @@ function Services() {
   );
 }
 
+
 /* ─── Instagram reels shown beside the testimonials ─── */
+
+type InstagramReel = {
+  id: string;
+  title: string;
+  link: string;
+  pubDate: string;
+  videoUrl: string;
+  thumbnailUrl: string | null;
+};
+
 function InstagramReels() {
   const rowRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
 
-  // Auto-scroll the reels one card at a time; loops back to the start; pauses while hovering/touching
+  const [reels, setReels] = useState<InstagramReel[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (instagramWidget) return;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let active = true;
+
+    async function loadReels() {
+      try {
+        const response = await fetch("/api/instagram");
+        const data = await response.json();
+
+        if (active && response.ok && Array.isArray(data.reels)) {
+          setReels(data.reels);
+        }
+      } catch (error) {
+        console.error("Instagram loading error:", error);
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadReels();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Auto-scroll
+  useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
     const timer = setInterval(() => {
       const el = rowRef.current;
+
       if (!el || pausedRef.current || reduceMotion.matches) return;
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
-      if (atEnd) el.scrollTo({ left: 0, behavior: "smooth" });
-      else el.scrollBy({ left: 270, behavior: "smooth" });
+
+      const atEnd =
+        el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
+
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        el.scrollBy({ left: 270, behavior: "smooth" });
+      }
     }, 2000);
+
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (!instagramWidget) return;
-    const src = instagramWidget.provider === "behold" ? "https://w.behold.so/widget.js" : "https://elfsightcdn.com/platform.js";
-    if (document.querySelector(`script[src="${src}"]`)) return;
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    if (instagramWidget.provider === "behold") s.type = "module";
-    document.body.appendChild(s);
-  }, []);
+  const scrollRow = (dir: number) => {
+    rowRef.current?.scrollBy({
+      left: dir * 270,
+      behavior: "smooth",
+    });
+  };
 
-  if (instagramWidget) {
-    return (
-      <div className="insta-wrap">
-        <span className="insta-label"><i className="fab fa-instagram" /> Follow us on Instagram</span>
-        <div className="insta-widget">
-          {instagramWidget.provider === "behold"
-            ? createElement("behold-widget", { "feed-id": instagramWidget.id })
-            : <div className={`elfsight-app-${instagramWidget.id}`} data-elfsight-app-lazy />}
-        </div>
-      </div>
-    );
-  }
-
-  const embeds = instagramReels.map(instaEmbedUrl).filter((u): u is string => !!u);
-  const scrollRow = (dir: number) => rowRef.current?.scrollBy({ left: dir * 270, behavior: "smooth" });
   return (
     <div className="insta-wrap">
-      <span className="insta-label"><i className="fab fa-instagram" /> Follow us on Instagram</span>
+      <span className="insta-label">
+        <i className="fab fa-instagram" /> Follow us on Instagram
+      </span>
+
       <div className="insta-slider">
-        <button type="button" className="insta-arrow left" aria-label="Scroll left" suppressHydrationWarning onClick={() => scrollRow(-1)}><i className="fas fa-chevron-left" /></button>
+        <button
+          type="button"
+          className="insta-arrow left"
+          aria-label="Scroll left"
+          onClick={() => scrollRow(-1)}
+        >
+          <i className="fas fa-chevron-left" />
+        </button>
+
         <div
           className="insta-row"
           ref={rowRef}
-          onMouseEnter={() => { pausedRef.current = true; }}
-          onMouseLeave={() => { pausedRef.current = false; }}
-          onTouchStart={() => { pausedRef.current = true; }}
-          onTouchEnd={() => { setTimeout(() => { pausedRef.current = false; }, 3500); }}
+          onMouseEnter={() => {
+            pausedRef.current = true;
+          }}
+          onMouseLeave={() => {
+            pausedRef.current = false;
+          }}
+          onTouchStart={() => {
+            pausedRef.current = true;
+          }}
+          onTouchEnd={() => {
+            setTimeout(() => {
+              pausedRef.current = false;
+            }, 3500);
+          }}
         >
-          {embeds.length > 0 ? (
-            embeds.map((src) => (
-              <div className="insta-frame" key={src}>
-                <iframe src={src} title="Instagram reel" loading="lazy" allow="encrypted-media; autoplay; clipboard-write" allowFullScreen scrolling="no" />
+          {loading ? (
+            <div className="insta-frame profile">
+              <p style={{ color: "#fff", padding: 30 }}>
+                Loading Instagram videos...
+              </p>
+            </div>
+          ) : reels.length > 0 ? (
+            reels.map((reel) => (
+              <div className="insta-frame" key={reel.id}>
+                <video
+                  src={reel.videoUrl}
+                  poster={reel.thumbnailUrl || undefined}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+
+                    const fallback =
+                      event.currentTarget.nextElementSibling as HTMLElement | null;
+
+                    if (fallback) fallback.style.display = "flex";
+                  }}
+                />
+
+                <a
+                  href={reel.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="insta-video-fallback"
+                  style={{ display: "none" }}
+                >
+                  View on Instagram
+                </a>
               </div>
             ))
           ) : (
-            /* No reel links added yet: show the live Instagram profile feed instead */
             <div className="insta-frame profile">
-              <iframe src={`https://www.instagram.com/${instagramHandle}/embed`} title="Stairs on Instagram" loading="lazy" scrolling="yes" />
+              <a
+                href="https://www.instagram.com/stairs.physio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#111", padding: 30 }}
+              >
+                Visit Stairs on Instagram
+              </a>
             </div>
           )}
         </div>
-        <button type="button" className="insta-arrow right" aria-label="Scroll right" suppressHydrationWarning onClick={() => scrollRow(1)}><i className="fas fa-chevron-right" /></button>
+
+        <button
+          type="button"
+          className="insta-arrow right"
+          aria-label="Scroll right"
+          onClick={() => scrollRow(1)}
+        >
+          <i className="fas fa-chevron-right" />
+        </button>
       </div>
     </div>
   );
 }
+
 
 /* ─── Testimonials ─── */
 function Testimonials() {
