@@ -581,7 +581,6 @@ function StairsTeam() {
             <div className="by">Supported by the Stairs Recovery Team</div>
             <p>Recovery is an important part of your training process. With access to deep tissue and massage support, Fit2Run members can make recovery a structured part of their training journey.</p>
             <ul>{["Recover", "Reset", "Get ready for the next run"].map((x) => <li key={x}><i className="fas fa-circle" />{x}</li>)}</ul>
-            <img className="f2r-recovery-img" src="/images/team/fit2run/recovery-team.webp" alt="The Stairs recovery team" />
           </div>
         </div>
       </div>
