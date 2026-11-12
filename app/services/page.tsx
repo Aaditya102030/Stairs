@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
+import Navbar from "@/components/SiteNav";
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -166,6 +167,7 @@ function useReveal() {
   }, []);
 }
 
+<<<<<<< HEAD
 function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -190,6 +192,8 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
     </nav>
   );
 }
+=======
+>>>>>>> a56e7d8 (Update website pages and images)
 
 function PageHero() {
   return (

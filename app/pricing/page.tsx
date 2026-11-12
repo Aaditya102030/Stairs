@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import BranchesFooter from "@/components/BranchesFooter";
+import Navbar from "@/components/SiteNav";
 
 const APPLY_EMAIL = "info@stairsphysiotherapy.in";
 
@@ -63,6 +65,9 @@ const globalStyles = `
   .ac-block.reverse .ac-visual .ac-num{left:auto;right:30px;}
   .ac-icon{position:relative;z-index:2;width:150px;height:150px;border-radius:50%;border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;background:rgba(232,55,44,.12);}
   .ac-icon i{color:#fff;font-size:3.6rem;}
+  .ac-slides{position:absolute;inset:0;z-index:1;}
+  .ac-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease;}
+  .ac-slides img.active{opacity:1;}
   .ac-content{background:#fff;padding:64px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
   .ac-block.alt .ac-content{background:var(--bg-light);}
   .ac-content::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;border:40px solid rgba(232,55,44,.05);pointer-events:none;}
@@ -128,26 +133,6 @@ function useReveal() {
   }, []);
 }
 
-function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
-  const links = [
-    { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Team" },
-    { href: "/pricing", label: "Initiatives" },
-    { href: "/fit2run", label: "Fit2Run" },
-  ];
-  return (
-    <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} /></div>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
-        {links.map((l) => <a key={l.href} href={l.href} className={l.href === "/pricing" ? "active" : ""}>{l.label}</a>)}
-        <a href="/contact" className="contact-btn">Contact</a>
-      </div>
-      <div className="hamburger" onClick={() => setMenuOpen((o) => !o)}><span /><span /><span /></div>
-    </nav>
-  );
-}
 
 function PageHero() {
   return (
@@ -180,15 +165,44 @@ function Intro() {
   );
 }
 
+const professionalPhotos = [
+  "2R5A9465.jpg",
+  "2R5A9470.jpg",
+  "2R5A9477.jpg",
+  "2R5A9469.jpg",
+].map((f) => `/images/${f}`);
+
+/* Photos fade into each other automatically (default: every 2 seconds). */
+function PhotoSlideshow({ images, interval = 2000 }: { images: string[]; interval?: number }) {
+  const [cur, setCur] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setCur((c) => (c + 1) % images.length), interval);
+    return () => clearInterval(t);
+  }, [images.length, interval]);
+  return (
+    <div className="ac-slides">
+      {images.map((src, i) => (
+        <Image
+          key={src}
+          src={src}
+          alt={`Stairs Learning Academy ${i + 1}`}
+          fill
+          sizes="(max-width: 900px) 100vw, 50vw"
+          loading="eager"
+          className={i === cur ? "active" : ""}
+        />
+      ))}
+    </div>
+  );
+}
+
 function ProfessionalLearning() {
   return (
     <div className="ac-block reveal">
       <div className="ac-visual">
-        <div className="ac-icon"><i className="fas fa-user-graduate" /></div>
-        <div className="ac-num">01</div>
+        <PhotoSlideshow images={professionalPhotos} />
       </div>
       <div className="ac-content">
-        <span className="ac-tag">Section 1</span>
         <h2>Professional Learning &amp; Development</h2>
         <span className="ac-tagline">Build knowledge. Develop skills. Grow with experience.</span>
         <p>For aspiring and practising professionals looking to strengthen their understanding and practical skills.</p>
@@ -208,15 +222,18 @@ function ProfessionalLearning() {
   );
 }
 
+const communityPhotos = [
+  "IMG_3006.JPG.jpeg",
+  "DSC01692.JPG",
+].map((f) => `/images/${f}`);
+
 function CommunityLearning() {
   return (
     <div className="ac-block alt reverse reveal">
       <div className="ac-visual">
-        <div className="ac-icon"><i className="fas fa-people-group" /></div>
-        <div className="ac-num">02</div>
+        <PhotoSlideshow images={communityPhotos} interval={3000} />
       </div>
       <div className="ac-content">
-        <span className="ac-tag">Section 2</span>
         <h2>Community Learning &amp; Awareness</h2>
         <span className="ac-tagline">Understand your body. Take charge of your health.</span>
         <p>We believe health education should not be limited to professionals. Our community learning initiatives help individuals understand their bodies, make informed choices and build healthier movement habits.</p>

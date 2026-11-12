@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
+import Navbar from "@/components/SiteNav";
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
@@ -363,24 +364,6 @@ function Photo({ src, name }: { src: string; name: string }) {
   );
 }
 
-function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => { const s = () => setScrolled(window.scrollY > 60); window.addEventListener("scroll", s); return () => window.removeEventListener("scroll", s); }, []);
-  const links = [
-    { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Team" }, { href: "/pricing", label: "Initiatives" }, { href: "/fit2run", label: "Fit2Run" },
-  ];
-  return (
-    <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <a href="/" className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} /></a>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
-        {links.map((l) => <a key={l.href} href={l.href} className={l.label === "Fit2Run" ? "active" : ""}>{l.label}</a>)}
-        <a href="/contact" className="contact-btn">Contact</a>
-      </div>
-      <div className="hamburger" onClick={() => setMenuOpen((o) => !o)}><span /><span /><span /></div>
-    </nav>
-  );
-}
 
 /* ───────── SECTIONS ───────── */
 

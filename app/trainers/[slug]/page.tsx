@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
+import Navbar from "@/components/SiteNav";
 import { useParams } from "next/navigation";
 import { motion } from "motion/react";
 
@@ -376,6 +377,7 @@ function useReveal() {
   }, []);
 }
 
+<<<<<<< HEAD
 /* ─── Navbar ─── */
 function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [scrolled, setScrolled] = useState(false);
@@ -397,6 +399,8 @@ function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: Rea
     </nav>
   );
 }
+=======
+>>>>>>> a56e7d8 (Update website pages and images)
 
 /* ─── Page Hero (individual trainer) ─── */
 function PageHero({ trainer }: { trainer: typeof trainers[0] }) {
