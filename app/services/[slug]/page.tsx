@@ -618,31 +618,6 @@ const allServices = [
   { slug: "running-rehab-performance-training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  const links = [
-    { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-    { href: "/trainers", label: "Team" },
-    { href: "/pricing", label: "Initiatives" },
-    { href: "/fit2run", label: "Fit2Run" },
-      ];
-  return (
-    <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 45, width: "auto" }} /></div>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
-        {links.map((l) => <a key={l.href} href={l.href} className={l.href === "/services" ? "active" : ""}>{l.label}</a>)}
-        <a href="/contact" className="contact-btn">Contact</a>
-      </div>
-      <div className="hamburger" onClick={() => setMenuOpen((o) => !o)}><span /><span /><span /></div>
-    </nav>
-  );
-}
 
 export default function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
