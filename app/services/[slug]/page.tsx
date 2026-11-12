@@ -197,7 +197,7 @@ const serviceDetails: Record<string, ServiceData> = {
     keyPointsHeading: "More Services",
     description: "At Stairs, we are committed to bringing access to quality physio care through manual therapies and high-skilled practitioners. Our world-class therapists keep a strong focus on patient needs and deliver the highest level of care.",
     icon: "fas fa-notes-medical",
-    heroImage: "/images/DSC01810.JPG",
+    heroImage: "/images-optimized/DSC01810.webp",
     sections: [
       {
         tag: "Rehabilitation",
@@ -206,7 +206,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Rehabilitation can reduce the impact of a broad range of health conditions, including diseases (acute or chronic), illnesses or injuries. It can also complement other health interventions, such as medical and surgical interventions, helping to achieve the best outcome possible.",
           "Common conditions include injuries and trauma, burns and fractures, spinal cord injuries, soft tissue injuries, birth defects, developmental disabilities, and chronic pain including back and neck pain.",
         ],
-        image: "/images/DSC02024.JPG",
+        image: "/images-optimized/DSC02024.webp",
         imageAlt: "Rehabilitation session",
         fullImage: true,
       },
@@ -217,7 +217,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "When most people think of Physical Therapy, they think of rehabilitation or rehab. Now many people are discovering the value of prehabilitation — visiting a Physical Therapist before a surgery or injury.",
           "Prehabilitation has been shown to reduce the recovery time period and complications after surgery. The general conditioning that can be incorporated into a Prehab program can offset some of the detrimental side effects of surgery so the patient is better prepared and can handle it.",
         ],
-        image: "/images/DSC02039.JPG",
+        image: "/images-optimized/DSC02039.webp",
         imageAlt: "Prehabilitation exercise",
         fullImage: true,
         reverse: true,
@@ -234,7 +234,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Mobility / Strength",
     description: "Strength and Conditioning (S&C) is the selection and development of dynamic and static exercises used to improve physical performance. Whilst it originally benefited athletes, it is now widely used in both the sporting world and more generally.",
     icon: "fas fa-dumbbell",
-    heroImage: "/images/DSC01790.JPG",
+    heroImage: "/images-optimized/DSC01790.webp",
     sections: [
       {
         tag: "Strength Training",
@@ -243,7 +243,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "S&C is used to develop every area of the body and improve the way a person moves, with the intention of enhancing sporting or physical performance.",
           "S&C means engaging in activity to improve performance and/or fitness; this is best accomplished by understanding the seven sports training principles: overload, reversibility, progression, individualisation, periodisation, and specificity.",
         ],
-        image: "/images/DSC01737.JPG",
+        image: "/images-optimized/DSC01737.webp",
         imageAlt: "Strength training session",
       },
       {
@@ -253,7 +253,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "General fitness training works towards broad goals of overall health and well-being, rather than narrow goals of sport competition, larger muscles or concerns over appearance.",
           "A regular moderate workout regimen and healthy diet can improve general appearance markers of good health such as muscle tone, healthy skin, hair and nails, while preventing age or lifestyle-related reductions in health and reducing the likelihood of cardiovascular diseases.",
         ],
-        image: "/images/DSC01920.JPG",
+        image: "/images-optimized/DSC01920.webp",
         imageAlt: "General fitness workout",
         reverse: true,
       },
@@ -264,7 +264,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Resistance training forms an essential component of any fitness program because it helps build lean muscle mass and bone density. Group strength-training classes offer guidance at a minimal cost to participants.",
           "Many people don't know where to begin when it comes to strength training and can't afford a personal trainer. Our group classes are fun, motivating and effective — designed for all fitness levels.",
         ],
-        image: "/images/DSC01896.JPG",
+        image: "/images-optimized/DSC01896.webp",
         imageAlt: "Group training class",
       },
     ],
@@ -282,7 +282,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Relieving Tightness / Improving Mobility",
     description: "Myofascial release is a soft tissue massage treatment to help increase myofascial mobility and reduce pain within the musculoskeletal system. Massage therapists working at STAIRS use MFR to treat many conditions.",
     icon: "fas fa-hand-holding-heart",
-    heroImage: "/images/DSC01936.JPG",
+    heroImage: "/images-optimized/DSC01936.webp",
     sections: [
       {
         tag: "What Is MFR",
@@ -291,7 +291,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Myofascial is connective tissue that is situated under the skin and surrounds muscle, bone, ligaments and tendons. Soft tissues in the body can become restricted due to injury, overuse, inactivity and result in pain, tension and reduced blood flow.",
           "Myofascial release is a slow, effective technique to relieve symptoms of fascia restrictions. MFR is used to treat symptoms with muscles, tendons, ligaments, fascia and nerves.",
         ],
-        image: "/images/DSC01934.JPG",
+        image: "/images-optimized/DSC01934.webp",
         imageAlt: "Myofascial release treatment",
         fullImage: true,
       },
@@ -302,7 +302,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Myofascial release helps decrease pain by breaking through restrictions and relieving tightness. It increases blood flow and temperature of soft tissues which can also help reduce pain.",
           "MFR helps release restrictive tissues such as scar tissue. After injury, scar tissue can restrict the movement of fascia and cause pain — MFR helps loosen scar tissue and restore normal function of the tissue.",
         ],
-        image: "/images/DSC01776.JPG",
+        image: "/images-optimized/DSC01776.webp",
         imageAlt: "Soft tissue massage treatment",
         reverse: true,
       },
@@ -313,7 +313,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Myofascial release is commonly used as a relaxation technique. It is performed in a slow and precise way. The slow movements of myofascial release across the skin can stimulate the parasympathetic nervous system.",
           "The nervous system controls emotions and produces feelings of calmness, making MFR beneficial not just physically but also for mental well-being and recovery.",
         ],
-        image: "/images/DSC01937.JPG",
+        image: "/images-optimized/DSC01937.webp",
         imageAlt: "Relaxation and wellness",
       },
     ],
@@ -331,7 +331,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Get Back to Peak Performance Safely",
     description: "We've made sure that our sports health modules cover the whole spectrum, from the specific needs of athletes who represent their countries on the global stage, all the way to those seeking an active lifestyle.",
     icon: "fas fa-basketball-ball",
-    heroImage: "/images/DSC01701.JPG",
+    heroImage: "/images-optimized/DSC01701.webp",
     sections: [
       {
         tag: "Athletics Program",
@@ -340,7 +340,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Stairs is one of the top athletic training centres that offers professional fitness training, sports injury management and athlete development programs. We have a dedicated team to offer end-to-end fitness and injury management.",
           "We've made sure that our sports health modules cover the whole spectrum, from the specific needs of athletes who represent their countries on the global stage, all the way to those seeking an active lifestyle.",
         ],
-        image: "/images/DSC01864.JPG",
+        image: "/images-optimized/DSC01864.webp",
         imageAlt: "Athletics training program",
       },
       {
@@ -350,7 +350,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "If you are a sports enthusiast, or would like to take up a sport, we can help you step up your game and prevent injuries that can hold you back. If you've been unlucky enough to pick up an injury, we have the platinum standard evidence-based protocols to get you back in the park as soon as possible.",
           "Through our individualized programs based on thorough testing and scientific progression, you will have all the tools you need to improve your sports specific fitness.",
         ],
-        image: "/images/DSC01834.JPG",
+        image: "/images-optimized/DSC01834.webp",
         imageAlt: "Sports injury management",
         reverse: true,
       },
@@ -361,7 +361,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Full time athletes are always pushing the envelope in the search for a competitive edge, which often leads to injuries. Our specialized programs are focused on injury-treatment and prevention, going all the way through to post-recovery performance enhancement.",
           "We continue to look after athletes through their entire season, off season and pre season, monitoring their workloads, adapting their training methods and programs to suit the requirement of the sport.",
         ],
-        image: "/images/DSC01897.JPG",
+        image: "/images-optimized/DSC01897.webp",
         imageAlt: "High performance athlete training",
       },
     ],
@@ -379,7 +379,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Reduce Workplace Injuries & Discomfort",
     description: "Long hours at a desk, on a screen or on your feet can quietly strain the body. Our postural and ergonomic correction programs help reduce workplace injuries and everyday discomfort.",
     icon: "fas fa-chair",
-    heroImage: "/images/DSC01971.JPG",
+    heroImage: "/images-optimized/DSC01971.webp",
     sections: [
       {
         tag: "Posture",
@@ -388,7 +388,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Posture is how your body holds itself while sitting, standing and moving. Habits built over years, such as slouching at a desk or looking down at a phone, can lead to muscle imbalances, stiffness and pain.",
           "We assess how you hold and move your body, then identify the habits and imbalances that may be contributing to your discomfort.",
         ],
-        image: "/images/DSC02002.JPG",
+        image: "/images-optimized/DSC02002.webp",
         imageAlt: "Posture assessment",
         fullImage: true,
       },
@@ -399,7 +399,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Ergonomics is about fitting your workspace and daily routine to your body. Small changes to your desk, chair, screen height and work habits can make a real difference to how you feel at the end of the day.",
           "We combine practical workstation advice with corrective exercises and mobility work, so you can build healthier habits that last.",
         ],
-        image: "/images/DSC01904.JPG",
+        image: "/images-optimized/DSC01904.webp",
         imageAlt: "Ergonomic workstation advice",
         reverse: true,
       },
@@ -418,7 +418,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Hands-On Techniques for Faster Healing",
     description: "Manual therapy and dry needling are hands-on techniques used by our physiotherapists to ease pain, release tight muscles and support faster healing as part of a complete treatment plan.",
     icon: "fas fa-hands",
-    heroImage: "/images/DSC01933.JPG",
+    heroImage: "/images-optimized/DSC01933.webp",
     sections: [
       {
         tag: "Manual Therapy",
@@ -427,7 +427,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Manual therapy uses skilled hands-on techniques to mobilise joints and soft tissues. It is used to reduce pain, ease stiffness and improve movement.",
           "It works best alongside exercise and education, so every treatment is tailored to your condition and your goals.",
         ],
-        image: "/images/DSC02040.JPG",
+        image: "/images-optimized/DSC02040.webp",
         imageAlt: "Manual therapy treatment",
       },
       {
@@ -437,7 +437,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Dry needling uses thin, sterile needles placed in tight or irritated areas of muscle, often called trigger points, to help release tension and reduce pain.",
           "It is carried out by a trained physiotherapist alongside other treatments. Your therapist will explain the technique and whether it is suitable for you before starting.",
         ],
-        image: "/images/DSC01758.JPG",
+        image: "/images-optimized/DSC01758.webp",
         imageAlt: "Dry needling session",
         reverse: true,
       },
@@ -456,7 +456,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Prevent Injuries Before They Happen",
     description: "Prehab and wellness programs focus on preventing injuries before they happen by building strength, mobility and healthy movement habits.",
     icon: "fas fa-heart",
-    heroImage: "/images/DSC02057.JPG",
+    heroImage: "/images-optimized/DSC02057.webp",
     sections: [
       {
         tag: "Prehab",

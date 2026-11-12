@@ -607,8 +607,8 @@ function MemberList({ members }: { members: { name: string; role: string; experi
 
   // Member photos (files in /public/images). objectPosition keeps faces framed inside the circles.
   const photos: Record<string, { src: string; pos: string }> = {
-    "Somya Rout":  { src: "/images/0H9A0792.jpg", pos: "center 20%" },
-    "Harinag S P": { src: "/images/0H9A0795.JPG", pos: "center 20%" },
+    "Somya Rout":  { src: "/images-optimized/0H9A0792.webp", pos: "center 20%" },
+    "Harinag S P": { src: "/images-optimized/0H9A0795.webp", pos: "center 20%" },
     "Akshata Koli":  { src: "/images/team/ulsoor%20team/Akshata%20koli.avif", pos: "center 20%" },
     "Rohan Charles": { src: "/images/team/ulsoor%20team/Rohan%20Charles.avif", pos: "center 20%" },
     "Riti Shetty":   { src: "/images/team/ulsoor%20team/Riti%20Shetty.avif", pos: "center 20%" },

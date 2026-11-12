@@ -58,7 +58,7 @@ const globalStyles = `
   /* PAGE HERO */
   #page-hero { position: relative; min-height: 60vh; background: var(--darker); display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
 
-  .page-hero-bg { position: absolute; inset: 0; background: url('/images/DSC02206.JPG') center/cover no-repeat; opacity: 0.55; }
+  .page-hero-bg { position: absolute; inset: 0; background: url('/images-optimized/DSC02206.webp') center/cover no-repeat; opacity: 0.55; }
 
   .page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.88) 38%, rgba(10,10,10,0.3) 100%); }
 
@@ -143,15 +143,15 @@ const globalStyles = `
 const services = [
 
   { href: "/services/advanced-physiotherapy", bg: "url('/images/physiotherapy.avif')", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Pain relief, rehab, post-surgery recovery" },
-  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images/DSC01806.JPG')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
-  { href: "/services/strength-conditioning", bg: "url('/images/DSC01801.JPG')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images-optimized/DSC01806.webp')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('/images-optimized/DSC01801.webp')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
   { href: "/services/postural-ergonomic-correction", bg: "url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80')", vertical: "Postural & Ergonomic Correction", icon: "fas fa-chair", title: "Postural & Ergonomic Correction", desc: "Reduce workplace injuries and discomfort" },
-  { href: "/services/manual-therapy-dry-needling", bg: "url('/images/DSC01938.JPG')", vertical: "Manual Therapy & Dry Needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('/images-optimized/DSC01938.webp')", vertical: "Manual Therapy & Dry Needling", icon: "fas fa-hands", title: "Manual Therapy & Dry Needling", desc: "Hands-on techniques for faster healing" },
   { href: "/services/myofascial-release", bg: "url('/images/myofascial%20release.avif')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02036.JPG')", vertical: "Prehab & Wellness Programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
+  { href: "/services/prehab-wellness-programs", bg: "url('/images-optimized/DSC02036.webp')", vertical: "Prehab & Wellness Programs", icon: "fas fa-heart", title: "Prehab & Wellness Programs", desc: "Prevent injuries before they happen" },
 
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
-  { href: "/services/running-rehab-performance-training", bg: "url('/images/DSC01950.JPG')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
+  { href: "/services/running-rehab-performance-training", bg: "url('/images-optimized/DSC01950.webp')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
 function useReveal() {
@@ -167,33 +167,6 @@ function useReveal() {
   }, []);
 }
 
-<<<<<<< HEAD
-function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  const links = [
-    { href: "/", label: "Home" }, { href: "/about", label: "About" }, { href: "/services", label: "Services" },
-{ href: "/trainers", label: "Team" },
-{ href: "/pricing", label: "Initiatives" },
-{ href: "/fit2run", label: "Fit2Run" },
-  ];
-  return (
-    <nav id="navbar" className={scrolled ? "scrolled" : ""}>
-      <div className="nav-logo"><img src="/logo.png" alt="Stairs" style={{ height: 70, width: "auto" }} /></div>
-      <div className="nav-links" style={menuOpen ? { display: "flex", flexDirection: "column", position: "absolute", top: 70, left: 0, right: 0, background: "rgba(10,10,10,0.97)", padding: 20, gap: 18, zIndex: 999 } : {}}>
-        {links.map((l) => <a key={l.href} href={l.href} className={l.href === "/services" ? "active" : ""}>{l.label}</a>)}
-        <a href="/contact" className="contact-btn">Contact</a>
-      </div>
-      <div className="hamburger" onClick={() => setMenuOpen((o) => !o)}><span /><span /><span /></div>
-    </nav>
-  );
-}
-=======
->>>>>>> a56e7d8 (Update website pages and images)
 
 function PageHero() {
   return (

@@ -67,7 +67,7 @@ const globalStyles = `
 
   /* PAGE HERO */
   #page-hero{position:relative;min-height:46vh;background:var(--darker);display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:80px;text-align:center;}
-  .page-hero-bg{position:absolute;inset:0;background:url('/images/DSC02060.JPG') center/cover no-repeat;opacity:.3;}
+  .page-hero-bg{position:absolute;inset:0;background:url('/images-optimized/DSC02060.webp') center/cover no-repeat;opacity:.3;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:rgba(10,10,10,.65);}
   .page-hero-content{position:relative;z-index:2;padding:0 40px;}
   .page-hero-content .sub{font-family:var(--font-body);font-weight:600;font-size:.9rem;letter-spacing:4px;color:var(--light);text-transform:uppercase;border-left:4px solid var(--red);padding-left:14px;margin-bottom:16px;display:inline-block;}

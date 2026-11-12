@@ -299,7 +299,7 @@ function AboutDetail() {
     <section id="about-detail">
       <div className="about-detail-grid">
         <div className="about-img-wrap reveal-left">
-          <img src="/images/GRoup%20photo.jpg.jpeg" alt="Stairs Team" style={{ width: "100%", height: "auto", borderRadius: "22px", display: "block" }} />
+          <img src="/images-optimized/GRoup%20photo.jpg.webp" alt="Stairs Team" style={{ width: "100%", height: "auto", borderRadius: "22px", display: "block" }} />
           <div className="exp-badge">8+<small>Years<br />Exp.</small></div>
         </div>
         <div className="about-text reveal-right">

@@ -38,7 +38,7 @@ const globalStyles = `
 
   /* PAGE HERO */
   #page-hero{position:relative;min-height:60vh;background:var(--darker);display:flex;align-items:center;overflow:hidden;padding-top:80px;}
-  .page-hero-bg{position:absolute;inset:0;background:url('/images/2R5A9466.jpg') center/cover no-repeat;opacity:.55;}
+  .page-hero-bg{position:absolute;inset:0;background:url('/images-optimized/2R5A9466.webp') center/cover no-repeat;opacity:.55;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.85) 40%,rgba(10,10,10,.2) 100%);}
   .page-hero-content{position:relative;z-index:2;padding:0 60px;}
   .page-hero-content .sub{font-family:var(--font-body);font-weight:600;font-size:.9rem;letter-spacing:4px;color:var(--light);text-transform:uppercase;border-left:4px solid var(--red);padding-left:14px;margin-bottom:16px;display:block;}
@@ -166,11 +166,11 @@ function Intro() {
 }
 
 const professionalPhotos = [
-  "2R5A9465.jpg",
-  "2R5A9470.jpg",
-  "2R5A9477.jpg",
-  "2R5A9469.jpg",
-].map((f) => `/images/${f}`);
+  "2R5A9465.webp",
+  "2R5A9470.webp",
+  "2R5A9477.webp",
+  "2R5A9469.webp",
+].map((f) => `/images-optimized/${f}`);
 
 /* Photos fade into each other automatically (default: every 2 seconds). */
 function PhotoSlideshow({ images, interval = 2000 }: { images: string[]; interval?: number }) {
@@ -223,9 +223,9 @@ function ProfessionalLearning() {
 }
 
 const communityPhotos = [
-  "IMG_3006.JPG.jpeg",
-  "DSC01692.JPG",
-].map((f) => `/images/${f}`);
+  "IMG_3006.JPG.webp",
+  "DSC01692.webp",
+].map((f) => `/images-optimized/${f}`);
 
 function CommunityLearning() {
   return (

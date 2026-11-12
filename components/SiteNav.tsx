@@ -127,6 +127,14 @@ export default function SiteNav({ menuOpen, setMenuOpen }: SiteNavProps) {
         className="hamburger"
         role="button"
         aria-label="Toggle menu"
+        aria-expanded={open}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setOpen((o) => !o);
+          }
+        }}
         onClick={() => setOpen((o) => !o)}
       >
         <span />

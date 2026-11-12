@@ -5,6 +5,7 @@ import BranchesFooter, { branches } from "@/components/BranchesFooter";
 import Navbar from "@/components/SiteNav";
 import AutoScrollRow from "@/components/AutoScrollRow";
 import { motion } from "motion/react";
+import { openMailCompose } from "@/lib/contact-mail";
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -35,7 +36,7 @@ const globalStyles = `
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
   .hamburger span{display:block;width:26px;height:2px;background:var(--light);}
   #page-hero{position:relative;min-height:60vh;background:var(--darker);display:flex;align-items:center;overflow:hidden;padding-top:80px;}
-  .page-hero-bg{position:absolute;inset:0;background:url('/images/DSC02231.webp') center/cover no-repeat;opacity:.55;}
+  .page-hero-bg{position:absolute;inset:0;background:url('/images-optimized/DSC02231.webp') center/cover no-repeat;opacity:.55;}
   .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,.85) 40%,rgba(10,10,10,.2) 100%);}
   .page-hero-circle-wrap{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:420px;height:420px;pointer-events:none;z-index:2;}
   @keyframes ph-spin-cw{to{transform:rotate(360deg);}}
@@ -210,27 +211,14 @@ function ContactFull() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = async () => {
+  // Opens the visitor's own mail service (Gmail / Outlook / Yahoo / default app) with the form filled in.
+  const handleSubmit = () => {
     if (!form.name || !form.email || !form.message) {
       setStatus("error");
       return;
     }
-    setStatus("loading");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus("success");
-        setForm({ name: "", phone: "", email: "", subject: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
+    openMailCompose(form);
+    setStatus("success");
   };
 
   return (
@@ -296,7 +284,7 @@ function ContactFull() {
           )}
           {status === "success" && (
             <p style={{ color: "#4caf50", fontSize: ".85rem", marginBottom: 8 }}>
-              ✓ Message sent! We&apos;ll get back to you soon.
+              ✓ Your mail app opened with the message filled in. Press Send there to deliver it.
             </p>
           )}
           <div className="form-submit">

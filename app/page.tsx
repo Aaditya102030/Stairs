@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 
 import { NoiseBackground } from "@/components/ui/noise-background";
 import blogPosts from "@/lib/blogPosts";
+import { openMailCompose } from "@/lib/contact-mail";
 import type { BlogPost } from "@/lib/blogPosts";
 import BranchesFooter from "@/components/BranchesFooter";
 import Navbar from "@/components/SiteNav";
@@ -14,7 +15,6 @@ import AutoScrollRow from "@/components/AutoScrollRow";
 
 /* ─── Inline CSS ─── */
 const globalStyles = `
-  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
   :root {
     --red: #e8372c;
@@ -162,10 +162,10 @@ const globalStyles = `
   }
 
   .feature-card { position: relative; padding: 30px 24px; border-radius: 16px; background: #ffffff; z-index: 0; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
-  .feature-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c, #8b0000); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; animation: gradientSpin 3s ease infinite; }
+  .feature-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c, #8b0000); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; }
   .feature-card::after { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: #ffffff; z-index: -1; }
   .feature-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(232,55,44,0.25); }
-  .feature-card:hover::before { opacity: 1; }
+  .feature-card:hover::before { opacity: 1; animation: gradientSpin 3s ease infinite; }
   .feature-card .icon-wrap { width: 64px; height: 64px; background: #fef0ef; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; transition: background 0.3s; }
   .feature-card:hover .icon-wrap { background: var(--red); }
   .feature-card .icon-wrap i { font-size: 1.6rem; color: var(--red); transition: color 0.3s; }
@@ -244,7 +244,7 @@ const globalStyles = `
 
   /* TESTIMONIALS */
   #testimonials { position: relative; min-height: 420px; background: var(--darker); display: flex; align-items: center; overflow: hidden; }
-  .testimonials-bg { position: absolute; inset: 0; background: url('/images/DSC02201.JPG') center 40%/cover no-repeat; opacity: 0.65; }
+  .testimonials-bg { position: absolute; inset: 0; background: url('/images-optimized/DSC02201.webp') center 40%/cover no-repeat; opacity: 0.65; }
   .testimonials-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.6) 50%, rgba(10,10,10,0.45) 100%), linear-gradient(to top, rgba(10,10,10,0.5) 0%, transparent 30%); }
   .testi-circle { width: 400px; height: 400px; right: 5%; top: 50%; transform: translateY(-50%); border-width: 20px; pointer-events: none; opacity: 0.65; }
   .testi-img-placeholder .img-box i { font-size: 2.5rem; margin-bottom: 10px; opacity: 0.3; }
@@ -288,10 +288,10 @@ const globalStyles = `
     .pricing-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 15px); }
   }
   .pricing-card { position: relative; border-radius: 16px; overflow: visible; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.07); z-index: 0; }
-  .pricing-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c, #8b0000); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; animation: gradientSpin 3s ease infinite; }
+  .pricing-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c, #8b0000); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; }
   .pricing-card::after { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: #ffffff; z-index: -1; }
   .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(232,55,44,0.25); }
-  .pricing-card:hover::before { opacity: 1; }
+  .pricing-card:hover::before { opacity: 1; animation: gradientSpin 3s ease infinite; }
   .pricing-card .card-img { height: 180px; background: #222; position: relative; overflow: hidden; border-radius: 14px 14px 0 0; }
   .pricing-card .card-img .img-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); font-size: 0.75rem; letter-spacing: 1px; }
   .pricing-card .card-img .img-placeholder i { font-size: 2rem; margin-bottom: 8px; }
@@ -305,8 +305,8 @@ const globalStyles = `
 
   /* PROGRAMME CARD (home) */
   .prog-card{position:relative;border-radius:16px;overflow:visible;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 16px rgba(0,0,0,.07);z-index:0;background:#fff;}
-  .prog-card::before{content:'';position:absolute;inset:-3px;border-radius:18px;background:linear-gradient(135deg,#e8372c,#ff6b35,#ffb347,#e8372c,#8b0000);background-size:300% 300%;z-index:-1;opacity:0;transition:opacity .4s ease;animation:gradientSpin 3s ease infinite;}
-  .prog-card:hover::before{opacity:1;}
+  .prog-card::before{content:'';position:absolute;inset:-3px;border-radius:18px;background:linear-gradient(135deg,#e8372c,#ff6b35,#ffb347,#e8372c,#8b0000);background-size:300% 300%;z-index:-1;opacity:0;transition:opacity .4s ease;}
+  .prog-card:hover::before{opacity:1;animation:gradientSpin 3s ease infinite;}
   .prog-card::after{content:'';position:absolute;inset:2px;border-radius:14px;background:#fff;z-index:-1;}
   .prog-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(232,55,44,.35);}
   .prog-slider{position:relative;height:180px;overflow:hidden;border-radius:14px 14px 0 0;background:#000;}
@@ -400,10 +400,10 @@ const globalStyles = `
   #trainers .section-title { color: var(--light); margin-bottom: 60px; }
   .trainers-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
   .trainer-card { position: relative; text-align: center; background: rgba(255,255,255,0.1); border-radius: 16px; padding: 30px 28px; width: 220px; z-index: 0; transition: transform 0.3s, box-shadow 0.3s; }
-  .trainer-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #ffffff, #ffb347, #ffffff, #ff6b35); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; animation: gradientSpin 3s ease infinite; }
+  .trainer-card::before { content: ''; position: absolute; inset: -3px; border-radius: 18px; background: linear-gradient(135deg, #ffffff, #ffb347, #ffffff, #ff6b35); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s ease; }
   .trainer-card::after { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: rgba(180,30,20,0.85); z-index: -1; }
   .trainer-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
-  .trainer-card:hover::before { opacity: 1; }
+  .trainer-card:hover::before { opacity: 1; animation: gradientSpin 3s ease infinite; }
   .trainer-card .trainer-img { width: 160px; height: 160px; border-radius: 50%; background: rgba(0,0,0,0.25); border: 4px solid rgba(255,255,255,0.3); margin: 0 auto 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; transition: border-color 0.3s; }
   .trainer-card:hover .trainer-img { border-color: var(--light); }
   .trainer-card .trainer-img .img-placeholder { color: rgba(255,255,255,0.3); font-size: 0.7rem; letter-spacing: 0.5px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
@@ -774,15 +774,15 @@ const testimonials = [
   { img: "/images/SANJAY RAJPAL.avif", quote: "STAIRS is God-sent for me. Absolutely awesome team and time at Stairs. Just can't wait for my next session every single time. You guys make it so interesting and work towards the need and goal of the client, that ensures I skip my work but not my workout. Keep rocking TEAM STAIRS!", name: "Sanjay Rajpal", role: "Businessman & Squash Champ" },
   { img: "/images/RUKMINI VIJAYAKUMAR.avif", quote: "I have personally grown to understand my body better because of Somya. There is a warm environment that the trainers and therapists foster that is conducive to progress. Every person working in Stairs is kind and helpful and I love the place! I highly recommend coming to Stairs.", name: "Rukmini Vijaykumar", role: "Actress & Dancer" },
   { img: "/images/SHREYAS KARNAD.avif", quote: "I'm proud to have a coach like Somya Rout, the team he is building and someone to speak to and someone who listens to me especially when you are in a profession it's the other way around all the time. To coach and to be coached is a perfect balance of learning & teaching.", name: "Shreyas Karnad", role: "Marathoner & Running Coach" },
-  { img: "/images/Stairs Corporate Deck.png", quote: "Stairs Physiotherapy & Fitness has been a game-changer in my recovery and performance. Their expert care helped me stay injury-free, improve mobility, and build strength for peak performance. Thanks to their support, I feel stronger, more agile, and ready for every match!", name: "Yasmeen Shaikh", role: "Indian badminton player" },
-  { img: "/images/Stairs Corporate Deck (1).png", quote: "Completing Ironman Goa was a huge challenge, and Stairs Physiotherapy & Fitness played a crucial role in my journey. Their expert rehab, strength training, and recovery sessions helped me stay injury-free and perform at my best. Their support made all the difference in crossing that finish line strong!", name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete" },
-  { img: "/images/Stairs Corporate Deck (2).png", quote: "Stairs Physiotherapy & Fitness has been a game-changer for me! Their expert team lead by Somya Rout and Harinag helped me recover from fatigue, improve mobility, and stay injury-free through personalized care. Thanks to them, I feel stronger, pain-free, and always ready to perform!", name: "Jacqueline Fernandez", role: "Indian Actress" },
-  { img: "/images/Stairs Corporate Deck (3).png", quote: "Stairs Physiotherapy & Fitness has been instrumental in keeping me pain-free and improving mobility. Their expert rehab and recovery programs help athletes stay strong, prevent injuries, and perform at their best. Highly recommended!", name: "Prakash Padukone", role: "Former Indian badminton player" },
-  { img: "/images/Stairs Corporate Deck (4).png", quote: "Competing in Ironman, Bergman, and multiple triathlons demands intense training and quick recovery. Stairs Physiotherapy & Fitness has been a key part of my journey, helping me stay injury-free, recover faster, and perform at my best. Their expert care has truly elevated my endurance and performance!", name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete" },
-  { img: "/images/Stairs Corporate Deck (5).png", quote: "Stairs Physiotherapy and Fitness has truly transformed my recovery journey. Their expert team, personalized care, and attention to detail helped me bounce back stronger and pain-free. Grateful for their dedication and support!", name: "Yash Gowda", role: "Indian Actor" },
-  { img: "/images/Stairs Corporate Deck (6).png", quote: "My dad, Prakash Padukone, continues to stay strong with the help of Stairs Physiotherapy and Fitness. Somya has been a huge part of his journey — and mine too. Every time I'm in Bangalore, Somya has been there to support my recovery journey.", name: "Deepika Padukone", role: "Indian Actress" },
-  { img: "/images/Stairs Corporate Deck (7).png", quote: "As a professional billiards and snooker champion, precision and physical well-being are everything. For the past 6 years, Stairs Physiotherapy and Fitness — especially Somya has been key to my recovery and performance. Their consistent care keeps me tournament-ready, always.", name: "Pankaj Advani", role: "Indian Billiards Champion" },
-  { img: "/images/Stairs Corporate Deck (8).png", quote: "Being in the film and fitness space, my body goes through a lot — and Stairs Physiotherapy and Fitness has been a game-changer. Somya's guidance has helped me recover faster and perform better, both on-screen and off. Grateful for the care and commitment they bring every single time.", name: "Rakul Preet", role: "Indian Actress" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck.webp", quote: "Stairs Physiotherapy & Fitness has been a game-changer in my recovery and performance. Their expert care helped me stay injury-free, improve mobility, and build strength for peak performance. Thanks to their support, I feel stronger, more agile, and ready for every match!", name: "Yasmeen Shaikh", role: "Indian badminton player" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(1).webp", quote: "Completing Ironman Goa was a huge challenge, and Stairs Physiotherapy & Fitness played a crucial role in my journey. Their expert rehab, strength training, and recovery sessions helped me stay injury-free and perform at my best. Their support made all the difference in crossing that finish line strong!", name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(2).webp", quote: "Stairs Physiotherapy & Fitness has been a game-changer for me! Their expert team lead by Somya Rout and Harinag helped me recover from fatigue, improve mobility, and stay injury-free through personalized care. Thanks to them, I feel stronger, pain-free, and always ready to perform!", name: "Jacqueline Fernandez", role: "Indian Actress" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(3).webp", quote: "Stairs Physiotherapy & Fitness has been instrumental in keeping me pain-free and improving mobility. Their expert rehab and recovery programs help athletes stay strong, prevent injuries, and perform at their best. Highly recommended!", name: "Prakash Padukone", role: "Former Indian badminton player" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(4).webp", quote: "Competing in Ironman, Bergman, and multiple triathlons demands intense training and quick recovery. Stairs Physiotherapy & Fitness has been a key part of my journey, helping me stay injury-free, recover faster, and perform at my best. Their expert care has truly elevated my endurance and performance!", name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(5).webp", quote: "Stairs Physiotherapy and Fitness has truly transformed my recovery journey. Their expert team, personalized care, and attention to detail helped me bounce back stronger and pain-free. Grateful for their dedication and support!", name: "Yash Gowda", role: "Indian Actor" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(6).webp", quote: "My dad, Prakash Padukone, continues to stay strong with the help of Stairs Physiotherapy and Fitness. Somya has been a huge part of his journey — and mine too. Every time I'm in Bangalore, Somya has been there to support my recovery journey.", name: "Deepika Padukone", role: "Indian Actress" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(7).webp", quote: "As a professional billiards and snooker champion, precision and physical well-being are everything. For the past 6 years, Stairs Physiotherapy and Fitness — especially Somya has been key to my recovery and performance. Their consistent care keeps me tournament-ready, always.", name: "Pankaj Advani", role: "Indian Billiards Champion" },
+  { img: "/images-optimized/Stairs%20Corporate%20Deck%20(8).webp", quote: "Being in the film and fitness space, my body goes through a lot — and Stairs Physiotherapy and Fitness has been a game-changer. Somya's guidance has helped me recover faster and perform better, both on-screen and off. Grateful for the care and commitment they bring every single time.", name: "Rakul Preet", role: "Indian Actress" },
   { img: "/images/PRAGATHI GUPTA.png", quote: "Stairs is like my second home. Entire team at Stairs is so diligent & proficient. They not only strengthen us but understand the needs of our sport and train us efficaciously such that we are able to pursue our goals.", name: "Pragathi Gupta", role: "Runner" },
   { img: "/images/JANANI ANANTHAKUMAR.jpg", quote: "Stairs isn't just a fitness space; it's a home. Grateful for dedicated trainers, physios, and supportive members ensuring peak performance. Thank you, Team Stairs, for fostering excellence and positivity.", name: "Janani Ananthakumar", role: "Athlete, Badminton (India)" },
 ];
@@ -841,15 +841,15 @@ const features = [
 
 const services = [
   { href: "/services/advanced-physiotherapy", bg: "url('/images/physiotherapy.avif')", vertical: "Physiotherapy", icon: "fas fa-notes-medical", title: "Physiotherapy", desc: "Pain Management, Prehab & Rehab, Post-Surgical Rehabilitation" },
-  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images/DSC01806.JPG')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
-  { href: "/services/strength-conditioning", bg: "url('/images/DSC01801.JPG')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
+  { href: "/services/sports-rehab-injury-prevention", bg: "url('/images-optimized/DSC01806.webp')", vertical: "Sports Rehab & Injury Prevention", icon: "fas fa-shield-alt", title: "Sports Rehab & Injury Prevention", desc: "Get back to peak performance safely" },
+  { href: "/services/strength-conditioning", bg: "url('/images-optimized/DSC01801.webp')", vertical: "Strength & Conditioning", icon: "fas fa-dumbbell", title: "Strength & Conditioning", desc: "Custom fitness programs for endurance and strength" },
   
-  { href: "/services/manual-therapy-dry-needling", bg: "url('/images/DSC01938.JPG')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
+  { href: "/services/manual-therapy-dry-needling", bg: "url('/images-optimized/DSC01938.webp')", vertical: "Manual Therapy, Dry Needling, Cupping", icon: "fas fa-hands", title: "Manual Therapy, Dry Needling, Cupping", desc: "Hands-on techniques for faster healing" },
   { href: "/services/myofascial-release", bg: "url('/images/myofascial%20release.avif')", vertical: "Myofascial Release Therapy (MFR)", icon: "fas fa-hand-holding-heart", title: "Myofascial Release Therapy (MFR)", desc: "Relieving muscle tightness and improving mobility" },
-  { href: "/services/prehab-wellness-programs", bg: "url('/images/DSC02036.JPG')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
+  { href: "/services/prehab-wellness-programs", bg: "url('/images-optimized/DSC02036.webp')", vertical: "Massage Therapy", icon: "fas fa-spa", title: "Massage Therapy", desc: "Deep tissue and sports massage for recovery" },
   
   { href: "/services/nutrition-support", bg: "url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80')", vertical: "Nutrition Support", icon: "fas fa-apple-alt", title: "Nutrition Support", desc: "Personalized guidance to fuel recovery and performance" },
-  { href: "/services/running-rehab-performance-training", bg: "url('/images/DSC01950.JPG')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
+  { href: "/services/running-rehab-performance-training", bg: "url('/images-optimized/DSC01950.webp')", vertical: "Running Rehab & Performance Training", icon: "fas fa-running", title: "Running Rehab & Performance Training", desc: "Injury prevention and strength sessions for all levels, from beginners to Ironman & World Major Marathon athletes." },
 ];
 
 type ProgramSlide = { title: string; sub: string; detail: string; bg: string };
@@ -864,7 +864,7 @@ const programCards: ProgramCardData[] = [
     subtitle: "What's Included",
     icon: "fas fa-dumbbell",
     features: ["Personalized training plan", "One-to-one online coaching sessions", "Exercise technique and movement guidance", "Progressive strength and conditioning", "Training adjustments based on your progress"],
-    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "/images/DSC02060.JPG" }],
+    slides: [{ title: "ONLINE", sub: "STRENGTH TRAINING", detail: "One-to-one online coaching", bg: "/images-optimized/DSC02060.webp" }],
   },
   {
     id: "online-group-sessions",
@@ -920,19 +920,19 @@ const pricingPlans = [
 
 /* Client gallery. Photos not yet in /public/images/gallery/ fall back to an initials tile. */
 const galleryClients = [
-  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images/Stairs%20Welcome%20Guide%20100.png" },
-  { name: "Yash Gowda", role: "Indian Actor", img: "/images/Stairs%20Welcome%20Guide.png" },
-  { name: "Deepika Padukone", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(1).png" },
-  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images/Stairs%20Welcome%20Guide%20(2).png" },
-  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images/Stairs%20Welcome%20Guide%20(3).png" },
-  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images/Stairs%20Welcome%20Guide%20(4).png" },
-  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(5).png" },
-  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images/Stairs%20Welcome%20Guide%20(6).png" },
-  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images/Stairs%20Welcome%20Guide%20(7).png" },
-  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images/Stairs%20Welcome%20Guide%20(8).png" },
-  { name: "Rakul Preet", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(9).png" },
-  { name: "Neha Shetty", role: "Indian Actress", img: "/images/Stairs%20Welcome%20Guide%20(10).png" },
-  { name: "Allu Sirish", role: "Indian Actor", img: "/images/Stairs%20Welcome%20Guide%20(11).png" },
+  { name: "Yasmeen Shaikh", role: "Indian badminton player", img: "/images-optimized/Stairs%20Welcome%20Guide%20100.webp" },
+  { name: "Yash Gowda", role: "Indian Actor", img: "/images-optimized/Stairs%20Welcome%20Guide.webp" },
+  { name: "Deepika Padukone", role: "Indian Actress", img: "/images-optimized/Stairs%20Welcome%20Guide%20(1).webp" },
+  { name: "Bhavish Aggarwal", role: "OLA Co-Founder", img: "/images-optimized/Stairs%20Welcome%20Guide%20(2).webp" },
+  { name: "Anand Dayal Dadu", role: "Anand Sweets Founder", img: "/images-optimized/Stairs%20Welcome%20Guide%20(3).webp" },
+  { name: "Tejasvi Surya", role: "MP, Bengaluru South & Ironman triathlete", img: "/images-optimized/Stairs%20Welcome%20Guide%20(4).webp" },
+  { name: "Jacqueline Fernandez", role: "Indian Actress", img: "/images-optimized/Stairs%20Welcome%20Guide%20(5).webp" },
+  { name: "Prakash Padukone", role: "Former Indian badminton player", img: "/images-optimized/Stairs%20Welcome%20Guide%20(6).webp" },
+  { name: "Anish Sood", role: "Businessman & Ironman, Bergman Triathlete", img: "/images-optimized/Stairs%20Welcome%20Guide%20(7).webp" },
+  { name: "Pankaj Advani", role: "Indian Billiards Champion", img: "/images-optimized/Stairs%20Welcome%20Guide%20(8).webp" },
+  { name: "Rakul Preet", role: "Indian Actress", img: "/images-optimized/Stairs%20Welcome%20Guide%20(9).webp" },
+  { name: "Neha Shetty", role: "Indian Actress", img: "/images-optimized/Stairs%20Welcome%20Guide%20(10).webp" },
+  { name: "Allu Sirish", role: "Indian Actor", img: "/images-optimized/Stairs%20Welcome%20Guide%20(11).webp" },
 ];
 
 const pricingFeatures = ["Unlimited club access", "Group attendance", "Gym visits", "Visits to the bath complex", "Gym fight club"];
@@ -980,11 +980,11 @@ function useCountUp() {
 /* ─── Hero ─── */
 /* Hero background: our own photos from /public/images, scrolling sideways on a loop */
 const heroPhotos = [
-  "DSC01960.JPG",
-  "DSC01972.JPG",
-  "DSC02035.JPG",
-  "DSC01898.JPG",
-].map((f) => `/images/${f}`);
+  "DSC01960.webp",
+  "DSC01972.webp",
+  "DSC02035.webp",
+  "DSC01898.webp",
+].map((f) => `/images-optimized/${f}`);
 
 function HeroGallery() {
   const [cur, setCur] = useState(0);
@@ -1014,15 +1014,6 @@ function Hero() {
   ];
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(true);
-
-  /* Background photos that auto-slide (crossfade) every 2 seconds */
-  const heroImages = ["/images/DSC02217.JPG", "/images/DSC02201.JPG"];
-  const [bgIdx, setBgIdx] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setBgIdx((i) => (i + 1) % heroImages.length), 2000);
-    return () => clearInterval(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     let innerTimer: ReturnType<typeof setTimeout>;
@@ -1183,6 +1174,7 @@ function Hero() {
           {slides.map((_, i) => (
             <button
               key={i}
+              aria-label={`Show slide ${i + 1}`}
               suppressHydrationWarning
               onClick={() => { setVisible(false); setTimeout(() => { setIdx(i); setVisible(true); }, 400); }}
               style={{ width: i === idx ? 28 : 8, height: 8, borderRadius: 4, border: "none", cursor: "pointer", background: i === idx ? "#e8372c" : "rgba(255,255,255,0.3)", transition: "all 0.4s", padding: 0 }}
@@ -1269,7 +1261,7 @@ function Organisations() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title org-title-line1">
+            <h2 className="section-title org-title-line1" aria-hidden="true">
               
             </h2>
             <h2 className="section-title org-title-line2">Organisations</h2>
@@ -1678,8 +1670,8 @@ function Testimonials() {
           <span id="testi-role">{t.role}</span>
         </div>
         <div className="testi-nav">
-          <button onClick={prev}><i className="fas fa-chevron-left" /></button>
-          <button onClick={next}><i className="fas fa-chevron-right" /></button>
+          <button aria-label="Previous testimonial" onClick={prev}><i className="fas fa-chevron-left" /></button>
+          <button aria-label="Next testimonial" onClick={next}><i className="fas fa-chevron-right" /></button>
         </div>
       </div>
     </section>
@@ -1715,11 +1707,11 @@ function ProgramCard({ data }: { data: ProgramCardData }) {
         ))}
         {multi && (
           <>
-            <button className="prog-arr left" onClick={prev}><i className="fas fa-chevron-left" /></button>
-            <button className="prog-arr right" onClick={next}><i className="fas fa-chevron-right" /></button>
+            <button className="prog-arr left" aria-label="Previous slide" onClick={prev}><i className="fas fa-chevron-left" /></button>
+            <button className="prog-arr right" aria-label="Next slide" onClick={next}><i className="fas fa-chevron-right" /></button>
             <div className="prog-nav">
               {slides.map((_, i) => (
-                <button key={i} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
+                <button key={i} aria-label={`Show slide ${i + 1}`} className={`prog-dot${idx === i ? " active" : ""}`} onClick={() => setIdx(i)} />
               ))}
             </div>
           </>
@@ -1890,27 +1882,14 @@ function Contact() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = async () => {
+  // Opens the visitor's own mail service (Gmail / Outlook / Yahoo / default app) with the form filled in.
+  const handleSubmit = () => {
     if (!form.name || !form.email || !form.message) {
       setStatus("error");
       return;
     }
-    setStatus("loading");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (res.ok) {
-        setStatus("success");
-        setForm({ name: "", phone: "", email: "", subject: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
+    openMailCompose(form);
+    setStatus("success");
   };
 
   return (
@@ -1989,7 +1968,7 @@ function Contact() {
           )}
           {status === "success" && (
             <p style={{ color: "#4caf50", fontSize: "0.85rem", marginBottom: 8 }}>
-              ✓ Message sent! We&apos;ll get back to you soon.
+              ✓ Your mail app opened with the message filled in. Press Send there to deliver it.
             </p>
           )}
           <div className="form-submit">
@@ -2086,6 +2065,7 @@ function Blog() {
       </div>
       <div className="blog-nav">
         <button
+          aria-label="Previous page"
           onClick={() => setPage((p) => Math.max(0, p - 1))}
           disabled={page === 0}
           style={{ opacity: page === 0 ? 0.35 : 1, width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -2095,6 +2075,7 @@ function Blog() {
         {Array.from({ length: totalPages }).map((_, i) => (
           <button
             key={i}
+            aria-label={`Page ${i + 1}`}
             onClick={() => setPage(i)}
             style={{
               background: i === page ? 'var(--red)' : 'var(--dark)',
@@ -2106,6 +2087,7 @@ function Blog() {
           >{i + 1}</button>
         ))}
         <button
+          aria-label="Next page"
           onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
           disabled={page === totalPages - 1}
           style={{ opacity: page === totalPages - 1 ? 0.35 : 1, width: 40, height: 40, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
