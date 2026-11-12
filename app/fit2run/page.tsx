@@ -70,7 +70,7 @@ const globalStyles = `
   /* INTRO */
   #f2r-intro{background:#fff;padding:100px 72px;}
   .f2r-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;}
-  .f2r-intro-grid p{color:#444;font-size:1.05rem;line-height:1.85;margin-bottom:18px;}
+  .f2r-intro-grid p{color:#000;font-size:1.05rem;line-height:1.85;margin-bottom:18px;}
   .f2r-intro-grid .mark{color:var(--red);font-weight:700;}
 
   /* APPROACH */
@@ -100,8 +100,8 @@ const globalStyles = `
   /* ELITE MILERS */
   #f2r-elite{background:var(--bg-light);padding:100px 72px;}
   .f2r-elite-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:stretch;}
-  .f2r-elite-copy p{color:#444;line-height:1.85;font-size:1.02rem;margin:18px 0 0;max-width:560px;}
-  .f2r-elite-copy .kicker{font-weight:700;letter-spacing:5px;font-size:.78rem;color:#666;text-transform:uppercase;}
+  .f2r-elite-copy p{color:#000;line-height:1.85;font-size:1.02rem;margin:18px 0 0;max-width:560px;}
+  .f2r-elite-copy .kicker{font-weight:700;letter-spacing:5px;font-size:.78rem;color:#000;text-transform:uppercase;}
   .f2r-elite-copy .brand{font-family:var(--font-display);font-size:clamp(3rem,7vw,5.6rem);line-height:.95;color:var(--red);letter-spacing:2px;}
   .f2r-goal{background:var(--dark);color:#fff;border-radius:22px;padding:42px 38px;display:flex;flex-direction:column;justify-content:center;border-top:6px solid var(--red);}
   .f2r-goal small{display:inline-block;align-self:flex-start;background:var(--red);font-weight:700;font-size:.85rem;padding:6px 16px;border-radius:4px;margin-bottom:20px;letter-spacing:.5px;}
@@ -147,7 +147,7 @@ const globalStyles = `
   .f2r-stairs-head{text-align:center;max-width:760px;margin:0 auto 44px;}
   .f2r-stairs-head .quote{font-style:italic;font-weight:700;font-size:1.15rem;line-height:1.6;margin:20px 0 14px;}
   .f2r-stairs-head .quote em{color:var(--red);font-style:italic;}
-  .f2r-stairs-head p{color:#555;line-height:1.8;}
+  .f2r-stairs-head p{color:#000;line-height:1.8;}
   .f2r-groupphoto{border-radius:22px;overflow:hidden;height:420px;margin-bottom:34px;position:relative;background:radial-gradient(ellipse 70% 90% at 50% 100%,#3a0f0b 0%,#150808 70%);display:flex;align-items:flex-end;justify-content:center;}
   .f2r-groupphoto img{width:100%;height:100%;object-fit:contain;object-position:center bottom;}
   .f2r-support{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
@@ -165,8 +165,8 @@ const globalStyles = `
   .f2r-pkg{background:#fff;border-radius:22px;padding:40px;margin-bottom:28px;box-shadow:0 4px 24px rgba(0,0,0,.06);}
   .f2r-pkg-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:24px;}
   .f2r-pkg-head .f2r-h2{font-size:clamp(2rem,3.6vw,3rem);}
-  .f2r-pkg-head p{color:#666;font-size:.92rem;line-height:1.6;max-width:460px;}
-  .f2r-pkg-head p.f2r-pkg-note{border-left:4px solid var(--red);padding-left:14px;color:#555;font-size:.9rem;line-height:1.5;}
+  .f2r-pkg-head p{color:#000;font-size:.92rem;line-height:1.6;max-width:460px;}
+  .f2r-pkg-head p.f2r-pkg-note{border-left:4px solid var(--red);padding-left:14px;color:#000;font-size:.9rem;line-height:1.5;}
   .f2r-table-wrap{overflow-x:auto;border-radius:14px;}
   .f2r-table{width:100%;border-collapse:collapse;min-width:520px;}
   .f2r-table th{background:var(--red);color:#fff;font-weight:700;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;padding:15px 20px;text-align:center;}
@@ -174,10 +174,10 @@ const globalStyles = `
   .f2r-table td{padding:16px 20px;text-align:center;border-bottom:1px solid #f0e4e3;font-size:1rem;}
   .f2r-table tbody tr:nth-child(odd){background:#fdf6f5;}
   .f2r-table td.price{font-weight:700;font-size:1.05rem;white-space:nowrap;}
-  .f2r-table td small{display:block;font-size:.76rem;letter-spacing:.8px;text-transform:uppercase;color:#888;margin-top:3px;}
+  .f2r-table td small{display:block;font-size:.76rem;letter-spacing:.8px;text-transform:uppercase;color:#000;margin-top:3px;}
   .f2r-table tr.total td{background:#fdecea;font-weight:700;font-size:1.15rem;border-bottom:none;}
   .f2r-table tr.total td.price{color:var(--red);}
-  .f2r-table del{color:#999;font-weight:400;font-size:.88rem;margin-right:8px;}
+  .f2r-table del{color:#000;font-weight:400;font-size:.88rem;margin-right:8px;}
   .f2r-table th.pay-col,.f2r-table td.pay-col{text-align:right;width:1%;white-space:nowrap;}
   .f2r-pay{display:inline-flex;align-items:center;background:var(--red);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:1.2px;text-transform:uppercase;padding:9px 20px;border-radius:50px;border:2px solid var(--red);transition:background .3s,border-color .3s,transform .2s;}
   .f2r-pay:hover{background:#c0251b;border-color:#c0251b;transform:translateY(-2px);}
@@ -205,7 +205,7 @@ const globalStyles = `
   .f2r-hybrid .f2r-table tr.total td.price{color:#fff;}
 
   .f2r-custom{background:#fff;border-radius:22px;padding:40px;display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,.06);}
-  .f2r-custom p{color:#555;line-height:1.8;margin-top:14px;}
+  .f2r-custom p{color:#000;line-height:1.8;margin-top:14px;}
   .f2r-custom p.big{font-family:var(--font-display);font-size:1.5rem;letter-spacing:1.5px;color:var(--dark);margin-top:18px;line-height:1.2;}
   .f2r-custom p.big span{color:var(--red);}
   .f2r-custom .box{background:var(--bg-light);border-radius:16px;padding:28px 26px;}
@@ -627,17 +627,17 @@ function Packages() {
           </div>
           <div className="f2r-table-wrap">
             <table className="f2r-table">
-              <thead><tr><th>All inclusive for Fit2Run members</th><th>3 months</th><th>6 months</th><th className="pay-col">Pay</th></tr></thead>
+              <thead><tr><th>All inclusive for Fit2Run members</th><th>3 months</th><th>6 months</th></tr></thead>
               <tbody>
                 {allInclusive.map((r) => (
                   <tr key={r.item}>
                     <td>{r.item}<small>{r.note}</small></td>
                     <td className="price">{inr(price(r.id, 3))}</td>
                     <td className="price">{inr(price(r.id, 6))}</td>
-                    <td className="pay-col"><a href={payHref(r.id)} className="f2r-pay">Pay now</a></td>
                   </tr>
                 ))}
-                <tr className="total"><td>Total</td><td className="price">{inr(price("allinc-total", 3))}</td><td className="price">{inr(price("allinc-total", 6))}</td><td className="pay-col"><a href={payHref("allinc-total")} className="f2r-pay">Pay now</a></td></tr>
+                <tr className="total"><td>Total</td><td className="price">{inr(price("allinc-total", 3))}</td><td className="price">{inr(price("allinc-total", 6))}</td></tr>
+                <tr className="pay-row"><td /><td className="price"><a href={payHref("allinc-total", 3)} className="f2r-pay">Pay now</a></td><td className="price"><a href={payHref("allinc-total", 6)} className="f2r-pay">Pay now</a></td></tr>
               </tbody>
             </table>
           </div>

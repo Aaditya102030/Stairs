@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import BranchesFooter, { branches } from "@/components/BranchesFooter";
+import { branches } from "@/components/BranchesFooter";
 import Navbar from "@/components/SiteNav";
 import AutoScrollRow from "@/components/AutoScrollRow";
 import { motion } from "motion/react";
@@ -81,7 +81,7 @@ const globalStyles = `
   .info-card .icon i{font-size:1.3rem;color:var(--red);transition:color .3s;}
   .info-card:hover .icon i{color:var(--light);}
   .info-card h4{font-family:var(--font-display);font-size:1.1rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
-  .info-card p{color:var(--gray);font-size:.88rem;line-height:1.7;}
+  .info-card p{color:#000;font-size:.88rem;line-height:1.7;}
 
   /* FOR APPOINTMENTS */
   #appointments{position:relative;background:linear-gradient(135deg,#ffffff 0%,#fff1ef 38%,#ffc9c2 72%,#ff8f84 100%);padding:70px 60px 64px;text-align:center;overflow:hidden;}
@@ -360,7 +360,6 @@ export default function ContactPage() {
       <PageHero />
       <ContactFull />
       <Appointments />
-      <BranchesFooter />
     </>
   );
 }

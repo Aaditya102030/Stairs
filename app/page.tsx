@@ -146,13 +146,13 @@ const globalStyles = `
   @keyframes scroll-logos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
   .org-card { width: 190px; height: 130px; padding: 10px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s, filter 0.3s; }
   .org-card:hover { transform: scale(1.1); filter: drop-shadow(0 0 14px rgba(232,55,44,0.45)); }
-  .org-card .org-img-box { width: 90px; height: 90px; background: rgba(0,0,0,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 0.65rem; letter-spacing: 0.5px; text-align: center; padding: 8px; }
+  .org-card .org-img-box { width: 90px; height: 90px; background: rgba(0,0,0,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000000; font-size: 0.65rem; letter-spacing: 0.5px; text-align: center; padding: 8px; }
 
   /* WHY */
   #why { padding: 90px 60px; background: var(--bg-light); }
   #why .why-header { text-align: center; margin-bottom: 60px; }
   #why .why-header .accent { color: var(--red); }
-  #why .why-sub { color: #555; font-size: 1.05rem; margin-top: 14px; }
+  #why .why-sub { color: #000000; font-size: 1.05rem; margin-top: 14px; }
   .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 
   @keyframes gradientSpin {
@@ -171,7 +171,7 @@ const globalStyles = `
   .feature-card .icon-wrap i { font-size: 1.6rem; color: var(--red); transition: color 0.3s; }
   .feature-card:hover .icon-wrap i { color: var(--light); }
   .feature-card h3 { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
-  .feature-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px; }
+  .feature-card p { color: #000000; font-size: 0.9rem; line-height: 1.7; margin-bottom: 16px; }
   .feature-card .read-more { color: var(--red); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; }
   .feature-card .read-more:hover { gap: 10px; }
 
@@ -300,7 +300,7 @@ const globalStyles = `
   .pricing-body { padding: 46px 30px 30px; text-align: center; }
   .pricing-body h3 { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
   .pricing-body ul { margin-bottom: 28px; }
-  .pricing-body ul li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; line-height: 1.4; text-align: left; color: #555; }
+  .pricing-body ul li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; line-height: 1.4; text-align: left; color: #000000; }
   .pricing-body ul li i { color: var(--red); font-size: 0.8rem; flex-shrink: 0; margin-top: 4px; }
 
   /* PROGRAMME CARD (home) */
@@ -327,7 +327,7 @@ const globalStyles = `
   .prog-body h3{font-family:var(--font-display);font-size:1.4rem;letter-spacing:2px;text-transform:uppercase;color:#111;margin-bottom:6px;}
   .prog-body .prog-sub{color:var(--red);font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:18px;}
   .prog-body ul{margin-bottom:24px;}
-  .prog-body ul li{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:.88rem;line-height:1.4;text-align:left;color:#555;}
+  .prog-body ul li{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:.88rem;line-height:1.4;text-align:left;color:#000000;}
   .prog-body ul li i{color:var(--red);font-size:.78rem;flex-shrink:0;margin-top:4px;}
   .prog-enroll{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 28px;border-radius:50px;cursor:pointer;transition:background .2s;text-decoration:none;border:none;width:100%;}
   .prog-enroll:hover{background:#c0251b;}
@@ -517,9 +517,9 @@ const globalStyles = `
     background: #fef0ef; display: flex; align-items: center; justify-content: center;
   }
   .blog-modal-author-icon i { color: var(--red); font-size: 0.85rem; }
-  .blog-modal-author span { font-size: 0.85rem; font-weight: 700; color: #555; letter-spacing: 0.5px; }
+  .blog-modal-author span { font-size: 0.85rem; font-weight: 700; color: #000000; letter-spacing: 0.5px; }
   .blog-modal-content {
-    color: #444; font-size: 0.95rem; line-height: 1.9;
+    color: #000000; font-size: 0.95rem; line-height: 1.9;
     white-space: pre-line;
   }
   .blog-modal-footer {
@@ -538,7 +538,7 @@ const globalStyles = `
   .blog-modal-cta:hover { background: #c0251b; }
   .blog-modal-back {
     display: inline-flex; align-items: center; gap: 8px;
-    border: 2px solid #ddd; color: #555;
+    border: 2px solid #ddd; color: #000000;
     font-family: var(--font-body); font-weight: 700; font-size: 0.82rem;
     letter-spacing: 1px; text-transform: uppercase;
     padding: 10px 22px; border-radius: 50px;
@@ -561,7 +561,7 @@ const globalStyles = `
   .blog-body { padding: 24px 22px; }
   .blog-body h3 { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; line-height: 1.3; margin-bottom: 12px; }
   .blog-card.featured h3 { color: var(--red); }
-  .blog-body p { color: var(--gray); font-size: 0.85rem; line-height: 1.7; margin-bottom: 14px; }
+  .blog-body p { color: #000000; font-size: 0.85rem; line-height: 1.7; margin-bottom: 14px; }
   .blog-body .read-more { color: var(--red); font-weight: 700; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; }
   .blog-nav { display: flex; justify-content: center; gap: 12px; margin-top: 40px; }
   .blog-nav button { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--dark); color: var(--light); cursor: pointer; font-size: 0.9rem; transition: background 0.3s; }

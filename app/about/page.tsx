@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
 import Navbar from "@/components/SiteNav";
-import { motion } from "motion/react";
 
 /* ─── Shared styles (same as main site) ─── */
 const globalStyles = `
@@ -99,14 +98,14 @@ const globalStyles = `
   .about-text { display: flex; flex-direction: column; }
   .about-text .section-label { color: var(--red); letter-spacing: 3px; font-weight: 700; }
   .about-text h2 { margin-bottom: 24px; }
-  .about-text p { color: var(--gray); font-size: 0.98rem; line-height: 1.85; margin-bottom: 24px; }
+  .about-text p { color: #000000; font-size: 0.98rem; line-height: 1.85; margin-bottom: 24px; }
   .feature-carousel { margin: 42px auto 0; overflow: hidden; position: relative; max-width: 820px; }
   .feature-carousel-track { display: flex; transition: transform 0.8s ease; }
   .feature-card { flex: 0 0 100%; min-width: 100%; max-width: 760px; margin: 0 auto; background: rgba(255,255,255,0.96); border: 1px solid rgba(17,17,17,0.06); border-radius: 24px; padding: 42px 42px 44px; min-height: 340px; box-shadow: 0 24px 60px rgba(0,0,0,0.08); display: flex; align-items: flex-start; gap: 20px; }
   .feature-card .icon { width: 56px; height: 56px; background: #fff4f1; border-radius: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .feature-card .icon i { color: var(--red); font-size: 1.25rem; }
   .feature-card h4 { font-family: var(--font-display); font-size: 1rem; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 8px; }
-  .feature-card p { color: var(--gray); font-size: 0.95rem; line-height: 1.85; margin: 0; }
+  .feature-card p { color: #000000; font-size: 0.95rem; line-height: 1.85; margin: 0; }
   .feature-carousel-nav { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
   .feature-carousel-dot { width: 12px; height: 12px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.15); background: rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s, background 0.2s; }
   .feature-carousel-dot.active { background: var(--red); transform: scale(1.1); border-color: var(--red); }
@@ -139,7 +138,7 @@ const globalStyles = `
   #approach::before { content: ''; position: absolute; top: -140px; right: -140px; width: 400px; height: 400px; border-radius: 50%; border: 40px solid rgba(232,55,44,0.06); pointer-events: none; }
   #approach > * { position: relative; z-index: 1; }
   #approach .section-title span { color: var(--red); }
-  .approach-sub { color: var(--gray); font-size: 1.05rem; line-height: 1.7; max-width: 620px; margin: 16px auto 0; }
+  .approach-sub { color: #000000; font-size: 1.05rem; line-height: 1.7; max-width: 620px; margin: 16px auto 0; }
   .approach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1200px; margin: 56px auto 0; }
   .approach-card { position: relative; z-index: 0; height: 100%; background: #fff; border-radius: 16px; padding: 44px 26px 34px; box-shadow: 0 4px 18px rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s; }
   .approach-card::before { content: ''; position: absolute; inset: -2px; border-radius: 18px; background: linear-gradient(135deg, #e8372c, #ff6b35, #ffb347, #e8372c); background-size: 300% 300%; z-index: -1; opacity: 0; transition: opacity 0.4s; animation: gradientSpin 3s ease infinite; }
@@ -152,7 +151,7 @@ const globalStyles = `
   .approach-card:hover .approach-icon { background: var(--red); }
   .approach-card:hover .approach-icon i { color: var(--light); }
   .approach-card h4 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dark); line-height: 1.25; margin-bottom: 12px; }
-  .approach-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.75; }
+  .approach-card p { color: #000000; font-size: 0.9rem; line-height: 1.75; }
   .approach-foot { display: inline-block; margin-top: 56px; background: var(--red); color: var(--light); font-size: clamp(0.95rem, 1.6vw, 1.1rem); padding: 16px 34px; border-radius: 50px; box-shadow: 0 10px 26px rgba(232,55,44,0.3); }
   .approach-foot strong { font-weight: 700; }
   @media (max-width: 1024px) {
@@ -306,9 +305,6 @@ function AboutDetail() {
           <span className="section-label">About Us</span>
           <h2 className="section-title">Who We Are</h2>
           <p>We believe that movement is life. At Stairs Physiotherapy &amp; Fitness, we are committed to helping individuals move pain-free, recover faster, and perform better. Whether it’s an athlete, a corporate professional, or someone recovering from an injury. Our expert team is here to support every journey toward better health.</p>
-          <motion.a href="/new-pricing-plan" whileTap={{ scale: 0.95 }} className="btn-primary">
-            Get Started <span className="play-icon"><i className="fas fa-play" /></span>
-          </motion.a>
         </div>
       </div>
       <FeatureCarousel />

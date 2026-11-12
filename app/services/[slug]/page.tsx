@@ -60,7 +60,7 @@ const globalStyles = `
   .intro-text .tag { font-family: var(--font-body); font-weight: 700; font-size: 0.82rem; letter-spacing: 3px; text-transform: uppercase; color: var(--red); display: block; margin-bottom: 12px; }
   .intro-text h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--dark); letter-spacing: 1px; text-transform: uppercase; line-height: 1.1; margin-bottom: 18px; }
   .intro-text .divider { width: 48px; height: 3px; background: var(--red); border-radius: 2px; margin-bottom: 20px; }
-  .intro-text p { color: #444; font-size: 0.97rem; line-height: 1.85; margin-bottom: 14px; }
+  .intro-text p { color: #000; font-size: 0.97rem; line-height: 1.85; margin-bottom: 14px; }
   .intro-img { border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
   .intro-img img { width: 100%; height: 380px; object-fit: cover; display: block; }
 
@@ -69,16 +69,16 @@ const globalStyles = `
   .feature-row.reverse { direction: rtl; }
   .feature-row.reverse > * { direction: ltr; }
   .feature-text h3 { font-family: var(--font-display); font-size: 1.7rem; color: var(--dark); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
-  .feature-text p { color: #555; font-size: 0.95rem; line-height: 1.85; margin-bottom: 12px; }
+  .feature-text p { color: #000; font-size: 0.95rem; line-height: 1.85; margin-bottom: 12px; }
   .feature-text ul { list-style: none; padding: 0; margin-top: 8px; }
-  .feature-text ul li { display: flex; gap: 12px; align-items: flex-start; color: #444; font-size: 0.92rem; line-height: 1.7; margin-bottom: 12px; }
+  .feature-text ul li { display: flex; gap: 12px; align-items: flex-start; color: #000; font-size: 0.92rem; line-height: 1.7; margin-bottom: 12px; }
   .feature-text ul li::before { content: ''; display: block; flex-shrink: 0; width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: var(--red); }
   .feature-img { border-radius: 14px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
   .feature-img img { width: 100%; height: 300px; object-fit: cover; display: block; }
 
   /* HIGHLIGHT STRIP */
   .highlight-strip { background: #f7f7f7; border-left: 5px solid var(--red); border-radius: 12px; padding: 28px 32px; margin: 40px 0; }
-  .highlight-strip p { color: #333; font-size: 1rem; line-height: 1.8; font-style: italic; }
+  .highlight-strip p { color: #000; font-size: 1rem; line-height: 1.8; font-style: italic; }
 
   /* BULLETS GRID */
   .bullets-section { background: #ffffff; padding: 70px 60px; }
@@ -91,12 +91,12 @@ const globalStyles = `
   .bullet-card .b-icon { width: 46px; height: 46px; background: rgba(232,55,44,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
   .bullet-card .b-icon i { color: var(--red); font-size: 1.2rem; }
   .bullet-card h4 { font-family: var(--font-display); font-size: 1rem; color: var(--dark); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-  .bullet-card p { color: #555; font-size: 0.87rem; line-height: 1.7; }
+  .bullet-card p { color: #000; font-size: 0.87rem; line-height: 1.7; }
 
   /* ACTION BAR */
   .action-bar { background: #ffffff; padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #eee; flex-wrap: wrap; gap: 16px; }
   .action-bar-text h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--dark); letter-spacing: 1px; text-transform: uppercase; }
-  .action-bar-text p { color: #666; font-size: 0.9rem; margin-top: 4px; }
+  .action-bar-text p { color: #000; font-size: 0.9rem; margin-top: 4px; }
   .action-bar-btns { display: flex; gap: 12px; flex-wrap: wrap; }
   .btn-red { display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: #fff; font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 13px 28px; border-radius: 50px; transition: background 0.3s, transform 0.2s; }
   .btn-red:hover { background: #c0251b; transform: translateY(-2px); }
@@ -691,7 +691,7 @@ export default function ServiceDetail({ params }: { params: Promise<{ slug: stri
           <div className="action-bar" style={{ padding: "40px 0 0 0", borderTop: "1px solid #eee", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginTop: 20 }}>
             <div className="action-bar-text">
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", color: "var(--dark)", letterSpacing: 1, textTransform: "uppercase" }}>Ready to Get Started?</h3>
-              <p style={{ color: "#666", fontSize: "0.9rem", marginTop: 4 }}>Book a session today and take the first step.</p>
+              <p style={{ color: "#000", fontSize: "0.9rem", marginTop: 4 }}>Book a session today and take the first step.</p>
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a href="/contact" className="btn-red">Book a Session</a>

@@ -51,7 +51,7 @@ const globalStyles = `
   #academy-intro{background:#fff;padding:90px 60px 80px;text-align:center;position:relative;}
   #academy-intro::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:3px;background:var(--red);border-radius:2px;}
   #academy-intro .section-title{color:var(--dark);margin-bottom:24px;}
-  #academy-intro p{color:#555;font-size:1.02rem;line-height:1.9;max-width:860px;margin:0 auto 18px;}
+  #academy-intro p{color:#000;font-size:1.02rem;line-height:1.9;max-width:860px;margin:0 auto 18px;}
   #academy-intro p:last-child{margin-bottom:0;}
   #academy-intro p strong{color:var(--dark);}
 
@@ -74,12 +74,12 @@ const globalStyles = `
   .ac-tag{font-weight:700;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);display:inline-block;margin-bottom:14px;border-left:3px solid var(--red);padding-left:12px;align-self:flex-start;}
   .ac-content h2{font-family:var(--font-display);font-size:clamp(2rem,3.5vw,2.8rem);color:var(--dark);letter-spacing:2px;text-transform:uppercase;line-height:1.05;margin-bottom:10px;}
   .ac-tagline{color:var(--red);font-size:.9rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px;display:block;line-height:1.5;}
-  .ac-content p{color:#555;font-size:.97rem;line-height:1.85;margin-bottom:26px;}
+  .ac-content p{color:#000;font-size:.97rem;line-height:1.85;margin-bottom:26px;}
   .ac-features{margin:0 0 32px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;}
-  .ac-features li{display:flex;align-items:flex-start;gap:10px;font-size:.92rem;color:#444;line-height:1.5;}
+  .ac-features li{display:flex;align-items:flex-start;gap:10px;font-size:.92rem;color:#000;line-height:1.5;}
   .ac-features li i{color:var(--red);font-size:.8rem;margin-top:4px;flex-shrink:0;}
   .ac-apply{display:flex;flex-wrap:wrap;align-items:center;gap:18px;}
-  .ac-apply .mail{color:#555;font-size:.92rem;}
+  .ac-apply .mail{color:#000;font-size:.92rem;}
   .ac-apply .mail a{color:var(--red);font-weight:700;border-bottom:1px solid rgba(232,55,44,.4);}
   .ac-divider{height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);opacity:.35;}
 
