@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
 import Navbar from "@/components/SiteNav";
+import { payUrl } from "@/lib/pricing-plans"; /* general checkout: services, packages, nutrition */
+import { inr, price, payHref as fit2runHref } from "@/lib/fit2run-plans"; /* Fit2Run has its own checkout */
 
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
@@ -78,12 +80,15 @@ const globalStyles = `
   .pt .pt-note{display:block;font-size:.62rem;color:rgba(255,255,255,.75);margin-top:2px;}
   .pt .pt-small{display:block;font-size:.7rem;letter-spacing:.6px;font-style:italic;text-transform:uppercase;color:rgba(255,255,255,.8);margin-top:3px;}
   .pt.two td:first-child{width:64%;}
-  .pt.pkg{min-width:680px;}
+  .pt.pkg{min-width:780px;}
   .pt.pkg td{font-size:1.05rem;}
   .pt.pkg td:first-child{font-size:.95rem;text-transform:uppercase;line-height:1.35;}
   .pt.pkg .pt-fee{font-size:1.15rem;}
   .pt.inc td:first-child{width:50%;}
   .pt tr.total td{font-weight:800;text-transform:uppercase;}
+  .pt td.pay-cell{width:1%;white-space:nowrap;}
+  .pt .pay-btn{display:inline-block;background:var(--red);color:#fff;font-weight:700;font-size:.74rem;letter-spacing:1.2px;text-transform:uppercase;padding:8px 16px;border-radius:50px;white-space:nowrap;transition:background .25s,transform .2s;}
+  .pt .pay-btn:hover{background:#c0251b;transform:translateY(-2px);}
 
   /* CTA */
   .pr-cta{background:var(--red);padding:56px 40px;text-align:center;}
@@ -113,23 +118,23 @@ const globalStyles = `
 
 /* ───────── DATA (from the official rate cards) ───────── */
 
-type ServiceRow = { name: string; tag?: string; fee: string; note?: string; text?: boolean };
+type ServiceRow = { name: string; tag?: string; fee: string; note?: string; text?: boolean; pay?: string };
 
 const servicesLeft: ServiceRow[] = [
-  { name: "Physiotherapy (Basic)", fee: "₹1500 - ₹1800" },
-  { name: "Physiotherapy (with Somya)", fee: "₹2200" },
-  { name: "Myofascial Release (Full Body)", fee: "₹3000", note: "with Physio" },
-  { name: "Myofascial Release (Half Body)", fee: "₹2000", note: "with Physio" },
-  { name: "Sports / Deep Tissue Massage", tag: "Full Body", fee: "₹2500" },
-  { name: "Sports / Deep Tissue Massage", tag: "Half Body", fee: "₹1800" },
+  { name: "Physiotherapy (Basic)", pay: "svc-physio-junior", fee: "₹1500 - ₹1800" },
+  { name: "Physiotherapy (with Somya)", pay: "svc-physio-somya", fee: "₹2200" },
+  { name: "Myofascial Release (Full Body)", pay: "svc-mfr-full", fee: "₹3000", note: "with Physio" },
+  { name: "Myofascial Release (Half Body)", pay: "svc-mfr-half", fee: "₹2000", note: "with Physio" },
+  { name: "Sports / Deep Tissue Massage", tag: "Full Body", pay: "svc-massage-full", fee: "₹2500" },
+  { name: "Sports / Deep Tissue Massage", tag: "Half Body", pay: "svc-massage-half", fee: "₹1800" },
 ];
 
 const servicesRight: ServiceRow[] = [
-  { name: "Assessment", fee: "₹1000" },
-  { name: "Strength & Conditioning (1-on-1)", fee: "₹1500 - ₹1800" },
+  { name: "Assessment", pay: "svc-assessment", fee: "₹1000" },
+  { name: "Strength & Conditioning (1-on-1)", pay: "svc-sc-junior", fee: "₹1500 - ₹1800" },
   { name: "Group Strength & Conditioning", fee: "₹750 - ₹1200" },
-  { name: "MFR + Cupping (with Masseur)", fee: "₹2700" },
-  { name: "Physiotherapy + Needling", fee: "₹1900" },
+  { name: "MFR + Cupping (with Masseur)", pay: "svc-mfr-cupping", fee: "₹2700" },
+  { name: "Physiotherapy + Needling", pay: "svc-physio-needling", fee: "₹1900" },
   { name: "Session Cancellation (last minute)", fee: "Full session charges", text: true },
 ];
 
@@ -155,18 +160,14 @@ const nutritionPlans = [
   { plan: "6 Months Plan : 6 Nutrition plans + 6 consultations with weekly follow-ups", price: "₹38000" },
 ];
 
-const fit2RunPlans = [
-  { period: "3 months", price: "₹4200" },
-  { period: "6 months", price: "₹8400" },
-  { period: "12 months", price: "₹16800" },
-];
+const fit2RunPlans = [3, 6, 12].map((term) => ({ term, period: `${term} months`, price: inr(price("running", term)) }));
 
 const allInclusive = [
-  { name: "Running Plan", note: "(Tuesday, Thursday, Saturday at Kanteerava - 06:30AM)", m3: "₹4200", m6: "₹8400" },
-  { name: "Physiotherapy", note: "2 sessions / month at 20% off", m3: "₹7200", m6: "₹14400" },
-  { name: "Deep Tissue Massage", note: "2 sessions / month at 20% off", m3: "₹12000", m6: "₹24000" },
-  { name: "Nutrition Plan", note: "at 20% off", m3: "₹14400", m6: "₹30400" },
-  { name: "Strength & Conditioning", note: "2 semi-personal sessions / month at 20% off", m3: "₹7200", m6: "₹14400" },
+  { id: "allinc-running", name: "Running Plan", note: "(Tuesday, Thursday, Saturday at Kanteerava - 06:30AM)" },
+  { id: "allinc-physio", name: "Physiotherapy", note: "2 sessions / month at 20% off" },
+  { id: "allinc-massage", name: "Deep Tissue Massage", note: "2 sessions / month at 20% off" },
+  { id: "allinc-nutrition", name: "Nutrition Plan", note: "at 20% off" },
+  { id: "allinc-sc", name: "Strength & Conditioning", note: "2 semi-personal sessions / month at 20% off" },
 ];
 
 const sections = [
@@ -208,7 +209,7 @@ function ServiceTable({ rows }: { rows: ServiceRow[] }) {
   return (
     <div className="pt-wrap reveal">
       <table className="pt two">
-        <thead><tr><th>Services</th><th>Fee</th></tr></thead>
+        <thead><tr><th>Services</th><th>Fee</th><th>Pay</th></tr></thead>
         <tbody>
           {rows.map((r) => (
             <tr key={r.name + (r.tag ?? "")}>
@@ -216,6 +217,9 @@ function ServiceTable({ rows }: { rows: ServiceRow[] }) {
               <td>
                 <span className={`pt-fee${r.text ? " text" : ""}`}>{r.fee}</span>
                 {r.note && <small className="pt-note">({r.note})</small>}
+              </td>
+              <td className="pay-cell">
+                {r.pay ? <a href={payUrl(r.pay)} className="pay-btn">Pay now</a> : null}
               </td>
             </tr>
           ))}
@@ -225,13 +229,15 @@ function ServiceTable({ rows }: { rows: ServiceRow[] }) {
   );
 }
 
-function PackageTable({ rows }: { rows: PackageRow[] }) {
+const PKG_KEY: Record<string, string> = { "1 Session": "1s", "1 Month": "1m", "3 Months": "3m", "6 Months": "6m" };
+
+function PackageTable({ rows, prefix }: { rows: PackageRow[]; prefix: string }) {
   return (
     <div className="pt-wrap reveal">
       <table className="pt pkg caps">
         <thead>
           <tr>
-            <th>Packages</th><th>Actual</th><th>Discount</th><th>After Discount</th><th>Validity (Days)</th><th>Per Session After Disc</th>
+            <th>Packages</th><th>Actual</th><th>Discount</th><th>After Discount</th><th>Validity (Days)</th><th>Per Session After Disc</th><th>Pay</th>
           </tr>
         </thead>
         <tbody>
@@ -243,6 +249,7 @@ function PackageTable({ rows }: { rows: PackageRow[] }) {
               <td><span className="pt-fee">{r.after}</span></td>
               <td><span className="pt-fee">{r.validity}</span></td>
               <td><span className="pt-fee">{r.perSession}</span></td>
+              <td className="pay-cell"><a href={payUrl(`${prefix}-${PKG_KEY[r.pkg]}`)} className="pay-btn">Pay now</a></td>
             </tr>
           ))}
         </tbody>
@@ -311,7 +318,7 @@ export default function NewPricingPage() {
       <section id="junior" className="pr-section">
         <SectionHead first="Package" second="Charges for Junior Physio / S&C" sub="(As per current rates)" />
         <div className="pr-body">
-          <PackageTable rows={juniorPackages} />
+          <PackageTable rows={juniorPackages} prefix="jr" />
         </div>
       </section>
 
@@ -319,7 +326,7 @@ export default function NewPricingPage() {
       <section id="senior" className="pr-section">
         <SectionHead first="Package" second="Charges for Senior Physio / S&C" sub="(As per current rates)" />
         <div className="pr-body">
-          <PackageTable rows={seniorPackages} />
+          <PackageTable rows={seniorPackages} prefix="sr" />
         </div>
       </section>
 
@@ -334,12 +341,13 @@ export default function NewPricingPage() {
         <div className="pr-body narrow">
           <div className="pt-wrap reveal">
             <table className="pt two">
-              <thead><tr><th>Nutrition Plan</th><th>Charges</th></tr></thead>
+              <thead><tr><th>Nutrition Plan</th><th>Charges</th><th>Pay</th></tr></thead>
               <tbody>
-                {nutritionPlans.map((n) => (
+                {nutritionPlans.map((n, i) => (
                   <tr key={n.plan}>
                     <td>{n.plan}</td>
                     <td><span className="pt-fee">{n.price}</span></td>
+                    <td className="pay-cell"><a href={payUrl(["nut-1m", "nut-3m", "nut-6m"][i])} className="pay-btn">Pay now</a></td>
                   </tr>
                 ))}
               </tbody>
@@ -358,6 +366,7 @@ export default function NewPricingPage() {
                 <tr>
                   <th>Running Plan only<br />(Tuesday, Thursday, Saturday at Kanteerava - 6.30AM)</th>
                   <th>Charges</th>
+                  <th>Pay</th>
                 </tr>
               </thead>
               <tbody>
@@ -365,6 +374,7 @@ export default function NewPricingPage() {
                   <tr key={f.period}>
                     <td>PRICE<br /><span style={{ fontSize: ".85em" }}>({f.period})</span></td>
                     <td><span className="pt-fee">{f.price}</span></td>
+                    <td className="pay-cell"><a href={fit2runHref("running", f.term)} className="pay-btn">Pay now</a></td>
                   </tr>
                 ))}
               </tbody>
@@ -388,20 +398,23 @@ export default function NewPricingPage() {
                   <th style={{ textTransform: "uppercase" }}>All inclusive for Fit2Run members</th>
                   <th>PRICE (3 months)</th>
                   <th>PRICE (6 months)</th>
+                  <th>Pay</th>
                 </tr>
               </thead>
               <tbody>
                 {allInclusive.map((r) => (
                   <tr key={r.name}>
                     <td>{r.name}<span className="pt-small">{r.note}</span></td>
-                    <td><span className="pt-fee">{r.m3}</span></td>
-                    <td><span className="pt-fee">{r.m6}</span></td>
+                    <td><span className="pt-fee">{inr(price(r.id, 3))}</span></td>
+                    <td><span className="pt-fee">{inr(price(r.id, 6))}</span></td>
+                    <td className="pay-cell"><a href={fit2runHref(r.id)} className="pay-btn">Pay now</a></td>
                   </tr>
                 ))}
                 <tr className="total">
                   <td>Total</td>
-                  <td><span className="pt-fee">₹45000</span></td>
-                  <td><span className="pt-fee">₹91600</span></td>
+                  <td><span className="pt-fee">{inr(price("allinc-total", 3))}</span></td>
+                  <td><span className="pt-fee">{inr(price("allinc-total", 6))}</span></td>
+                  <td className="pay-cell"><a href={fit2runHref("allinc-total")} className="pay-btn">Pay now</a></td>
                 </tr>
               </tbody>
             </table>

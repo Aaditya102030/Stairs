@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import BranchesFooter from "@/components/BranchesFooter";
 import Navbar from "@/components/SiteNav";
 
+/* Prices live in lib/fit2run-plans.ts - edit them there. */
+import { inr, price, payHref } from "@/lib/fit2run-plans";
+
 const globalStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
   :root { --red:#e8372c; --dark:#111111; --darker:#0a0a0a; --light:#ffffff; --gray:#888888; --bg-light:#f5f5f5; --font-display:'Bebas Neue',sans-serif; --font-body:'Barlow',sans-serif; }
@@ -175,6 +178,12 @@ const globalStyles = `
   .f2r-table tr.total td{background:#fdecea;font-weight:700;font-size:1.15rem;border-bottom:none;}
   .f2r-table tr.total td.price{color:var(--red);}
   .f2r-table del{color:#999;font-weight:400;font-size:.88rem;margin-right:8px;}
+  .f2r-table th.pay-col,.f2r-table td.pay-col{text-align:right;width:1%;white-space:nowrap;}
+  .f2r-pay{display:inline-flex;align-items:center;background:var(--red);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:1.2px;text-transform:uppercase;padding:9px 20px;border-radius:50px;border:2px solid var(--red);transition:background .3s,border-color .3s,transform .2s;}
+  .f2r-pay:hover{background:#c0251b;border-color:#c0251b;transform:translateY(-2px);}
+  .f2r-hybrid .f2r-table tr.total .f2r-pay,.f2r-table tr.total .f2r-pay{box-shadow:0 2px 10px rgba(232,55,44,.25);}
+  .f2r-hybrid .f2r-table tr.total .f2r-pay{background:#fff;color:var(--red);border-color:#fff;box-shadow:none;}
+  .f2r-hybrid .f2r-table tr.total .f2r-pay:hover{background:#f0f0f0;border-color:#f0f0f0;}
 
   .f2r-hybrid{background:var(--darker);color:#fff;border-radius:22px;padding:44px 40px;margin-bottom:28px;}
   .f2r-hybrid-top{display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:start;margin-bottom:36px;}
@@ -263,18 +272,14 @@ const stations = [
   { icon: "fa-flag-checkered", label: "Better Performance", final: true },
 ];
 
-const runningPlans = [
-  { duration: "3 months", price: "₹4,200" },
-  { duration: "6 months", price: "₹8,400" },
-  { duration: "12 months", price: "₹16,800" },
-];
+const runningPlans = [3, 6, 12].map((term) => ({ term, duration: `${term} months` }));
 
 const allInclusive = [
-  { item: "Running Plan", note: "Tuesday, Thursday, Saturday at Kanteerava – 6:30 AM", m3: "₹4,200", m6: "₹8,400" },
-  { item: "Physiotherapy", note: "2 sessions / month at 20% off", m3: "₹7,200", m6: "₹14,400" },
-  { item: "Deep Tissue Massage", note: "2 sessions / month at 20% off", m3: "₹12,000", m6: "₹24,000" },
-  { item: "Nutrition Plan", note: "At 20% off", m3: "₹14,400", m6: "₹30,400" },
-  { item: "Strength & Conditioning", note: "2 semi-personal sessions / month at 20% off", m3: "₹7,200", m6: "₹14,400" },
+  { id: "allinc-running", item: "Running Plan", note: "Tuesday, Thursday, Saturday at Kanteerava – 6:30 AM" },
+  { id: "allinc-physio", item: "Physiotherapy", note: "2 sessions / month at 20% off" },
+  { id: "allinc-massage", item: "Deep Tissue Massage", note: "2 sessions / month at 20% off" },
+  { id: "allinc-nutrition", item: "Nutrition Plan", note: "At 20% off" },
+  { id: "allinc-sc", item: "Strength & Conditioning", note: "2 semi-personal sessions / month at 20% off" },
 ];
 
 const hybridFlow = [
@@ -286,12 +291,12 @@ const hybridFlow = [
   { step: "Perform", text: "" },
 ];
 
-const hybridRows: { item: string; note?: string; was?: string; price: string }[] = [
-  { item: "Running Program", price: "₹1,600" },
-  { item: "1-to-1 Strength & Conditioning", note: "8 sessions / month", was: "₹12,000", price: "₹11,200" },
-  { item: "Group Weekend Simulation", note: "12 sessions / month", price: "₹14,400" },
-  { item: "Nutrition Plan", was: "₹7,000", price: "₹5,800" },
-  { item: "Recovery – Deep Tissue / Massage", note: "2 sessions / month", was: "₹5,000", price: "₹4,000" },
+const hybridRows: { id: string; item: string; note?: string; was?: string }[] = [
+  { id: "hybrid-running", item: "Running Program" },
+  { id: "hybrid-sc", item: "1-to-1 Strength & Conditioning", note: "8 sessions / month", was: "₹12,000" },
+  { id: "hybrid-weekend", item: "Group Weekend Simulation", note: "12 sessions / month" },
+  { id: "hybrid-nutrition", item: "Nutrition Plan", was: "₹7,000" },
+  { id: "hybrid-recovery", item: "Recovery – Deep Tissue / Massage", note: "2 sessions / month", was: "₹5,000" },
 ];
 
 type Coach = {
@@ -604,10 +609,10 @@ function Packages() {
           </div>
           <div className="f2r-table-wrap">
             <table className="f2r-table">
-              <thead><tr><th>Plan duration</th><th>Charges</th></tr></thead>
+              <thead><tr><th>Plan duration</th><th>Charges</th><th className="pay-col">Pay</th></tr></thead>
               <tbody>
                 {runningPlans.map((r) => (
-                  <tr key={r.duration}><td>{r.duration}</td><td className="price">{r.price}</td></tr>
+                  <tr key={r.term}><td>{r.duration}</td><td className="price">{inr(price("running", r.term))}</td><td className="pay-col"><a href={payHref("running", r.term)} className="f2r-pay">Pay now</a></td></tr>
                 ))}
               </tbody>
             </table>
@@ -622,16 +627,17 @@ function Packages() {
           </div>
           <div className="f2r-table-wrap">
             <table className="f2r-table">
-              <thead><tr><th>All inclusive for Fit2Run members</th><th>3 months</th><th>6 months</th></tr></thead>
+              <thead><tr><th>All inclusive for Fit2Run members</th><th>3 months</th><th>6 months</th><th className="pay-col">Pay</th></tr></thead>
               <tbody>
                 {allInclusive.map((r) => (
                   <tr key={r.item}>
                     <td>{r.item}<small>{r.note}</small></td>
-                    <td className="price">{r.m3}</td>
-                    <td className="price">{r.m6}</td>
+                    <td className="price">{inr(price(r.id, 3))}</td>
+                    <td className="price">{inr(price(r.id, 6))}</td>
+                    <td className="pay-col"><a href={payHref(r.id)} className="f2r-pay">Pay now</a></td>
                   </tr>
                 ))}
-                <tr className="total"><td>Total</td><td className="price">₹45,000</td><td className="price">₹91,600</td></tr>
+                <tr className="total"><td>Total</td><td className="price">{inr(price("allinc-total", 3))}</td><td className="price">{inr(price("allinc-total", 6))}</td><td className="pay-col"><a href={payHref("allinc-total")} className="f2r-pay">Pay now</a></td></tr>
               </tbody>
             </table>
           </div>
@@ -674,15 +680,16 @@ function Packages() {
           <h2 className="f2r-h2" style={{ fontSize: "clamp(1.8rem,3vw,2.6rem)", marginBottom: 18 }}>Hybrid training <em>package</em></h2>
           <div className="f2r-table-wrap">
             <table className="f2r-table">
-              <thead><tr><th>Component</th><th>1 month</th></tr></thead>
+              <thead><tr><th>Component</th><th>1 month</th><th className="pay-col">Pay</th></tr></thead>
               <tbody>
                 {hybridRows.map((r) => (
                   <tr key={r.item}>
                     <td>{r.item}{r.note ? <small>{r.note}</small> : null}</td>
-                    <td className="price">{r.was ? <del>{r.was}</del> : null}{r.price}</td>
+                    <td className="price">{r.was ? <del>{r.was}</del> : null}{inr(price(r.id, 1))}</td>
+                    <td className="pay-col"><a href={payHref(r.id)} className="f2r-pay">Pay now</a></td>
                   </tr>
                 ))}
-                <tr className="total"><td>Total package</td><td className="price">₹36,800</td></tr>
+                <tr className="total"><td>Total package</td><td className="price">{inr(price("hybrid-total", 1))}</td><td className="pay-col"><a href={payHref("hybrid-total")} className="f2r-pay">Pay now</a></td></tr>
               </tbody>
             </table>
           </div>

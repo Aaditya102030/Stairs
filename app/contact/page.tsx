@@ -284,7 +284,7 @@ function ContactFull() {
           )}
           {status === "success" && (
             <p style={{ color: "#4caf50", fontSize: ".85rem", marginBottom: 8 }}>
-              ✓ Your mail app opened with the message filled in. Press Send there to deliver it.
+              ✓ Your mail app opened with the message filled in. Press Send there to deliver it. Nothing opened? Email us at <a href="mailto:info@stairsphysiotherapy.in" style={{ color: "inherit", textDecoration: "underline" }}>info@stairsphysiotherapy.in</a>.
             </p>
           )}
           <div className="form-submit">
