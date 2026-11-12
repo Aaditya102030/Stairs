@@ -89,12 +89,13 @@ export function openMailCompose(form: ContactForm): Provider {
   // ---- Phones & tablets: open the Gmail app ----
   if (isMobileDevice()) {
     if (isAndroid()) {
-      // Chrome intent: forces the Gmail app; browser_fallback_url is used when Gmail is not installed.
+      // Chrome intent: forces the Gmail app (mailto: VIEW is browsable, unlike SENDTO, so Chrome allows it).
+      // Chrome only accepts an http(s) browser_fallback_url, so if Gmail is missing we open Gmail on the web.
+      const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${su}&body=${bd}`;
       const intent =
-        `intent:#Intent;action=android.intent.action.SENDTO;` +
-        `data=${encodeURIComponent(mailto)};` +
-        `package=com.google.android.gm;` +
-        `S.browser_fallback_url=${encodeURIComponent(mailto)};end`;
+        `intent:${CONTACT_EMAIL}?subject=${su}&body=${encodeURIComponent(body.replace(/\n/g, "\r\n"))}` +
+        `#Intent;scheme=mailto;package=com.google.android.gm;` +
+        `S.browser_fallback_url=${encodeURIComponent(gmailWeb)};end`;
       window.location.href = intent;
     } else {
       openGmailAppIOS(`googlegmail:///co?to=${to}&subject=${su}&body=${bd}`, mailto);
