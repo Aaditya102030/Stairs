@@ -284,6 +284,11 @@ const globalStyles = `
   /* ── BOTTOM ROW: 2 location teams ── */
   .bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 
+  /* ── EQUAL TEAM GRID: every team card is the same size ── */
+  .team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch;}
+  .team-grid .loc-card{height:100%;}
+  .loc-avatar-wrap{width:100%;height:140px;border-radius:12px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;background:rgba(232,55,44,.08);border:1px solid rgba(232,55,44,.2);color:var(--red);font-size:3rem;}
+
   /* loc-card map visual */
   .loc-map-wrap{width:100%;border-radius:12px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(232,55,44,.2);position:relative;height:140px;}
   .loc-map-wrap iframe{width:100%;height:100%;border:none;display:block;border-radius:12px;filter:grayscale(0.3) contrast(1.1);}
@@ -307,6 +312,7 @@ const globalStyles = `
     .founders-row{grid-template-columns:1fr 1fr;}
     .founders-center{grid-column:1/-1;order:-1;}
     .bottom-row{grid-template-columns:1fr 1fr;}
+    .team-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
     .footer-grid{grid-template-columns:1fr 1fr;}
   }
   @media(max-width:768px){
@@ -324,6 +330,7 @@ const globalStyles = `
     .admin-stats{flex-wrap:wrap;gap:16px;}
     .founders-row{grid-template-columns:1fr;}
     .bottom-row{grid-template-columns:1fr;}
+    .team-grid{grid-template-columns:minmax(0,1fr);}
     .footer-grid{grid-template-columns:1fr;}
   }
 
@@ -369,6 +376,7 @@ const globalStyles = `
 `;
 
 const trainers = [
+  { slug: "new-bel-road-team", name: "NEW BEL ROAD TEAM", bio: "The New BEL Road Team is committed to delivering high-quality physiotherapy and fitness care through expertise, dedication, and compassion. Their patient-first approach helps individuals recover, move better, and perform at their best." },
   { slug: "ulsoor-team", name: "ULSOOR TEAM",   bio: "The Ulsoor Team is dedicated to providing exceptional physiotherapy care with professionalism, compassion, and expertise. Their commitment to patient recovery, personalized treatment plans, and supportive approach makes them a trusted team for rehabilitation and wellness." },
   { slug: "koramangala-team", name: "KORAMANGALA TEAM",  bio: "Our Koramangala Team combines experience, dedication, and patient-focused care to deliver outstanding physiotherapy treatment. With a passion for helping people recover stronger and healthier, the team creates a positive and motivating healing environment." },
   { slug: "indiranagar-team", name: "INDIRANAGAR TEAM",  bio: "The Indiranagar Team is known for its friendly approach, expert guidance, and commitment to every patients’ recovery journey. Their teamwork and dedication ensure that every patient receives the highest quality care and support." },
@@ -412,6 +420,7 @@ function TrainersFull() {
   const kora    = trainers.find(t => t.slug === "koramangala-team")!;
   const indira  = trainers.find(t => t.slug === "indiranagar-team")!;
   const white   = trainers.find(t => t.slug === "whitefield-team")!;
+  const belRoad = trainers.find(t => t.slug === "new-bel-road-team")!;
 
   const locIcons: Record<string, string> = {
     "ulsoor-team":       "fas fa-map-marker-alt",
@@ -426,6 +435,7 @@ function TrainersFull() {
     "koramangala-team": "https://www.openstreetmap.org/export/embed.html?bbox=77.6265%2C12.9285%2C77.6305%2C12.9315&layer=mapnik&marker=12.9300%2C77.6285",
     "indiranagar-team": "https://www.openstreetmap.org/export/embed.html?bbox=77.6390%2C12.9765%2C77.6430%2C12.9795&layer=mapnik&marker=12.9780%2C77.6410",
     "whitefield-team":  "https://www.openstreetmap.org/export/embed.html?bbox=77.7490%2C12.9685%2C77.7530%2C12.9715&layer=mapnik&marker=12.9700%2C77.7510",
+    "new-bel-road-team": "https://www.openstreetmap.org/export/embed.html?bbox=77.5725%2C13.0340%2C77.5765%2C13.0370&layer=mapnik&marker=13.0355%2C77.5745",
   };
 
   const branchNameBySlug: Record<string, string> = {
@@ -433,6 +443,7 @@ function TrainersFull() {
     "koramangala-team": "Koramangala",
     "indiranagar-team": "Indiranagar",
     "whitefield-team": "Whitefield",
+    "new-bel-road-team": "New BEL Road",
   };
   // Google Maps link for each branch (same list the footer uses)
   const mapLink = (slug: string) => branches.find((b) => b.name === branchNameBySlug[slug])?.map;
@@ -509,14 +520,14 @@ function TrainersFull() {
           </div>
         </div>
 
-        {/* ── ROW 2: ADMIN TEAM center + 2 location teams ── */}
-        <div className="founders-row">
+        {/* ── TEAM GRID: admin + all branches, every card the same size (3 per row) ── */}
+        <div className="team-grid">
           <LocCard t={ulsoor} num={1} />
 
-          {/* Admin — secondary featured */}
-          <div className="founders-center reveal">
-            <span className="founders-crown"><i className="fas fa-star" /> Priority Team</span>
-            <div className="f-avatar"><i className="fas fa-user-tie" /></div>
+          {/* Admin — same size as the location cards */}
+          <div className="loc-card reveal">
+            <div className="loc-avatar-wrap"><i className="fas fa-user-tie" /></div>
+            <span className="loc-tag">Priority Team</span>
             <h3>{admin.name}</h3>
             <p>{admin.bio}</p>
             <a href={`/trainers/${admin.slug}`} className="explore-btn">
@@ -525,12 +536,9 @@ function TrainersFull() {
           </div>
 
           <LocCard t={kora} num={2} />
-        </div>
-
-        {/* ── ROW 3: 2 remaining location teams ── */}
-        <div className="bottom-row">
           <LocCard t={indira} num={3} />
-          <LocCard t={white}  num={4} />
+          <LocCard t={white} num={4} />
+          <LocCard t={belRoad} num={5} />
         </div>
 
       </div>

@@ -34,9 +34,9 @@ export const branches: Branch[] = [
   },
   {
     name: "Whitefield",
-    address: "(Swaasthya Physiotherapy and Fitness) Sree Bywaweshwara arcade, 3rd Floor, Nallurahalli Main Rd, near Spectra Palmwoods, Siddapura, Whitefield, Bengaluru - 560066",
+    address: "3rd Floor, Sree Bywaweshwara Arcade, Nallurahalli Main Rd, near Spectra Palmwoods, Siddapura, Whitefield, Bengaluru, Karnataka 560066",
     phones: ["+91 8050247888"],
-    map: "https://g.co/kgs/x4wc4ue",
+    map: "https://www.google.com/maps/search/?api=1&query=Stairs+Physiotherapy+and+Fitness+Whitefield+Sree+Bywaweshwara+Arcade+Nallurahalli+Main+Rd+Siddapura+Bengaluru+560066",
   },
   {
     name: "New BEL Road",

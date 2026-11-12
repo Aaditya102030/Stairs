@@ -90,6 +90,14 @@ const trainers = [
 
 /* ─── Location Team Data ─── */
 const locationTeams: Record<string, { name: string; location: string; description: string; members: { name: string; role: string; experience?: string; specialty?: string }[] }> = {
+  "new-bel-road-team": {
+    name: "New BEL Road Team",
+    location: "New BEL Road, Bangalore",
+    description: "The New BEL Road Team is committed to delivering high-quality physiotherapy and fitness care through expertise, dedication, and compassion. Their patient-first approach helps individuals recover, move better, and perform at their best.",
+    members: [
+      // Team members will be added here later
+    ],
+  },
   "ulsoor-team": {
     name: "Ulsoor Team",
     location: "Ulsoor, Bangalore",
