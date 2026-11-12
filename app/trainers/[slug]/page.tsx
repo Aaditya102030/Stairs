@@ -176,8 +176,8 @@ const locationTeams: Record<string, { name: string; location: string; descriptio
     location: "Bangalore",
     description: "The Founders envisioned a centre built on trust, care, and excellence in physiotherapy. Through their dedication, leadership, and passion for improving lives, they have created a place focused on healing, recovery, and patient well-being.",
     members: [
-      { name: "Somya Rout", role: "Co-Founder & Head Physio", experience: "12+ Yrs", specialty: "Musculoskeletal Rehab" },
-      { name: "Harinag S P", role: "Co-Founder & S&C Lead", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
+      { name: "Somya Rout", role: "Co-Founder & Head Physio Coach", experience: "12+ Yrs", specialty: "Musculoskeletal Rehab" },
+      { name: "Harinag S P", role: "Co-Founder & S&C Lead Coach", experience: "10+ Yrs", specialty: "Strength & Conditioning" },
     ],
   },
 };
@@ -322,6 +322,9 @@ const globalStyles = `
   .te-stat .te-lbl{font-size:.65rem;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px;display:block;}
   .te-book-btn{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:10px 24px;border-radius:50px;text-decoration:none;transition:background .2s;border:none;cursor:pointer;}
   .te-book-btn:hover{background:#c0251b;}
+  .te-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;}
+  .te-ig-btn{display:inline-flex;align-items:center;gap:8px;border:2px solid #111;color:#111;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:8px 22px;border-radius:50px;transition:background .3s,color .3s;}
+  .te-ig-btn:hover{background:#111;color:#fff;}
 
   /* FOOTER */
   #footer{background:var(--dark);padding:60px 60px 30px;color:#aaa;}
@@ -589,8 +592,13 @@ function MemberList({ members }: { members: { name: string; role: string; experi
     "Sneha Rao":       "Centre manager ensuring smooth operations and a welcoming experience for every patient and visitor.",
     "Kiran Shetty":    "Front desk coordinator providing attentive patient support and a warm first point of contact.",
     "Deepa Iyer":      "Finance and admin specialist handling billing and coordination with precision and care.",
-    "Somya Rout":      "Co-Founder & Head Physio with 12+ years transforming patient recovery through expert musculoskeletal rehabilitation.",
-    "Harinag S P":     "Co-Founder & S&C Lead driving the strength and conditioning vision that makes Stairs a centre of excellence.",
+    "Somya Rout":      "EDUCATION & QUALIFICATIONS: Bachelor's in Physiotherapy. Post-Graduation in Clinical Research. Fellowship in Sports Sciences (Apollo Hospitals). Certification in Asian Football Sports Physiotherapy course (ASPETAR, Qatar). Certificate in Manual Therapy (MTFI). Certified Strength and Conditioning Trainer (Exercise and Sport Sciences International Consultancy). Certification in Cranial and Spinal Osteopathy (European Union). Member of the Indian Association of Physiotherapists. Certificate Physiotherapy course in Marathon Running.\n\nWORK EXPERIENCE: Former Head Physiotherapist for a Ranji Cricket Team and Academy. Former Head Physiotherapist for the U19 and U17 Indian football teams. Former Physiotherapist for a national player at the Vietnam Tennis Open. Former Head Physiotherapist at Sports Authority of Gujarat. Somya worked closely with cricketer Michael Bevan from 2011-12. He was also part of the physio team for the Asian Football Qualifiers in Kuwait and the Asian Football Championship in Malaysia.\n\nCURRENTLY: Founded STAIRS Physiotherapy and Fitness Centre (Ulsoor and Koramangala, Bangalore) in 2019.",
+    "Harinag S P":     "Hari is one of the co-founders of Stairs and one of its strength and conditioning coaches. He completed his Bachelor's in Civil Engineering. A sports enthusiast since childhood, he loves running, football and badminton, and holds a black belt in Karate, having won various state and national level tournaments. He is an expert in functional training and plyometrics and has been practising Olympic lifting for many years. He loves exploring different forms of training and building creative, fun training programs. In his leisure time Hari takes up different fitness challenges. Apart from loving everything related to sports, Hari enjoys meeting new people and learning new skills.",
+  };
+
+  // Social links shown as a button in the expanded member panel.
+  const socials: Record<string, string> = {
+    "Somya Rout": "https://www.instagram.com/somyarout2806/",
   };
 
   // Member photos (files in /public/images). objectPosition keeps faces framed inside the circles.
@@ -653,6 +661,25 @@ function MemberList({ members }: { members: { name: string; role: string; experi
 
   const toggle = (i: number) => setOpenIdx(openIdx === i ? null : i);
 
+  // Splits a bio on blank lines; a leading "LABEL:" (all caps) is shown as a small heading.
+  const renderBio = (text: string) =>
+    text.split("\n\n").map((para, i) => {
+      const m = para.match(/^([A-Z &]+):\s*([\s\S]*)$/);
+      return (
+        <p className="te-bio" key={i}>
+          {m ? (
+            <>
+              <strong style={{ color: "#111", fontSize: ".8rem", letterSpacing: "1.5px" }}>{m[1]}</strong>
+              <br />
+              {m[2]}
+            </>
+          ) : (
+            para
+          )}
+        </p>
+      );
+    });
+
   return (
     <div className="tm-list reveal" style={{ marginTop: 48 }}>
       {members.map((m, i) => (
@@ -684,8 +711,15 @@ function MemberList({ members }: { members: { name: string; role: string; experi
                 </div>
               </div>
               <div className="tm-expand-body">
-                <p className="te-bio">{bios[m.name] || `${m.name} is a dedicated member of the Stairs team, committed to delivering exceptional care and results for every patient.`}</p>
-                <a href="/contact" className="te-book-btn">Book a Session <i className="fas fa-arrow-right" /></a>
+                {renderBio(bios[m.name] || `${m.name} is a dedicated member of the Stairs team, committed to delivering exceptional care and results for every patient.`)}
+                <div className="te-actions">
+                  <a href="/contact" className="te-book-btn">Book a Session <i className="fas fa-arrow-right" /></a>
+                  {socials[m.name] && (
+                    <a href={socials[m.name]} target="_blank" rel="noopener noreferrer" className="te-ig-btn" aria-label={`${m.name} on Instagram`}>
+                      <i className="fab fa-instagram" /> Instagram
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>

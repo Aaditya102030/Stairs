@@ -852,12 +852,13 @@ const services = [
 ];
 
 type ProgramSlide = { title: string; sub: string; detail: string; bg: string };
-type ProgramCardData = { id: string; title: string; subtitle?: string; icon: string; features: string[]; slides: ProgramSlide[] };
+type ProgramCardData = { id: string; href?: string; noLink?: boolean; title: string; subtitle?: string; icon: string; features: string[]; slides: ProgramSlide[] };
 
 /* Programme cards on the home page. A card with a single slide renders with no slider. */
 const programCards: ProgramCardData[] = [
   {
     id: "online-strength-training",
+    href: "/online-strength-training",
     title: "Online Strength Training",
     subtitle: "What's Included",
     icon: "fas fa-dumbbell",
@@ -866,6 +867,7 @@ const programCards: ProgramCardData[] = [
   },
   {
     id: "online-group-sessions",
+    noLink: true,
     title: "Online Group Sessions",
     subtitle: "What's Included",
     icon: "fas fa-users",
@@ -874,6 +876,7 @@ const programCards: ProgramCardData[] = [
   },
   {
     id: "massage-therapy",
+    noLink: true,
     title: "Massage Therapy",
     subtitle: "Feel Better, Move Better",
     icon: "fas fa-spa",
@@ -882,6 +885,7 @@ const programCards: ProgramCardData[] = [
   },
   {
     id: "fit2run",
+    href: "/fit2run",
     title: "What's Included",
     icon: "fas fa-running",
     features: ["Structured running Training", "Strength & conditioning for runners", "Running movement assessment", "Injury prevention & load management", "Nutrition and Recovery"],
@@ -891,6 +895,7 @@ const programCards: ProgramCardData[] = [
   },
   {
     id: "hybrid-training",
+    href: "/fit2run#hybrid-training",
     title: "What's Included",
     icon: "fas fa-dumbbell",
     features: ["Hyrox specific training", "Running & functional fitness", "Strength & conditioning", "Endurance & work capacity", "Race simulations & performance preparation"],
@@ -1632,7 +1637,7 @@ function InstagramReels() {
     <div className="insta-wrap">
       <span className="insta-label"><i className="fab fa-instagram" /> Follow us on Instagram</span>
       <div className="insta-slider">
-        <button type="button" className="insta-arrow left" aria-label="Scroll left" onClick={() => scrollRow(-1)}><i className="fas fa-chevron-left" /></button>
+        <button type="button" className="insta-arrow left" aria-label="Scroll left" suppressHydrationWarning onClick={() => scrollRow(-1)}><i className="fas fa-chevron-left" /></button>
         <div
           className="insta-row"
           ref={rowRef}
@@ -1654,7 +1659,7 @@ function InstagramReels() {
             </div>
           )}
         </div>
-        <button type="button" className="insta-arrow right" aria-label="Scroll right" onClick={() => scrollRow(1)}><i className="fas fa-chevron-right" /></button>
+        <button type="button" className="insta-arrow right" aria-label="Scroll right" suppressHydrationWarning onClick={() => scrollRow(1)}><i className="fas fa-chevron-right" /></button>
       </div>
     </div>
   );
@@ -1743,7 +1748,7 @@ function ProgramCard({ data }: { data: ProgramCardData }) {
 
   return (
     <div className="prog-card reveal">
-      <div className="prog-slider">
+      <div className="prog-slider" style={data.href ? { cursor: "pointer" } : undefined} onClick={data.href ? () => { window.location.href = data.href as string; } : undefined}>
         {slides.map((s, i) => (
           <div key={i} className={`prog-slide${idx === i ? " active" : ""}`}>
             <div className="prog-slide-bg" style={{ backgroundImage: `url('${s.bg}')` }} />
@@ -1765,7 +1770,7 @@ function ProgramCard({ data }: { data: ProgramCardData }) {
           </>
         )}
       </div>
-      <a href="/pricing" className="prog-body">
+      <a href={data.noLink ? undefined : (data.href ?? "/pricing")} className="prog-body" style={data.noLink ? { cursor: "default" } : undefined}>
         <h3>{data.title}</h3>
         {data.subtitle && <span className="prog-sub">{data.subtitle}</span>}
         <ul>
