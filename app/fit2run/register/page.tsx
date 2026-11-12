@@ -39,7 +39,8 @@ const globalStyles = `
   .reg-info::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.5),rgba(10,10,10,.88));}
   .reg-info>*{position:relative;z-index:1;}
   .reg-service{align-self:flex-start;background:rgba(232,55,44,.15);border:1px solid rgba(232,55,44,.45);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:30px;margin-bottom:22px;}
-  .reg-brand{font-family:var(--font-body);font-style:italic;font-weight:700;font-size:clamp(2.8rem,5vw,4rem);color:#ff5a4f;line-height:1;text-align:center;}
+  .reg-brand{font-family:var(--font-body);font-style:italic;font-weight:700;font-size:clamp(2rem,4.2vw,3.4rem);color:#ff5a4f;line-height:1.05;text-align:center;}
+  .reg-group{text-align:center;font-weight:700;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:10px;}
   .reg-tag{font-weight:700;font-size:1.35rem;text-align:center;margin:14px 0 22px;}
   .reg-price{font-weight:700;font-size:clamp(2.2rem,4.4vw,3.2rem);color:#ff5a4f;text-align:center;line-height:1;}
   .reg-for{display:block;text-align:center;font-weight:700;font-size:.78rem;letter-spacing:.5px;margin:6px 0 30px;}
@@ -111,11 +112,11 @@ const LEVELS = ["Beginner", "Intermediate", "Advance"];
 function LevelGroup({ label, name }: { label: string; name: string }) {
   return (
     <div className="reg-field">
-      <span className="lbl">{label} *</span>
+      <span className="lbl">{label}</span>
       <div className="reg-opts">
         {LEVELS.map((l) => (
           <label key={l} className="reg-opt">
-            <input type="radio" name={name} value={l} required /> {l}
+            <input type="radio" name={name} value={l} /> {l}
           </label>
         ))}
       </div>
@@ -123,20 +124,21 @@ function LevelGroup({ label, name }: { label: string; name: string }) {
   );
 }
 
-function Text({ label, name, type = "text", placeholder }: { label: string; name: string; type?: string; placeholder?: string }) {
+/* Only the fields marked `required` must be filled in - everything else is optional. */
+function Text({ label, name, type = "text", placeholder, required = false }: { label: string; name: string; type?: string; placeholder?: string; required?: boolean }) {
   return (
     <div className="reg-field">
-      <label className="lbl" htmlFor={name}>{label} *</label>
-      <input id={name} name={name} type={type} required placeholder={placeholder} />
+      <label className="lbl" htmlFor={name}>{label}{required ? " *" : ""}</label>
+      <input id={name} name={name} type={type} required={required} placeholder={placeholder} />
     </div>
   );
 }
 
-function Area({ label, name, placeholder }: { label: string; name: string; placeholder: string }) {
+function Area({ label, name, placeholder, required = false }: { label: string; name: string; placeholder: string; required?: boolean }) {
   return (
     <div className="reg-field">
-      <label className="lbl" htmlFor={name}>{label} *</label>
-      <textarea id={name} name={name} required placeholder={placeholder} />
+      <label className="lbl" htmlFor={name}>{label}{required ? " *" : ""}</label>
+      <textarea id={name} name={name} required={required} placeholder={placeholder} />
     </div>
   );
 }
@@ -182,8 +184,9 @@ function RegisterContent() {
       <aside className="reg-info">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="reg-info-bg" src="/images/team/fit2run/runner-particles.webp" alt="" aria-hidden="true" />
-        <span className="reg-service">{service.group === service.name ? service.name : <>{service.group} &middot; {service.name}</>}</span>
-        <div className="reg-brand">Fit to Run</div>
+        <span className="reg-service">Fit to Run</span>
+        <div className="reg-brand">{service.name}</div>
+        {service.group !== service.name ? <div className="reg-group">{service.group}</div> : null}
         <p className="reg-tag">Everything a RUNNER needs</p>
         <div className="reg-price">{inr(service.prices[shownTerm])}</div>
         <small className="reg-for">FOR {termLabel(shownTerm).toUpperCase()}</small>
@@ -201,17 +204,17 @@ function RegisterContent() {
 
         <form ref={formRef} onSubmit={(e) => { e.preventDefault(); next(); }}>
           <div className="reg-row c3">
-            <Text label="First Name" name="firstName" />
+            <Text label="First Name" name="firstName" required />
             <Text label="Last Name" name="lastName" />
-            <Text label="Phone" name="phone" type="tel" />
+            <Text label="Phone" name="phone" type="tel" required />
           </div>
 
           <div className="reg-row c3">
-            <Text label="Email Address" name="email" type="email" />
+            <Text label="Email Address" name="email" type="email" required />
             <div className="reg-field">
-              <label className="lbl" htmlFor="gender">Gender *</label>
-              <select id="gender" name="gender" required defaultValue="">
-                <option value="" disabled />
+              <label className="lbl" htmlFor="gender">Gender</label>
+              <select id="gender" name="gender" defaultValue="">
+                <option value="" />
                 <option>Female</option>
                 <option>Male</option>
                 <option>Other</option>
@@ -219,8 +222,8 @@ function RegisterContent() {
               </select>
             </div>
             <div className="reg-field">
-              <label className="lbl" htmlFor="age">Age *</label>
-              <input id="age" name="age" type="number" min={10} max={100} required />
+              <label className="lbl" htmlFor="age">Age</label>
+              <input id="age" name="age" type="number" min={10} max={100} />
             </div>
           </div>
 

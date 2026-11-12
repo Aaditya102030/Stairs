@@ -570,7 +570,7 @@ const serviceDetails: Record<string, ServiceData> = {
     subtitle: "Injury Prevention & Strength for Runners",
     description: "Injury prevention and strength sessions for all levels, from beginners to Ironman and World Major Marathon athletes.",
     icon: "fas fa-running",
-    heroImage: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1200&q=80",
+    heroImage: "/images/g1.jpeg",
     sections: [
       {
         tag: "Running Rehab",
@@ -579,7 +579,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Running injuries often come from a mix of training load, strength and movement patterns. We assess how you run and move to understand what is holding you back.",
           "Your rehab plan builds strength and control step by step, so you can get back to running safely.",
         ],
-        image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=800&q=80",
+        image: "/images/g2.jpeg",
         imageAlt: "Running rehab session",
       },
       {
@@ -589,7 +589,7 @@ const serviceDetails: Record<string, ServiceData> = {
           "Strength sessions help runners build resilience, improve efficiency and reduce injury risk. We work with all levels, from first-time runners to Ironman and World Major Marathon athletes.",
           "Sessions are tailored to your event, your schedule and your goals.",
         ],
-        image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80",
+        image: "/images/g3.png",
         imageAlt: "Runner strength training",
         reverse: true,
       },

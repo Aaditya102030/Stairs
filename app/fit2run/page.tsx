@@ -686,7 +686,7 @@ function Packages() {
                   <tr key={r.item}>
                     <td>{r.item}{r.note ? <small>{r.note}</small> : null}</td>
                     <td className="price">{r.was ? <del>{r.was}</del> : null}{inr(price(r.id, 1))}</td>
-                    <td className="pay-col"><a href={payHref(r.id)} className="f2r-pay">Pay now</a></td>
+                    <td className="pay-col" />
                   </tr>
                 ))}
                 <tr className="total"><td>Total package</td><td className="price">{inr(price("hybrid-total", 1))}</td><td className="pay-col"><a href={payHref("hybrid-total")} className="f2r-pay">Pay now</a></td></tr>
